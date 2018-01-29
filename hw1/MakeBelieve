@@ -1,0 +1,366 @@
+// Wait for document to load
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* MY jQuery IMPLEMENTATION */
+    (function () {
+        function makeBelieveElement(elem, length) {
+            // If length of element is 1 then treat as one element else as a list.
+            this.elem = elem.length === 1 ? elem[0] : elem;
+            this.length = length;
+
+            this.parent = function (query) {
+                var parents = [];
+
+                for (var i = 0; i < this.length; i++) {
+                    if (elem[i]) { // if element is valid
+                        var parent = elem[i].parentNode;
+                        if (parent) { // if parent was found push it to result
+                            if (query) { // If query is provided
+                                if (parent.matches(query)) { // if the element matches the query provided
+                                    parents.push(new makeBelieveElement(parent, 1));
+                                }
+                            } else {
+                                parents.push(new makeBelieveElement(parent, 1));
+                            }
+                        }
+                    }
+                }
+                return parents;
+            };
+
+            this.grandParent = function (query) {
+                var grandParents = [];
+
+                for (var i = 0; i < this.length; i++) {
+                    if (elem[i]) { // If element is valid
+                        var parent = elem[i].parentNode;
+                        if (parent) { // if parent was found
+                            var grandParent = parent.parentNode;
+                            if (grandParent) { // if grandparent was found push it to result
+                                if (query) { // If query is provided
+                                    if (grandParent.matches(query)) { // if the element matches the query provided
+                                        grandParents.push(new makeBelieveElement(grandParent, 1));
+                                    }
+                                } else {
+                                    grandParents.push(new makeBelieveElement(grandParent, 1));
+                                }
+                            }
+                        }
+                    }
+                    return grandParents;
+                }
+            };
+
+            this.ancestor = function (query) {
+                var ancestors = [];
+
+                for (var i = 0; i < this.length; i++) {
+                    var generationCounter = 0;
+                    var ancestor = elem[i]; // initialize base ancestor
+                    while (ancestor.tagName !== 'HTML') { // While the current element is not the <html> tag
+                        ancestor = ancestor.parentNode; // Update current element
+
+                        if (generationCounter >= 2) { // Only add current element to ancestor if it is
+                            // more than 2 generations way
+
+                            if (query) { // If query is provided
+                                if (ancestor.matches(query)) { // if the element matches the query provided
+                                    ancestors.push(new makeBelieveElement(ancestor, 1));
+                                }
+                            } else {
+                                ancestors.push(new makeBelieveElement(ancestor, 1));
+                            }
+                        }
+                        generationCounter++;
+                    }
+                }
+                return ancestors;
+            };
+
+            this.onClick = function (evt) {
+                this.elem.addEventListener('click', evt);
+                return this;
+            };
+
+            this.insertText = function (text) {
+                this.elem.innerHTML = text;
+            };
+
+            this.append = function (appendItem) {
+                //TODO: needs error handling
+                if (appendItem.nodeName) { // if DOM element
+                    this.elem.appendChild(appendItem.parentElement);
+                } else { // If text
+                    this.elem.innerHTML += appendItem;
+                }
+            };
+
+            this.prepend = function (prependItem) {
+                //TODO: needs error handling
+                if (prependItem.nodeName) { // if DOM element
+                    var parent = this.elem;
+                    parent.insertBefore(prependItem.parentElement, parent.children[0]);
+                } else { // If text
+                    this.elem.innerHTML = prependItem + this.elem.innerHTML;
+                }
+            };
+
+            this.delete = function () {
+                var parent = this.elem.parentNode;
+                parent.removeChild(this.elem);
+                return this.elem;
+            };
+
+            this.css = function (styleChange, value) {
+                this.elem.setAttribute("style", styleChange + ': ' + value);
+                return this.elem;
+            };
+
+            this.toggleClass = function(toggledClass){
+                var classes = this.elem.classList;
+                if(classes.contains(toggledClass)){
+                    classes.remove(toggledClass);
+                }
+                else{
+                    classes.add(toggledClass);
+                }
+                return this.elem;
+            };
+
+            this.onSubmit = function (evt) {
+                this.elem.onsubmit = evt;
+                return this.elem;
+            };
+
+            this.onInput = function (evt) {
+                this.elem.addEventListener('input', evt);
+                return this.elem;
+            };
+        }
+
+        var innerMakeBelieve = function (query) {
+            // Find the queried element
+            var elem = document.querySelectorAll(query);
+            // If element found
+            if (elem) {
+                return new makeBelieveElement(elem, elem.length);
+            }
+
+            
+            return {};
+        };
+        
+        var ajax = function (params) {
+            if(!params.url){
+                throw new Error('Url must be provided');
+            }
+            if(!params.method){ // if method not provided, default to GET
+                params.method = 'GET';
+            }
+            if(!params.timeout){ // if timeout not provided, default to 0
+                params.timeout = 0; // 0 is no timeout
+            }
+            if(!params.data){ // if data not provided, default to {}
+                params.data = {}; 
+            }
+            if(!params.headers){ // if headers not provided, default to {}
+                params.headers = {}; 
+            }
+            if(!params.success){
+                params.success = null;
+            }
+            if(!params.fail){
+                params.fail = null;
+            }
+            if(!params.beforeSend){
+                params.beforeSend = null;
+            }
+            // TODO: Callbacks
+            console.log('params:');
+            console.log(params);
+    
+            var myrequest = new XMLHttpRequest();
+
+            //TODO: BEFORE
+            myrequest.open(params.method, params.url);
+
+            // For the headers
+            params.headers.forEach(element => {
+                // Get the key values
+                var keys = Object.keys(element);
+                // Set the header to the request for each key
+                keys.forEach(key => {
+                    myrequest.setRequestHeader(key, element[key]);
+                });
+            });
+            
+            myrequest.onreadystatechange = function () {
+                if(myrequest.readyState === XMLHttpRequest.HEADERS_RECEIVED && params.beforeSend){
+                    params.beforeSend(myrequest);
+                }
+                if(myrequest.readyState === XMLHttpRequest.DONE){
+                    if(myrequest.status >= 200 && myrequest.status < 300 && params.success){
+                        params.success(myrequest);
+                    }
+                    else if(params.fail){
+                        params.fail(myrequest);
+                    }
+                }
+            };
+            myrequest.send();
+            
+
+            return this.elem;
+        };
+
+        // Attach the outer function to the window object
+        window.__ = innerMakeBelieve;
+        window.__.ajax = ajax;
+    })();
+
+    /* TESTS */
+
+    /* 1 */
+    // Examples in every other test
+
+    /* 2 */
+    // // Find one element
+    // var password = __('#password');
+    // console.log('#password');
+    // console.log(password);
+
+
+    /* 3 */
+    // // Find parent, returns form with id #my-form // PASS
+    // var passwordParent = __('#password').parent();
+    // console.log('#password.parent()');
+    // console.log(passwordParent);
+
+    // // Find the same form // PASS
+    // var formParent = __('#password').parent('form');
+    // console.log('formParent');
+    // console.log(formParent);
+
+    /* 4 */
+
+    // Returns the div with the id #grandfather // PASS
+    // var grandParent = __('#password').grandParent();
+    // console.log('grandParent');
+    // console.log(grandParent);
+
+    // // Returns the same div // PASS
+    // var idGrandParent = __('#password').grandParent('#grandfather');
+    // console.log('idGrandParent');
+    // console.log(idGrandParent);
+
+    // // Returns an empty object // PASS
+    // var emptyGrandParent = __('#password').grandParent('#unknownid');
+    // console.log('emptyGrandParent');
+    // console.log(emptyGrandParent);
+
+    /* 5 */
+    // Returns the div with the class .ancestor // PASS
+    // var ancestor = __('#password').ancestor('.ancestor');
+    // console.log('ancestor');
+    // console.log(ancestor);
+
+    // // Returns the div with the class .root // PASS
+    // var rootElem = __('#password').ancestor('.root');
+    // console.log('rootElem');
+    // console.log(rootElem);
+
+    // // Returns an empty object // PASS
+    // var ancestorSib = __('#password').ancestor('.ancestor-sib');
+    // console.log('ancestorSib');
+    // console.log(ancestorSib);
+
+    /* 6 */
+    // // Add onClickEvent // PASS
+    // __('#password').onClick(function(evt) {
+    //     // Logs the current password to the console
+    //     console.log(evt.target.value);
+    // });
+
+    /* 7 */
+    // // Inserts a text to element. If there is text previously 
+    // // within the element it is overwritten. // PASS
+    // __('#shakespeare-novel').insertText("To be, or not to be: this is the question");
+
+    /* 8 */
+    // Appends new HTML to an element. It takes as parameter either a string
+    // which represents a valid HTML or an actual DOM element // PASS
+    // __('.the-appender').append('<p>I am an appended paragraph</p>');
+
+    // __('.the-appender').append(
+    //     document.createElement('p').appendChild(
+    //         document.createTextNode('I am an appended paragraph!')
+    //     )
+    // );  
+
+    /* 9 */
+    // This is just like the function append() above, only now it inserts before every
+    // element inside instead of at the back. // PASS
+    // __('.the-prepender').prepend('<p>I am a prepended paragraph</p>');
+    // __('.the-prepender').prepend(
+    //     document.createElement('p').appendChild(
+    //         document.createTextNode('I am a prepended paragraph!')
+    //     )
+    // );  
+
+    /* 10 */
+    // Deletes an element. If no element is found with the query it has no effect. // PASS
+    // __('.some-div h2').delete();
+
+    /* 11 */
+    __.ajax({
+        url: 'https://serene-island-81305.herokuapp.com/200',
+        method: 'POST',
+        timeout: 10,
+        data: {},
+        headers: [
+            { "Authorization": "mySecret" }
+        ],
+        success: function (resp) {
+            // Triggered when there is a successful response from the server
+            console.log('success');
+            console.log(resp);
+        },
+        fail: function (error) {
+            // Triggered when an error occurred when connecting to the server
+            console.log('error');
+            console.log(error);
+        },
+        beforeSend: function (xhr) {
+            // Triggered before the request is passed in the XMLHttpRequest object
+            console.log('beforesend');
+            console.log(xhr);
+        }
+    });
+
+    /* 12 */ // PASS
+    // Changes the direct css styles on the
+    // element. It takes in two strings, one for the which css element is being changed and the
+    // second for the value of that css element.
+    // __('#elemToChange').css('color', 'green');
+
+    /* 13 */ // PASS
+    // // toggles a css class for an element. Toggling meaning that if the class
+    // // contains the class it removes it, otherwise adds it.
+    //  __('#elemToChange').toggleClass('some-class');
+
+    /* 14 */
+    // This handler should be triggered whenever the
+    // targeted form is submitted
+    // __('#my-form').onSubmit(function (evt) {
+    //     // Process the form
+    //     // console.log(evt.target.value);
+    //     alert('hello');
+    // });
+
+    // /* 15 */
+    // __('#my-form').onInput(function (evt) {
+    //     console.log(evt.target.value);
+    // });
+
+
+}, false);
