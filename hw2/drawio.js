@@ -57,16 +57,16 @@ $(function () {
         
     });
 
-    $('#color-picker').css("background-color", drawio.currentColor);
-    $('#color-form').on('input', function() {
-        $('#color-picker').css("background-color", drawio.currentColor);
-    });
+    // $('#color-picker').css("background-color", drawio.currentColor);
+    // $('#color-form').on('input', function() {
+    //     $('#color-picker').css("background-color", drawio.currentColor);
+    // });
 
     $('#text-selector').on('input', function(){
         drawio.textInput = $(this).val();
     });
 
-    $('.icon').on('click', function () {
+    $('.icon.clickable').on('click', function () {
         $('.icon').removeClass('selected');
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
@@ -155,25 +155,29 @@ $(function () {
     /*
     Color Picker
     */
-    $('#red').on('input', function (){
-        drawio.rgba.RED = minMaxColor($(this).val());
-        getColor();
+    // $('#red').on('input', function (){
+    //     drawio.rgba.RED = minMaxColor($(this).val());
+    //     getColor();
+    // });
+
+    // $('#green').on('input', function (){
+    //     drawio.rgba.GREEN = minMaxColor($(this).val());
+    //     getColor();
+    // });
+
+    // $('#blue').on('input', function (){
+    //     drawio.rgba.BLUE = minMaxColor($(this).val());
+    //     getColor();
+    // });
+
+    $('#color-picker').on('input', function (){
+        drawio.currentColor = $(this).val();
     });
 
-    $('#green').on('input', function (){
-        drawio.rgba.GREEN = minMaxColor($(this).val());
-        getColor();
-    });
-
-    $('#blue').on('input', function (){
-        drawio.rgba.BLUE = minMaxColor($(this).val());
-        getColor();
-    });
-
-    $('#alpha').on('input', function (){
-        drawio.rgba.ALPHA = $(this).val() / 100;
-        getColor();
-    });
+    // $('#alpha').on('input', function (){
+    //     drawio.rgba.ALPHA = $(this).val() / 100;
+    //     getColor();
+    // });
 
     // Line Width slider
     $('#line-width').on('input', function (){
@@ -190,7 +194,6 @@ $(function () {
         }
     });
 
-
     // Makes value fit into the range 0-255
     function minMaxColor (val){
         if(val > 255){
@@ -202,9 +205,9 @@ $(function () {
         return val;
     }
 
-    function getColor() {
-        drawio.currentColor = "rgba(" + drawio.rgba.RED + ", " + drawio.rgba.GREEN + ", "+ drawio.rgba.BLUE + ", "+ drawio.rgba.ALPHA +")";
-    }
+    // function getColor() {
+    //     drawio.currentColor = "rgba(" + drawio.rgba.RED + ", " + drawio.rgba.GREEN + ", "+ drawio.rgba.BLUE + ", "+ drawio.rgba.ALPHA +")";
+    // }
 
     function checkIfFill (){
         if ($('#fill').is(":checked")){

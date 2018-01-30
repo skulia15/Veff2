@@ -10,10 +10,11 @@
         body {
             padding: 0;
             margin: 0;
+            background-color: #3A506B;
         }
 
         .container {
-            padding: 20px;
+            padding: 5px;
         }
 
         #my-canvas {
@@ -28,59 +29,49 @@
             display: inline-block;
             font-size: 4em;
             float: right;
-            width: 100px;
-            top: 15px;
+            margin: 10px;
             transition: color .5s;
+            color: #1D3557;
         }
 
         .icon:hover {
-            color: orange;
+            color: #457B9D;
             cursor: pointer;
+            
         }
 
-        .icon.selected {
-            color: yellow;
+        .icon.clickable.selected {
+            color: #E63946;
         }
-        
+
         .icon.left {
             float: left;
         }
 
-        .options {
-            position: relative;
-            display: inline-block;
-            font-size: 4em;
-            float: right;
-            width: 100px;
-            top: 15px;
+        .fa {
+            font-size: 1em;
         }
 
         .navbar {
             height: 100px;
-            background-color: rgba(50, 100, 200, 0.5);
+            background-color: #A8DADC;
             border-bottom: solid 6px rgba(50, 100, 200, 1);
         }
 
-        .left{
-            float: left;
-            margin-left: 50px;
-        }
-
-        .color-picker{
+        /* .color-picker{
             width: 100px;
             height: 50px;
             content: "";
             min-height: 100%;
             height: 100%;
             float: left
-        }
+        } */
 
-        .fill{
+        .fill {
             float: right;
             margin-top: 40px;
             margin-right: 40px;
         }
-
         
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -93,83 +84,87 @@
             <label>
                 Fill Shape?
             </label>
-            <input type="checkbox" class="form-check-input" id="fill"> 
+            <input type="checkbox" class="form-check-input" id="fill">
         </div>
-        <div class="icon" data-shape="rectangle">
+        <div class="icon clickable" data-shape="rectangle" data-tooltip="Rectangle Tool">
             <i id="rectangle" class="fa fa-square-o" aria-hidden="true"></i>
         </div>
-        <div class="icon" data-shape="circle">
+        <div class="icon clickable" data-shape="circle" data-tooltip="Circle Tool">
             <i class="fa fa-circle-o" aria-hidden="true"></i>
         </div>
-        <div class="icon" data-shape="line">
+        <div class="icon clickable" data-shape="line" data-tooltip="Line Tool">
             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
         </div>
-        <div class="icon" data-shape="text">
+        <div class="icon clickable" data-shape="text" data-tooltip="Text Tool">
             <i class="fa fa-font" aria-hidden="true"></i>
         </div>
-        <div class="icon selected" data-shape="pen">
+        <div class="icon selected clickable" data-shape="pen" data-tooltip="Pen Tool">
             <i class="fa fa-paint-brush" aria-hidden="true"></i>
         </div>
-        <div class="left">
-            <div class="options">
+        <div>
+            <div class="icon left" data-tooltip="Redo">
                 <i id="redo" class="fa fa-repeat" aria-hidden="true"></i>
             </div>
-            <div class="options">
+            <div class="icon left" data-tooltip="Undo">
                 <i id="undo" class="fa fa-undo" aria-hidden="true"></i>
             </div>
-            <div class="options">
+            <div class="icon left" data-tooltip="Clear Canvas">
                 <i id="clear" class="fa fa-times" aria-hidden="true"></i>
             </div>
         </div>
     </nav>
 
-        <div class="form-group col-md-1" >
-            <form id="color-form">
-                <label for="red">Red</label>
-                <input id="red" name="red" value="0" class="form-control"/>
-                <label for="green">Green</label>
-                <input id="green" name="green" value="0" class="form-control"/>
-                <label for="blue">Blue</label>
-                <input id="blue" name="blue" value="0" class="form-control"/>
-                <div class="alpha-slider">
+    <div class="form-group col-md-1">
+        <form id="color-form">
+            <!-- <label for="red">Red</label>
+            <input id="red" name="red" value="0" class="form-control"/>
+            <label for="green">Green</label>
+            <input id="green" name="green" value="0" class="form-control"/>
+            <label for="blue">Blue</label>
+            <input id="blue" name="blue" value="0" class="form-control"/> -->
+            <label for="color-picker">
+                Color
+                <input type="color" id="color-picker" />
+            </label>
+            <!-- <div class="alpha-slider">
                     <label for="alpha">Alpha
                         <input type="range" min="0" max="100" value="100" class="slider" id="alpha" name="alpha">
                     </label>
-                </div>
-                <label for="color-picker">Color
+                </div> -->
+            <!-- <label for="color-picker">Color
                     <div id="color-picker" class="color-picker">
                     </label>
                     &nbsp;
-                </div>
-                <div class="line-width-slider">
-                    <label for="line-width">Line Width
-                        <input type="range" min="0" max="30" value="5" class="slider" id="line-width", name="line-width">
-                    </label>
-                </div>
-                <label for="text">Text
-                    <input id="text-selector" name="text" class="form-control"/>
+                </div> -->
+            <div class="line-width-slider">
+                <label for="line-width">Line Width
+                    <input type="range" min="0" max="30" value="5" class="slider" id="line-width" , name="line-width">
                 </label>
-                <form id="font-form">
-                    <select id="font-picker">
-                        <option value="Helvetica">Helvetica</option>
-                        <option value="Comic Sans MS">Comic Sans</option>
-                        <option value="Times New Roman">Times New Roman</option>
-                        <option value="Impact">Impact</option>
-                    </select>
-                    <select id="font-size-picker">
-                        <option value="14">14</option>
-                        <option value="16">16</option>
-                        <option value="20">20</option>
-                        <option value="26">26</option>
-                        <option value="36">36</option>
-                        <option value="50">50</option>
-                    </select>
-                </form>
-
+            </div>
+            <label for="text">Text
+                <input id="text-selector" name="text" class="form-control" />
+            </label>
+            <form id="font-form">
+                <select id="font-picker">
+                    <option value="Helvetica">Helvetica</option>
+                    <option value="Comic Sans MS">Comic Sans</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Impact">Impact</option>
+                </select>
+                <select id="font-size-picker">
+                    <option value="14">14</option>
+                    <option value="16">16</option>
+                    <option value="20">20</option>
+                    <option value="26">26</option>
+                    <option value="36">36</option>
+                    <option value="50">50</option>
+                </select>
             </form>
-            
-        </div>
-        
+
+        </form>
+
+    </div>
+
     <div class="container">
         <canvas id="my-canvas" width="1000" height="600">
             Canvas is not supported. Get yourself a real browser
@@ -178,6 +173,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="shapes.js" charset="utf-8"></script>
     <script src="drawio.js" charset="utf-8"></script>
+
 </body>
 
 </html>
