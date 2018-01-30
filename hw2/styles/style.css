@@ -1,0 +1,64 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    padding: 5px;
+}
+
+#my-canvas {
+    background-color: rgba(155, 155, 155, 0.2);
+    box-shadow: 1px 1px 1px;
+    margin: 0 auto;
+    display: block;
+}
+
+.icon {
+    position: relative;
+    display: inline-block;
+    font-size: 4em;
+    float: right;
+    margin: 10px;
+    transition: color .5s;
+    color: #1D3557;
+}
+
+.icon:hover {
+    color: #457B9D;
+    cursor: pointer;
+    
+}
+
+.icon.clickable.selected {
+    color: #E63946;
+}
+
+.icon.left {
+    float: left;
+}
+
+.fa {
+    font-size: 1em;
+}
+
+.navbar {
+    height: 100px;
+    background-color: #A8DADC;
+    border-bottom: solid 6px rgba(50, 100, 200, 1);
+}
+
+/* .color-picker{
+    width: 100px;
+    height: 50px;
+    content: "";
+    min-height: 100%;
+    height: 100%;
+    float: left
+} */
+
+.fill {
+    float: right;
+    margin-top: 40px;
+    margin-right: 40px;
+}

@@ -6,76 +6,11 @@
     <meta charset="utf-8">
 
     <title>Draw.io</title>
-    <style media="screen">
-        body {
-            padding: 0;
-            margin: 0;
-            background-color: #3A506B;
-        }
-
-        .container {
-            padding: 5px;
-        }
-
-        #my-canvas {
-            background-color: rgba(155, 155, 155, 0.2);
-            box-shadow: 1px 1px 1px;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .icon {
-            position: relative;
-            display: inline-block;
-            font-size: 4em;
-            float: right;
-            margin: 10px;
-            transition: color .5s;
-            color: #1D3557;
-        }
-
-        .icon:hover {
-            color: #457B9D;
-            cursor: pointer;
-            
-        }
-
-        .icon.clickable.selected {
-            color: #E63946;
-        }
-
-        .icon.left {
-            float: left;
-        }
-
-        .fa {
-            font-size: 1em;
-        }
-
-        .navbar {
-            height: 100px;
-            background-color: #A8DADC;
-            border-bottom: solid 6px rgba(50, 100, 200, 1);
-        }
-
-        /* .color-picker{
-            width: 100px;
-            height: 50px;
-            content: "";
-            min-height: 100%;
-            height: 100%;
-            float: left
-        } */
-
-        .fill {
-            float: right;
-            margin-top: 40px;
-            margin-right: 40px;
-        }
-        
-    </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel='stylesheet' href='External/spectrum.css' />
 </head>
 
 <body>
@@ -102,40 +37,23 @@
             <i class="fa fa-paint-brush" aria-hidden="true"></i>
         </div>
         <div>
-            <div class="icon left" data-tooltip="Redo">
-                <i id="redo" class="fa fa-repeat" aria-hidden="true"></i>
-            </div>
-            <div class="icon left" data-tooltip="Undo">
-                <i id="undo" class="fa fa-undo" aria-hidden="true"></i>
-            </div>
-            <div class="icon left" data-tooltip="Clear Canvas">
+            <div class="icon left">
                 <i id="clear" class="fa fa-times" aria-hidden="true"></i>
             </div>
-        </div>
-    </nav>
+            <div class="icon left">
+                <i id="undo" class="fa fa-undo" aria-hidden="true"></i>
+            </div>
+            <div class="icon left">
+                <i id="redo" class="fa fa-repeat" aria-hidden="true"></i>
+            </div>
+        </nav>
 
     <div class="form-group col-md-1">
         <form id="color-form">
-            <!-- <label for="red">Red</label>
-            <input id="red" name="red" value="0" class="form-control"/>
-            <label for="green">Green</label>
-            <input id="green" name="green" value="0" class="form-control"/>
-            <label for="blue">Blue</label>
-            <input id="blue" name="blue" value="0" class="form-control"/> -->
             <label for="color-picker">
                 Color
                 <input type="color" id="color-picker" />
             </label>
-            <!-- <div class="alpha-slider">
-                    <label for="alpha">Alpha
-                        <input type="range" min="0" max="100" value="100" class="slider" id="alpha" name="alpha">
-                    </label>
-                </div> -->
-            <!-- <label for="color-picker">Color
-                    <div id="color-picker" class="color-picker">
-                    </label>
-                    &nbsp;
-                </div> -->
             <div class="line-width-slider">
                 <label for="line-width">Line Width
                     <input type="range" min="0" max="30" value="5" class="slider" id="line-width" , name="line-width">
@@ -173,7 +91,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="shapes.js" charset="utf-8"></script>
     <script src="drawio.js" charset="utf-8"></script>
-
+    <script src='External/spectrum.js'></script>
 </body>
 
 </html>
