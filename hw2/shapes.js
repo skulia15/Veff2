@@ -10,12 +10,12 @@ function Shape(position) {
 }
 
 Shape.prototype.render = function (color, lineWidth) {
-    if(color){
-        drawio.ctx.fillStyle = color;
-    }
-    if(lineWidth){
-        drawio.ctx.lineWidth = lineWidth;
-    }
+    // if(color){
+    //     drawio.ctx.fillStyle = color;
+    // }
+    // if(lineWidth){
+    //     drawio.ctx.lineWidth = lineWidth;
+    // }
 };
 
 Shape.prototype.move = function (position) {
@@ -40,13 +40,17 @@ Rectangle.prototype.constructor = Rectangle;
 Rectangle.prototype.render = function (color, fill, lineWidth) {
     // Render a Rectangle
     // Call render in superclass
-    Object.getPrototypeOf(Rectangle.prototype).render.call(this, color, lineWidth);
 
+    drawio.ctx.fillStyle = color;
+    drawio.ctx.lineWidth = lineWidth;
+    drawio.ctx.strokeStyle = color;
+    drawio.ctx.beginPath();
     if (fill) {
         drawio.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
-    drawio.ctx.beginPath();
-    drawio.ctx.rect(this.position.x, this.position.y, this.width, this.height);
+    else{
+        drawio.ctx.rect(this.position.x, this.position.y, this.width, this.height);
+    }
     drawio.ctx.stroke();
     drawio.ctx.closePath();
 };
@@ -70,7 +74,9 @@ Circle.prototype.constructor = Circle;
 
 Circle.prototype.render = function (color, fill, lineWidth) {
     // Render a Rectangle
-    Object.getPrototypeOf(Circle.prototype).render.call(this, color, lineWidth);
+    drawio.ctx.fillStyle = color;
+    drawio.ctx.strokeStyle = color;
+    drawio.ctx.lineWidth = lineWidth;
 
     drawio.ctx.beginPath();
     drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
@@ -104,7 +110,8 @@ Line.prototype = Object.create(Shape.prototype);
 Line.prototype.constructor = Line;
 
 Line.prototype.render = function (color, fill, lineWidth) {
-    Object.getPrototypeOf(Line.prototype).render.call(this, color, lineWidth);
+    drawio.ctx.fillStyle = color;
+    drawio.ctx.lineWidth = lineWidth;
     // Render a Line
     drawio.ctx.strokeStyle = color;
     drawio.ctx.beginPath();
@@ -133,8 +140,10 @@ function Text(position, text, font, color) {
 Text.prototype = Object.create(Shape.prototype);
 Text.prototype.constructor = Text;
 
-Text.prototype.render = function (color) {
-    Object.getPrototypeOf(Text.prototype).render.call(this, color);
+Text.prototype.render = function (color, lineWidth) {
+    drawio.ctx.fillStyle = color;
+    drawio.ctx.strokeStyle = color;
+    drawio.ctx.lineWidth = lineWidth;
     // Render Text
     drawio.ctx.beginPath();
     drawio.ctx.font = this.font;
