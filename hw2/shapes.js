@@ -4,8 +4,16 @@
 
 
 // Shape 
-function Shape(position) {
-    this.position = position;
+function Shape(startX, startY, endX, endY) {
+    this.startX = startX;
+    this.startY = startY;
+    this.endX = endX;
+    this.endY = endY;
+    this.fill = drawio.fillSelectedElement;
+    this.lineWidth = drawio.lineWidth;
+    this.color = drawio.currentColor;
+
+    //console.log(drawio.currentColor);
     drawio.undoneShapes = [];
 }
 
@@ -13,19 +21,19 @@ Shape.prototype.render = function (color, lineWidth) {};
 
 Shape.prototype.move = function (shape, offset) {
     console.log('move');
-    console.log(shape.position);
-    console.log('offset');
-    console.log(offset);
-    
+    console.log(shape.startX);
+    console.log(shape.startY);
+    console.log(shape.endX);
+    console.log(shape.endY);
 
     //console.log(shape);
     //console.log(pos);
 
 
-    shape.position.x = offset.x;
-    shape.position.y = offset.y;
-    // console.log(shape.position.x);
-    // console.log(shape.position.y);
+    shape.startX = offset.x;
+    shape.startY = offset.y;
+    // console.log(shape.startX);
+    // console.log(shape.startY);
 };
 
 Shape.prototype.resize = function () { };
@@ -33,37 +41,36 @@ Shape.prototype.resize = function () { };
 /*
  Rectangle
 */
-function Rectangle(position, width, height) {
-    Shape.call(this, position);
-    this.width = width;
-    this.height = height;
+function Rectangle(startX, startY, endX, endY) {
+    Shape.call(this, startX, startY, endX, endY);
+    console.log('pushing shape rectangle');
+    drawio.shapes.push(this);
 }
 
 // Assign the prototypes
 Rectangle.prototype = Object.create(Shape.prototype);
 Rectangle.prototype.constructor = Rectangle;
 
-Rectangle.prototype.render = function (color, fill, lineWidth) {
+Rectangle.prototype.render = function () {
     // Render a Rectangle
     // Call render in superclass
-
-    drawio.ctx.fillStyle = color;
-    drawio.ctx.lineWidth = lineWidth;
-    drawio.ctx.strokeStyle = color;
+    drawio.ctx.fillStyle = this.color;
+    drawio.ctx.strokeStyle = this.color;
+    drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.beginPath();
-    if (fill) {
-        drawio.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    if (this.fill) {
+        drawio.ctx.fillRect(this.startX, this.startY, this.endX, this.endY);
     }
     else{
-        drawio.ctx.rect(this.position.x, this.position.y, this.width, this.height);
+        drawio.ctx.rect(this.startX, this.startY, this.endX, this.endY);
     }
     drawio.ctx.stroke();
     drawio.ctx.closePath();
 };
 
 Rectangle.prototype.resize = function (x, y) {
-    this.width = x - this.position.x;
-    this.height = y - this.position.y;
+    this.endX = x - this.startX;
+    this.endY = y - this.startY;
 };
 
 Rectangle.prototype.move = function (shape, offset) {
@@ -74,82 +81,94 @@ Rectangle.prototype.move = function (shape, offset) {
 
 };
 
+Rectangle.prototype.position = function (x, y) {
+    // not reverse
+    if(startX < endX){
+
+    }
+
+    this.startX
+
+};
+
 
 /*
  Circle
 */
-function Circle(position, radius) {
-    Shape.call(this, position);
+function Circle(startX, startY, endX, endY, radius) {
+    Shape.call(this, startX, startY, endX, endY);
     this.radius = radius;
+    drawio.shapes.push(this);
 }
 
 // Assign the prototypes
 Circle.prototype = Object.create(Shape.prototype);
 Circle.prototype.constructor = Circle;
 
-Circle.prototype.render = function (color, fill, lineWidth) {
+Circle.prototype.render = function () {
     // Render a Rectangle
-    drawio.ctx.fillStyle = color;
-    drawio.ctx.strokeStyle = color;
-    drawio.ctx.lineWidth = lineWidth;
+    //drawio.shapes.pop();
+    drawio.ctx.fillStyle = this.color;
+    drawio.ctx.strokeStyle = this.color;
+    drawio.ctx.lineWidth = this.lineWidth;
 
     drawio.ctx.beginPath();
-    drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-    if (fill) {
+    drawio.ctx.arc(this.startX, this.startY, this.endX, this.endY, this.radius, 0, 2 * Math.PI);
+    if (this.fill) {
         drawio.ctx.fill();
     }
     drawio.ctx.stroke();
     drawio.ctx.closePath();
+    //drawio.shapes.push(this);
+    console.log(drawio.shapes);
 };
 
 Circle.prototype.resize = function (radius) {
-    if (radius - this.position.x > 0) {
-        this.radius = radius - this.position.x;
+    if (radius - this.startX > 0) {
+        this.radius = radius - this.startX;
     }
     else {
-        this.radius = -(radius - this.position.x);
+        this.radius = -(radius - this.startX);
     }
 };
 
 /*
  Line
 */
-function Line(position, start, end) {
-    Shape.call(this, position);
-    this.start = start;
-    this.end = end;
+function Line(startX, startY, endX, endY) {
+    Shape.call(this, startX, startY, endX, endY);
+    drawio.shapes.push(this);
 }
 
 // Assign the prototypes
 Line.prototype = Object.create(Shape.prototype);
 Line.prototype.constructor = Line;
 
-Line.prototype.render = function (color, fill, lineWidth) {
-    drawio.ctx.fillStyle = color;
-    drawio.ctx.lineWidth = lineWidth;
+Line.prototype.render = function () {
+    drawio.ctx.fillStyle = this.color;
+    drawio.ctx.strokeStyle = this.color;
+    drawio.ctx.lineWidth = this.lineWidth;
     // Render a Line
-    drawio.ctx.strokeStyle = color;
     drawio.ctx.beginPath();
-    drawio.ctx.moveTo(this.position.x + this.start, this.position.y + this.end);
-    drawio.ctx.lineTo(this.position.x, this.position.y, 10);
+    drawio.ctx.moveTo(this.startX + this.start, this.startY + this.end);
+    drawio.ctx.lineTo(this.startX, this.startY, 10);
     drawio.ctx.stroke();
     drawio.ctx.closePath();
 };
 
 Line.prototype.resize = function (x, y) {
-    this.start = x - this.position.x;
-    this.end = y - this.position.y;
+    this.start = x - this.startX;
+    this.end = y - this.startY;
 };
 
 /*
  Text
 */
-function Text(position, text, font, color) {
-    Shape.call(this, position);
-    this.text = text;
-    this.font = font;
-    drawio.ctx.font = font;
-    console.log(drawio.ctx.font);
+function Text(startX, startY, endX, endY) {
+    Shape.call(this, startX, startY, endX, endY);
+    this.text = drawio.textInput;
+    this.font = drawio.font;
+    drawio.shapes.push(this);
 }
 
 // Assign the prototypes
@@ -157,7 +176,7 @@ Text.prototype = Object.create(Shape.prototype);
 Text.prototype.constructor = Text;
 
 Text.prototype.render = function (color, lineWidth) {
-    if(this.text.length){
+    if(drawio.textInput.length){
         drawio.ctx.fillStyle = color;
         drawio.ctx.strokeStyle = color;
         drawio.ctx.lineWidth = lineWidth;
@@ -166,28 +185,30 @@ Text.prototype.render = function (color, lineWidth) {
         drawio.ctx.font = this.font;
         
             if(fill){
-                drawio.ctx.fillText(this.text, this.position.x, this.position.y);
+                drawio.ctx.fillText(this.text, this.startX, this.startY);
             }
             else{
-                drawio.ctx.strokeText(this.text, this.position.x, this.position.y);
+                drawio.ctx.strokeText(this.text, this.startX, this.startY);
             }
             drawio.ctx.closePath();
         }
-        //console.log(drawio.shapes);
-        //console.log(this.text.text);
         
 };
 
 Text.prototype.resize = function (x, y) {
-    this.start = x - this.position.x;
-    this.end = y - this.position.y;
+    this.start = x - this.startX;
+    this.end = y - this.startY;
 };
 
 /*
  Pen
 */
-function Pen(position) {
-    Shape.call(this, position);
+function Pen(startX, startY, endX, endY) {
+    Shape.call(this, startX, startY, endX, endY);
+    this.startingPoint = {x: startX, y: startY};
+    this.points = [];
+    this.points.push(this.startingPoint);
+    drawio.shapes.push(this);
 }
 
 // Assign the prototypes
@@ -196,11 +217,29 @@ Pen.prototype.constructor = Pen;
 
 Pen.prototype.render = function () {
     // Render a Rectangle
+    //let newPoint = {x: drawio.ctx.}
+    //this.points.push(newPoint)
+    //console.log('rendering');
     drawio.ctx.beginPath();
-    drawio.ctx.lineTo(this.position.x, this.position.y);
+    //console.log(this.points);
+    drawio.ctx.moveTo(this.startX, this.startY);
+    for (let i = 0; i < this.points.length; i++) {
+        point = this.points[i];
+        drawio.ctx.lineTo(point.x, point.y);
+        
+    }
+    //console.log(this.points);
     drawio.ctx.stroke();
+    drawio.ctx.closePath();
 };
 
 Pen.prototype.resize = function (radius) {
-    drawio.ctx.lineTo(this.position.x, this.position.y);
+    drawio.ctx.lineTo(this.startX, this.startY);
+};
+
+Pen.prototype.updateCurrent = function (currX, currY) {
+    let currPoint = {x: currX, y: currY};
+    this.points.push(currPoint);
+    console.log('udate');
+    
 };

@@ -1,6 +1,7 @@
 body {
     padding: 0;
     margin: 0;
+    background-color: #BBD1EA;
 }
 
 .container {
@@ -8,8 +9,10 @@ body {
 }
 
 #my-canvas {
-    background-color: rgba(155, 155, 155, 0.2);
-    box-shadow: 1px 1px 1px;
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
     margin: 0 auto;
     display: block;
 }
@@ -21,17 +24,17 @@ body {
     float: right;
     margin: 10px;
     transition: color .5s;
-    color: #1D3557;
+    color: #04080F;
 }
 
 .icon:hover {
-    color: #457B9D;
+    color: #A2C3A4;
     cursor: pointer;
     
 }
 
 .icon.clickable.selected {
-    color: #E63946;
+    color: #A1C6EA;
 }
 
 .icon.left {
@@ -44,8 +47,8 @@ body {
 
 .navbar {
     height: 100px;
-    background-color: #A8DADC;
-    border-bottom: solid 6px rgba(50, 100, 200, 1);
+    background-color: #457B9D;
+    border-bottom: solid 6px #BBD1EA;
 }
 
 /* .color-picker{
