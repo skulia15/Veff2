@@ -87,12 +87,12 @@ $(function () {
     });
 
     $('.saved-image').on('click', function () {
+        // Add and remove active from selected images
         let x = $('.active').removeClass("active");
-        console.log(x);
         $(this).addClass("active");
+
         let imageData = $(this).data();
         let myImage = localStorage.getItem(imageData.imageName);
-        console.log(myImage);
         if(myImage){ // If image was found
             drawio.shapes = [];
             drawio.undoneShapes = [];
@@ -116,7 +116,6 @@ $(function () {
                         break;
                 }
                 drawio.shapes.push(shape);
-                console.log(shape)
             });
             drawCanvas();
         }
@@ -201,14 +200,9 @@ $(function () {
             // drawio.selectedElement.fillSelectedElement = checkIfFill();
             // drawio.selectedElement.lineWidth = $("#line-width").val();
             // drawio.shapes.push(drawio.selectedElement);
-            console.log('move!!');
         }
         if(drawio.selectedTool == drawio.availableTools.PEN && drawio.drawing){
-            console.log('hey im drawing a pen');
-            let currentX = mouseEvent.offsetX;
-            let currentY = mouseEvent.offsetY;
-            drawio.selectedElement.updateCurrent(currentX, currentY);
-            //drawCanvas();
+            drawio.selectedElement.updateCurrent(mouseEvent.offsetX, mouseEvent.offsetY);
         }
         if(drawio.selectedTool === drawio.availableTools.MOVE){
             //drawio.selectedElement.end
@@ -290,7 +284,6 @@ $(function () {
     function getSaved(){
         $('#image-list').empty();
         for (let i = 0; i < localStorage.length; i++) {
-            console.log(localStorage.key(i));
             $('#image-list').append("<li class=\"saved-image list-group-item\" data-image-name=" +
                 localStorage.key(i) + ">" + localStorage.key(i) + "</li>");
         }
