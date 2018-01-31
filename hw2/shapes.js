@@ -12,6 +12,7 @@ function Shape(startX, startY, endX, endY) {
     this.fill = drawio.fillSelectedElement;
     this.lineWidth = drawio.lineWidth;
     this.color = drawio.currentColor;
+    this.type = drawio.selectedTool;
 
     //console.log(drawio.currentColor);
     drawio.undoneShapes = [];
@@ -113,7 +114,7 @@ Circle.prototype.render = function () {
     drawio.ctx.lineWidth = this.lineWidth;
 
     drawio.ctx.beginPath();
-    drawio.ctx.arc(this.startX, this.startY, this.endX, this.endY, this.radius, 0, 2 * Math.PI);
+    drawio.ctx.arc(this.startX, this.startY, this.radius, 0, 2 * Math.PI);
     if (this.fill) {
         drawio.ctx.fill();
     }
@@ -175,14 +176,14 @@ function Text(startX, startY, endX, endY) {
 Text.prototype = Object.create(Shape.prototype);
 Text.prototype.constructor = Text;
 
-Text.prototype.render = function (color, lineWidth) {
+Text.prototype.render = function () {
     if(drawio.textInput.length){
-        drawio.ctx.fillStyle = color;
-        drawio.ctx.strokeStyle = color;
-        drawio.ctx.lineWidth = lineWidth;
+        drawio.ctx.fillStyle = this.color;
+        drawio.ctx.strokeStyle = this.color;
+        drawio.ctx.lineWidth = this.lineWidth;
+        drawio.ctx.font = this.font;
         // Render Text
         drawio.ctx.beginPath();
-        drawio.ctx.font = this.font;
         
             if(fill){
                 drawio.ctx.fillText(this.text, this.startX, this.startY);
@@ -216,19 +217,16 @@ Pen.prototype = Object.create(Shape.prototype);
 Pen.prototype.constructor = Pen;
 
 Pen.prototype.render = function () {
-    // Render a Rectangle
-    //let newPoint = {x: drawio.ctx.}
-    //this.points.push(newPoint)
-    //console.log('rendering');
+    drawio.ctx.fillStyle = this.color;
+    drawio.ctx.strokeStyle = this.color;
+    drawio.ctx.lineWidth = this.lineWidth;
+
     drawio.ctx.beginPath();
-    //console.log(this.points);
     drawio.ctx.moveTo(this.startX, this.startY);
     for (let i = 0; i < this.points.length; i++) {
         point = this.points[i];
         drawio.ctx.lineTo(point.x, point.y);
-        
     }
-    //console.log(this.points);
     drawio.ctx.stroke();
     drawio.ctx.closePath();
 };

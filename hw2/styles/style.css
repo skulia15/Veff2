@@ -51,17 +51,16 @@ body {
     border-bottom: solid 6px #BBD1EA;
 }
 
-/* .color-picker{
-    width: 100px;
-    height: 50px;
-    content: "";
-    min-height: 100%;
-    height: 100%;
-    float: left
-} */
+.list-left {
+    float: right;
+}
 
 .fill {
     float: right;
     margin-top: 40px;
     margin-right: 40px;
+}
+
+ul {
+    list-style-type: none;
 }

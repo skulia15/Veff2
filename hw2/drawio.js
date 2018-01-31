@@ -32,22 +32,20 @@ window.drawio = {
 $(function () {
     // Document loaded and parsed
     function drawCanvas() {
+        drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
+        
         drawio.shapes.forEach(shape => {
             shape.render();
         });
-
-        // for (var i = 0; i < drawio.shapes.length; i++) {
-        //     drawio.shapes[i].render(drawio.shapes[i].color, drawio.shapes[i].fillSelectedElement, drawio.shapes[i].lineWidth);
-        // }
-        // if (drawio.selectedElement) {
-        //     drawio.selectedElement.render(drawio.currentColor, drawio.fillSelectedElement, drawio.lineWidth);
-        // }
+        
     }
+    // Get all saved images
+    getSaved();
 
     $('#font-size-picker').on('click', function () {
         drawio.font = $('#font-size-picker').val() + "px " + $('#font-picker option:selected').css('font-family');
-
     });
+
     $('#font-picker').on('click', function () {
         drawio.font = $('#font-size-picker').val() + "px " + $('#font-picker option:selected').css('font-family');
 
@@ -64,10 +62,10 @@ $(function () {
     });
 
     $('#clear').on('click', function () {
-        drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
         drawio.shapes = [];
         drawio.undoneShapes = [];
         drawio.shapes.length = 0;
+        drawCanvas();
     });
 
     $('#undo').on('click', function () {
@@ -75,7 +73,6 @@ $(function () {
             let popped = drawio.shapes.pop();
             drawio.undoneShapes.push(popped);
             drawio.selectedElement = popped;
-            drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
             drawCanvas();
         }
     });
@@ -88,7 +85,56 @@ $(function () {
             drawCanvas();
         }
     });
+
+    $('.saved-image').on('click', function () {
+        let x = $('.active').removeClass("active");
+        console.log(x);
+        $(this).addClass("active");
+        let imageData = $(this).data();
+        let myImage = localStorage.getItem(imageData.imageName);
+        console.log(myImage);
+        if(myImage){ // If image was found
+            drawio.shapes = [];
+            drawio.undoneShapes = [];
+            data = JSON.parse(myImage);
+            data.forEach(shape => { // Push each shape to shape array
+                switch (shape.type){
+                    case drawio.availableTools.PEN:
+                        shape.__proto__ = Pen.prototype;
+                        break;
+                    case drawio.availableTools.CIRCLE:
+                        shape.__proto__ = Circle.prototype;
+                        break;
+                    case drawio.availableTools.RECTANGLE:
+                        shape.__proto__ = Rectangle.prototype;
+                        break;
+                    case drawio.availableTools.LINE:
+                        shape.__proto__ = Line.prototype;
+                        break;
+                    case drawio.availableTools.TEXT:
+                        shape.__proto__ = Text.prototype;
+                        break;
+                }
+                drawio.shapes.push(shape);
+                console.log(shape)
+            });
+            drawCanvas();
+        }
+    });
     
+
+    $('#save').on('click', function () {
+        let myImage = JSON.stringify(drawio.shapes);
+        let imageName;
+        while(!imageName){
+            imageName = window.prompt("Save your masterpiece!", "");
+        }
+        if(myImage){
+            localStorage.setItem(imageName, myImage);
+        }
+        getSaved();
+        //location.reload();
+    });
     
     drawio.canvas.addEventListener('click', function(event) {
         var x = event.pageX - drawio.canvas.offsetLeft,
@@ -96,13 +142,6 @@ $(function () {
             console.log('clicked x: ' + x);
             console.log('clicked y: ' + y);
             
-        //Collision detection between clicked offset and element.
-        // drawio.shapes.forEach(function(element) {
-        //     if (y > element.top && y < element.top + element.height 
-        //         && x > element.left && x < element.left + element.width) {
-        //         alert('clicked an element');
-        //     }
-        // });
     } , false);
 
 
@@ -147,6 +186,7 @@ $(function () {
                         moveShape = drawio.shapes.pop();
                         moveShape.move(moveShape, {x: mouseEvent.offsetX, y: mouseEvent.offsetY});
                         drawio.shapes.push(moveShape);
+                        drawCanvas();
                     }
                 }
                 break;
@@ -156,8 +196,6 @@ $(function () {
     // mousemove
 
     $('#my-canvas').on('mousemove', function (mouseEvent) {
-
-        drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
         if(drawio.selectedTool == drawio.availableTools.MOVE && drawio.selectedElement){
             // drawio.selectedElement.color = drawio.currentColor;
             // drawio.selectedElement.fillSelectedElement = checkIfFill();
@@ -194,14 +232,7 @@ $(function () {
         if(drawio.selectedTool === drawio.availableTools.PEN){
             drawio.drawing = false;
         }
-        if (drawio.selectedElement) {
-            // drawio.selectedElement.color = drawio.currentColor;
-            // drawio.selectedElement.font = drawio.font;
-            // drawio.selectedElement.textInput = drawio.textInput;
-            //drawio.selectedElement.fillSelectedElement = checkIfFill();
-            // drawio.selectedElement.lineWidth = $("#line-width").val();
-            //drawio.shapes.push(drawio.selectedElement);
-        }
+
         drawio.selectedElement = null;
         drawCanvas();
     });
@@ -210,7 +241,7 @@ $(function () {
     Color Picker
     */
     $('#color-picker').change(function () {
-        drawio.currentColor = $('#color-picker').spectrum('get').toHexString();
+        drawio.currentColor = $('#color-picker').spectrum('get').toRgbString();
     });
 
     $("#color-picker").spectrum({
@@ -254,5 +285,14 @@ $(function () {
 
     function getSelected(clickedX, clickedY){
         
+    }
+
+    function getSaved(){
+        $('#image-list').empty();
+        for (let i = 0; i < localStorage.length; i++) {
+            console.log(localStorage.key(i));
+            $('#image-list').append("<li class=\"saved-image list-group-item\" data-image-name=" +
+                localStorage.key(i) + ">" + localStorage.key(i) + "</li>");
+        }
     }
 });
