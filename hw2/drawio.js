@@ -9,7 +9,7 @@
 window.drawio = {
     shapes: [],
     undoneShapes: [],
-    selectedShape: 'pen',
+    selectedTool: 'pen',
     canvas: document.getElementById('my-canvas'),
     ctx: document.getElementById('my-canvas').getContext('2d'),
     selectedElement: null,
@@ -24,12 +24,13 @@ window.drawio = {
         BLUE: 0,
         ALPHA: 1
     },
-    availableShapes: {
+    availableTools: {
         RECTANGLE: 'rectangle',
         CIRCLE: 'circle',
         LINE: 'line',
         TEXT: 'text',
-        PEN: 'pen'
+        PEN: 'pen',
+        MOVE: 'move'
     }
 };
 
@@ -45,15 +46,11 @@ $(function () {
     }
 
     $('#font-size-picker').on('click', function () {
-        console.log(drawio.font);
-        drawio.font = $('#font-size-picker').val() + "px " + $('#font-picker').val();
-        console.log(drawio.font);
+        drawio.font = $('#font-size-picker').val() + "px " + $('#font-picker option:selected').css('font-family');
 
     });
     $('#font-picker').on('click', function () {
-        console.log(drawio.font);
-        drawio.font = $('#font-size-picker').val() + "px " + $('#font-picker').val();
-        console.log(drawio.font);
+        drawio.font = $('#font-size-picker').val() + "px " + $('#font-picker option:selected').css('font-family');
 
     });
 
@@ -64,12 +61,13 @@ $(function () {
     $('.icon.clickable').on('click', function () {
         $('.icon').removeClass('selected');
         $(this).addClass('selected');
-        drawio.selectedShape = $(this).data('shape');
+        drawio.selectedTool = $(this).data('shape');
     });
 
     $('#clear').on('click', function () {
         drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
         drawio.shapes = [];
+        drawio.undoneShapes = [];
         drawio.shapes.length = 0;
     });
 
@@ -77,7 +75,7 @@ $(function () {
         if (drawio.shapes.length) {
             let popped = drawio.shapes.pop();
             drawio.undoneShapes.push(popped);
-            drawio.selectedElement = null;
+            drawio.selectedElement = popped;
             drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
             drawCanvas();
         }
@@ -87,27 +85,45 @@ $(function () {
         if (drawio.undoneShapes.length) {
             let popped = drawio.undoneShapes.pop();
             drawio.shapes.push(popped);
+            drawio.selectedElement = popped;
             drawCanvas();
         }
     });
+    
+    
+    drawio.canvas.addEventListener('click', function(event) {
+        var x = event.pageX - drawio.canvas.offsetLeft,
+            y = event.pageY - drawio.canvas.offsetLeft;
+            //console.log(x);
+            //console.log(y);
+            
+        // Collision detection between clicked offset and element.
+        // drawio.shapes.forEach(function(element) {
+        //     if (y > element.top && y < element.top + element.height 
+        //         && x > element.left && x < element.left + element.width) {
+        //         alert('clicked an element');
+        //     }
+        // });
+    } , false);
+
 
     // mousedown
 
     $('#my-canvas').on('mousedown', function (mouseEvent) {
-        switch (drawio.selectedShape) {
-            case drawio.availableShapes.RECTANGLE:
+        switch (drawio.selectedTool) {
+            case drawio.availableTools.RECTANGLE:
                 drawio.selectedElement = new Rectangle({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
                 }, 0, 0);
                 break;
-            case drawio.availableShapes.CIRCLE:
+            case drawio.availableTools.CIRCLE:
                 drawio.selectedElement = new Circle({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
                 }, 0, 0);
                 break;
-            case drawio.availableShapes.LINE:
+            case drawio.availableTools.LINE:
                 drawio.selectedElement = new Line({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
@@ -115,13 +131,13 @@ $(function () {
                     0,
                     0);
                 break;
-            case drawio.availableShapes.PEN:
+            case drawio.availableTools.PEN:
                 drawio.selectedElement = new Pen({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
                 });
                 break;
-            case drawio.availableShapes.TEXT:
+            case drawio.availableTools.TEXT:
                 drawio.selectedElement = new Text({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
@@ -133,22 +149,41 @@ $(function () {
                     drawio.lineWidth
                 );
                 break;
+            case drawio.availableTools.MOVE:
+                // Click on an element
+                //drawio.selectedElement = 
+                //drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY});
+                break;
         }
     });
 
     // mousemove
 
     $('#my-canvas').on('mousemove', function (mouseEvent) {
-        if (drawio.selectedElement) {
-            drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
-            drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
-            drawCanvas();
+        drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
+        if(drawio.selectedTool == drawio.availableTools.MOVE){ // if we are using move tool
+            if(drawio.shapes.length){
+                let moveShape;
+                moveShape = drawio.shapes.pop();
+                moveShape.move(moveShape, {x: mouseEvent.offsetX, y: mouseEvent.offsetY});
+                drawio.shapes.push(moveShape);
+            }
         }
+        if (drawio.selectedElement) {
+            // We are resizing an element   
+            drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
+        }
+        drawCanvas();
     });
 
     // mouseup
 
     $('#my-canvas').on('mouseup', function () {
+        if(drawio.selectedTool == drawio.availableTools.MOVE){ // if we are using move tool
+                drawio.shapes.push(drawio.selectedElement);
+                drawio.selectedElement = null;
+                //drawio.selectedElement = drawio.availableTools.PEN;
+        }
         if (drawio.selectedElement) {
             drawio.selectedElement.color = drawio.currentColor;
             drawio.selectedElement.fillSelectedElement = checkIfFill();

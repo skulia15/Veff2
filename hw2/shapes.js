@@ -9,17 +9,23 @@ function Shape(position) {
     drawio.undoneShapes = [];
 }
 
-Shape.prototype.render = function (color, lineWidth) {
-    // if(color){
-    //     drawio.ctx.fillStyle = color;
-    // }
-    // if(lineWidth){
-    //     drawio.ctx.lineWidth = lineWidth;
-    // }
-};
+Shape.prototype.render = function (color, lineWidth) {};
 
-Shape.prototype.move = function (position) {
-    this.position = position;
+Shape.prototype.move = function (shape, offset) {
+    console.log('move');
+    console.log(shape.position);
+    console.log('offset');
+    console.log(offset);
+    
+
+    //console.log(shape);
+    //console.log(pos);
+
+
+    shape.position.x = offset.x;
+    shape.position.y = offset.y;
+    // console.log(shape.position.x);
+    // console.log(shape.position.y);
 };
 
 Shape.prototype.resize = function () { };
@@ -59,6 +65,15 @@ Rectangle.prototype.resize = function (x, y) {
     this.width = x - this.position.x;
     this.height = y - this.position.y;
 };
+
+Rectangle.prototype.move = function (shape, offset) {
+    //console.log(shape);
+    //console.log(pos);
+    //console.log(this);
+    Object.getPrototypeOf(Rectangle.prototype).move(shape, offset);
+
+};
+
 
 /*
  Circle
@@ -126,7 +141,6 @@ Line.prototype.resize = function (x, y) {
     this.end = y - this.position.y;
 };
 
-
 /*
  Text
 */
@@ -134,6 +148,8 @@ function Text(position, text, font, color) {
     Shape.call(this, position);
     this.text = text;
     this.font = font;
+    drawio.ctx.font = font;
+    console.log(drawio.ctx.font);
 }
 
 // Assign the prototypes
@@ -141,20 +157,25 @@ Text.prototype = Object.create(Shape.prototype);
 Text.prototype.constructor = Text;
 
 Text.prototype.render = function (color, lineWidth) {
-    drawio.ctx.fillStyle = color;
-    drawio.ctx.strokeStyle = color;
-    drawio.ctx.lineWidth = lineWidth;
-    // Render Text
-    drawio.ctx.beginPath();
-    drawio.ctx.font = this.font;
-    console.log( drawio.ctx.font);
-    if(fill){
-        drawio.ctx.fillText(this.text, this.position.x, this.position.y);
-    }
-    else{
-        drawio.ctx.strokeText(this.text, this.position.x, this.position.y);
-    }
-    drawio.ctx.closePath();
+    if(this.text.length){
+        drawio.ctx.fillStyle = color;
+        drawio.ctx.strokeStyle = color;
+        drawio.ctx.lineWidth = lineWidth;
+        // Render Text
+        drawio.ctx.beginPath();
+        drawio.ctx.font = this.font;
+        
+            if(fill){
+                drawio.ctx.fillText(this.text, this.position.x, this.position.y);
+            }
+            else{
+                drawio.ctx.strokeText(this.text, this.position.x, this.position.y);
+            }
+            drawio.ctx.closePath();
+        }
+        //console.log(drawio.shapes);
+        //console.log(this.text.text);
+        
 };
 
 Text.prototype.resize = function (x, y) {
