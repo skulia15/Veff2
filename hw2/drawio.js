@@ -61,6 +61,12 @@ $(function () {
         drawio.selectedTool = $(this).data('shape');
     });
 
+    $('#text-tool-settings').on('click', function () {
+        drawio.selectedTool = drawio.availableTools.TEXT;
+        $('.icon').removeClass('selected');
+        $('#text-tool').addClass('selected');
+    });
+
     $('#clear').on('click', function () {
         drawio.shapes = [];
         drawio.undoneShapes = [];
@@ -138,14 +144,13 @@ $(function () {
     drawio.canvas.addEventListener('click', function(event) {
         var x = event.pageX - drawio.canvas.offsetLeft,
             y = event.pageY - drawio.canvas.offsetTop;
-            console.log('clicked x: ' + x);
-            console.log('clicked y: ' + y);
+            //console.log('clicked x: ' + x);
+            //console.log('clicked y: ' + y);
             
     } , false);
 
 
     // mousedown
-
     $('#my-canvas').on('mousedown', function (mouseEvent) {
         switch (drawio.selectedTool) {
             case drawio.availableTools.RECTANGLE:
@@ -193,7 +198,6 @@ $(function () {
     });
 
     // mousemove
-
     $('#my-canvas').on('mousemove', function (mouseEvent) {
         if(drawio.selectedTool == drawio.availableTools.MOVE && drawio.selectedElement){
             // drawio.selectedElement.color = drawio.currentColor;
@@ -211,6 +215,7 @@ $(function () {
             // We are resizing an element   
             drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
         }
+        console.log(drawio.shapes); 
         drawCanvas();
     });
 

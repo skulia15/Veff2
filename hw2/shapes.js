@@ -238,6 +238,4 @@ Pen.prototype.resize = function (radius) {
 Pen.prototype.updateCurrent = function (currX, currY) {
     let currPoint = {x: currX, y: currY};
     this.points.push(currPoint);
-    console.log('udate');
-    
 };
