@@ -30,7 +30,6 @@ body {
 .icon:hover {
     color: #A2C3A4;
     cursor: pointer;
-    
 }
 
 .icon.clickable.selected {

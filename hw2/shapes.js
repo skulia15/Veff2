@@ -37,7 +37,7 @@ Shape.prototype.move = function (shape, offset) {
     // console.log(shape.startY);
 };
 
-Shape.prototype.resize = function () { };
+Shape.prototype.resize = function () {};
 
 /*
  Rectangle
@@ -61,8 +61,7 @@ Rectangle.prototype.render = function () {
     drawio.ctx.beginPath();
     if (this.fill) {
         drawio.ctx.fillRect(this.startX, this.startY, this.endX, this.endY);
-    }
-    else{
+    } else {
         drawio.ctx.rect(this.startX, this.startY, this.endX, this.endY);
     }
     drawio.ctx.stroke();
@@ -84,7 +83,7 @@ Rectangle.prototype.move = function (shape, offset) {
 
 Rectangle.prototype.position = function (x, y) {
     // not reverse
-    if(startX < endX){
+    if (startX < endX) {
 
     }
 
@@ -127,8 +126,7 @@ Circle.prototype.render = function () {
 Circle.prototype.resize = function (radius) {
     if (radius - this.startX > 0) {
         this.radius = radius - this.startX;
-    }
-    else {
+    } else {
         this.radius = -(radius - this.startX);
     }
 };
@@ -177,23 +175,22 @@ Text.prototype = Object.create(Shape.prototype);
 Text.prototype.constructor = Text;
 
 Text.prototype.render = function () {
-    if(drawio.textInput.length){
+    if (drawio.textInput.length) {
         drawio.ctx.fillStyle = this.color;
         drawio.ctx.strokeStyle = this.color;
         drawio.ctx.lineWidth = this.lineWidth;
         drawio.ctx.font = this.font;
         // Render Text
         drawio.ctx.beginPath();
-        
-            if(fill){
-                drawio.ctx.fillText(this.text, this.startX, this.startY);
-            }
-            else{
-                drawio.ctx.strokeText(this.text, this.startX, this.startY);
-            }
-            drawio.ctx.closePath();
+
+        if (fill) {
+            drawio.ctx.fillText(this.text, this.startX, this.startY);
+        } else {
+            drawio.ctx.strokeText(this.text, this.startX, this.startY);
         }
-        
+        drawio.ctx.closePath();
+    }
+
 };
 
 Text.prototype.resize = function (x, y) {
@@ -206,7 +203,10 @@ Text.prototype.resize = function (x, y) {
 */
 function Pen(startX, startY, endX, endY) {
     Shape.call(this, startX, startY, endX, endY);
-    this.startingPoint = {x: startX, y: startY};
+    this.startingPoint = {
+        x: startX,
+        y: startY
+    };
     this.points = [];
     this.points.push(this.startingPoint);
     drawio.shapes.push(this);
@@ -236,6 +236,9 @@ Pen.prototype.resize = function (radius) {
 };
 
 Pen.prototype.updateCurrent = function (currX, currY) {
-    let currPoint = {x: currX, y: currY};
+    let currPoint = {
+        x: currX,
+        y: currY
+    };
     this.points.push(currPoint);
 };

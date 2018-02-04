@@ -52,58 +52,58 @@
             <div class="icon left">
                 <i id="save" class="fa fa-floppy-o" aria-hidden="true"></i>
             </div>
-        </nav>
-        <div class="list-group list-left col-md-2">
-            <label>
-                Saved Images
+    </nav>
+    <div class="list-group list-left col-md-2">
+        <label>
+            Saved Images
+        </label>
+        <ul id="image-list" class="list-group">
+
+        </ul>
+    </div>
+
+    <div class="form-group col-md-1">
+        <form id="color-form">
+            <label for="color-picker">
+                Color
+                <input type="color" id="color-picker" />
             </label>
-            <ul id="image-list" class="list-group">
-                
-            </ul>
-        </div>
-        
-        <div class="form-group col-md-1">
-            <form id="color-form">
-                <label for="color-picker">
-                    Color
-                    <input type="color" id="color-picker" />
-                </label>
-                <!-- <label for="border-color-picker">
+            <!-- <label for="border-color-picker">
                     Border Color
                     <input type="color" id="border-color-picker" />
                 </label> -->
-                <div class="line-width-slider">
-                    <label for="line-width">Line Width
-                        <input type="range" min="0" max="30" value="5" class="slider" id="line-width" , name="line-width">
-                    </label>
-                </div>
-                <div>
-            </form>
-                    
-            </div>
-
-            <div id="text-tool-settings">
-                <label for="text">Text
-                    <input id="text-selector" name="text" class="form-control" />
+            <div class="line-width-slider">
+                <label for="line-width">Line Width
+                    <input type="range" min="0" max="30" value="5" class="slider" id="line-width" , name="line-width">
                 </label>
-                <form id="font-form">
-                    <select id="font-picker">
-                        <option style="font-family: Arial, Helvetica, sans-serif">Arial</option>
-                        <option style="font-family: Comic Sans MS, cursive, sans-serif">Comic Sans</option>
-                        <option style="font-family: Times New Roman, Times, serif">Times New Roman</option>
-                        <option style="font-family: Impact, Charcoal, sans-serif">Impact</option>
-                        <option style="font-family: Palatino Linotype, Book Antiqua, Palatino, serif">Palatino</option>
-                    </select>
-                    <select id="font-size-picker">
-                        <option value="14">14</option>
-                        <option value="16">16</option>
-                        <option value="20">20</option>
-                        <option value="26">26</option>
-                        <option value="36">36</option>
-                        <option value="50">50</option>
-                    </select>
-                </form>
             </div>
+            <div>
+        </form>
+
+        </div>
+
+        <div id="text-tool-settings">
+            <label for="text">Text
+                <input id="text-selector" name="text" class="form-control" />
+            </label>
+            <form id="font-form">
+                <select id="font-picker">
+                    <option style="font-family: Arial, Helvetica, sans-serif">Arial</option>
+                    <option style="font-family: Comic Sans MS, cursive, sans-serif">Comic Sans</option>
+                    <option style="font-family: Times New Roman, Times, serif">Times New Roman</option>
+                    <option style="font-family: Impact, Charcoal, sans-serif">Impact</option>
+                    <option style="font-family: Palatino Linotype, Book Antiqua, Palatino, serif">Palatino</option>
+                </select>
+                <select id="font-size-picker">
+                    <option value="14">14</option>
+                    <option value="16">16</option>
+                    <option value="20">20</option>
+                    <option value="26">26</option>
+                    <option value="36">36</option>
+                    <option value="50">50</option>
+                </select>
+            </form>
+        </div>
 
 
     </div>

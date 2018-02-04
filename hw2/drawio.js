@@ -33,11 +33,11 @@ $(function () {
     // Document loaded and parsed
     function drawCanvas() {
         drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
-        
+
         drawio.shapes.forEach(shape => {
             shape.render();
         });
-        
+
     }
     // Get all saved images
     getSaved();
@@ -99,12 +99,12 @@ $(function () {
 
         let imageData = $(this).data();
         let myImage = localStorage.getItem(imageData.imageName);
-        if(myImage){ // If image was found
+        if (myImage) { // If image was found
             drawio.shapes = [];
             drawio.undoneShapes = [];
             data = JSON.parse(myImage);
             data.forEach(shape => { // Push each shape to shape array
-                switch (shape.type){
+                switch (shape.type) {
                     case drawio.availableTools.PEN:
                         shape.__proto__ = Pen.prototype;
                         break;
@@ -126,28 +126,28 @@ $(function () {
             drawCanvas();
         }
     });
-    
+
 
     $('#save').on('click', function () {
         let myImage = JSON.stringify(drawio.shapes);
         let imageName;
-        while(!imageName){
+        while (!imageName) {
             imageName = window.prompt("Save your masterpiece!", "");
         }
-        if(myImage){
+        if (myImage) {
             localStorage.setItem(imageName, myImage);
         }
         getSaved();
         //location.reload();
     });
-    
-    drawio.canvas.addEventListener('click', function(event) {
+
+    drawio.canvas.addEventListener('click', function (event) {
         var x = event.pageX - drawio.canvas.offsetLeft,
             y = event.pageY - drawio.canvas.offsetTop;
-            //console.log('clicked x: ' + x);
-            //console.log('clicked y: ' + y);
-            
-    } , false);
+        //console.log('clicked x: ' + x);
+        //console.log('clicked y: ' + y);
+
+    }, false);
 
 
     // mousedown
@@ -184,11 +184,14 @@ $(function () {
             case drawio.availableTools.MOVE:
                 // Click on an element
 
-                if(drawio.selectedTool == drawio.availableTools.MOVE){ // if we are using move tool
-                    if(drawio.shapes.length){
+                if (drawio.selectedTool == drawio.availableTools.MOVE) { // if we are using move tool
+                    if (drawio.shapes.length) {
                         let moveShape;
                         moveShape = drawio.shapes.pop();
-                        moveShape.move(moveShape, {x: mouseEvent.offsetX, y: mouseEvent.offsetY});
+                        moveShape.move(moveShape, {
+                            x: mouseEvent.offsetX,
+                            y: mouseEvent.offsetY
+                        });
                         drawio.shapes.push(moveShape);
                         drawCanvas();
                     }
@@ -199,36 +202,36 @@ $(function () {
 
     // mousemove
     $('#my-canvas').on('mousemove', function (mouseEvent) {
-        if(drawio.selectedTool == drawio.availableTools.MOVE && drawio.selectedElement){
+        if (drawio.selectedTool == drawio.availableTools.MOVE && drawio.selectedElement) {
             // drawio.selectedElement.color = drawio.currentColor;
             // drawio.selectedElement.fillSelectedElement = checkIfFill();
             // drawio.selectedElement.lineWidth = $("#line-width").val();
             // drawio.shapes.push(drawio.selectedElement);
         }
-        if(drawio.selectedTool == drawio.availableTools.PEN && drawio.drawing){
+        if (drawio.selectedTool == drawio.availableTools.PEN && drawio.drawing) {
             drawio.selectedElement.updateCurrent(mouseEvent.offsetX, mouseEvent.offsetY);
         }
-        if(drawio.selectedTool === drawio.availableTools.MOVE){
+        if (drawio.selectedTool === drawio.availableTools.MOVE) {
             //drawio.selectedElement.end
         }
         if (drawio.selectedElement) {
             // We are resizing an element   
             drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
         }
-        console.log(drawio.shapes); 
+        console.log(drawio.shapes);
         drawCanvas();
     });
 
     // mouseup
 
     $('#my-canvas').on('mouseup', function () {
-        
-        if(drawio.selectedTool == drawio.availableTools.MOVE && drawio.selectedElement){ // if we are using move tool
+
+        if (drawio.selectedTool == drawio.availableTools.MOVE && drawio.selectedElement) { // if we are using move tool
             drawio.shapes.push(drawio.selectedElement);
             drawio.selectedElement = null;
             //drawio.selectedElement = drawio.availableTools.PEN;
         }
-        if(drawio.selectedTool === drawio.availableTools.PEN){
+        if (drawio.selectedTool === drawio.availableTools.PEN) {
             drawio.drawing = false;
         }
 
@@ -268,8 +271,7 @@ $(function () {
     $('#fill').change(function () {
         if ($(this).is(":checked")) {
             drawio.fillSelectedElement = true;
-        }
-        else {
+        } else {
             drawio.fillSelectedElement = false;
         }
     });
@@ -282,11 +284,11 @@ $(function () {
         return false;
     }
 
-    function getSelected(clickedX, clickedY){
-        
+    function getSelected(clickedX, clickedY) {
+
     }
 
-    function getSaved(){
+    function getSaved() {
         $('#image-list').empty();
         for (let i = 0; i < localStorage.length; i++) {
             $('#image-list').append("<li class=\"saved-image list-group-item\" data-image-name=" +
