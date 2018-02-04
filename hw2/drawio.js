@@ -130,11 +130,14 @@ $(function () {
 
     $('#save').on('click', function () {
         let myImage = JSON.stringify(drawio.shapes);
-        let imageName;
-        while (!imageName) {
-            imageName = window.prompt("Save your masterpiece!", "");
+        var imageName = window.prompt("Save your masterpiece!", "");
+        if(imageName == null) {
+          return;
         }
-        if (myImage) {
+        else if (imageName == "") {
+          alert("Can't insert empty name!");
+        }
+        else {
             localStorage.setItem(imageName, myImage);
         }
         getSaved();
@@ -215,7 +218,7 @@ $(function () {
             //drawio.selectedElement.end
         }
         if (drawio.selectedElement) {
-            // We are resizing an element   
+            // We are resizing an element
             drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
         }
         console.log(drawio.shapes);
