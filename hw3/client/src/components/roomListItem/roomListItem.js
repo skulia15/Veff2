@@ -1,16 +1,14 @@
 import React from 'react';
 
 const RoomListItem = ({info}) => {
-    //const {topic} = info;
-    console.log(info)
+
     return (
-        <li className="room-list-item">
-            <p>
-                hello
-            </p>
+        <li className="list-group-item room-list-item">
+            {info}
+            <button id="join-button"className="btn btn-success join-button" value={info}>
+                Join
+            </button>
         </li>
-        
     );
 }
-
 export default RoomListItem;

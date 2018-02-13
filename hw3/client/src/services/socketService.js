@@ -17,25 +17,53 @@ export default class SocketService {
 
     static getRooms() {
         this.socket.emit('rooms');
-        console.log('Getting rooms...');
+        console.log(this.socket.users); 
+        //console.log('Getting rooms...');
     };
 
     static roomListener(resolve) {
         this.socket.on('roomlist', roomList => {
-            console.log('Received answer about rooms from server');
+            //console.log('Received answer about rooms from server');
             resolve(roomList);
         })
     };
 
+    static getUsers() {
+        this.socket.emit('users');
+        console.log('Getting users...');
+    };
 
-    static createUser(nickname) {
-        return new Promise((resolve, reject) => {
-            this.socket.emit('addUser', nickname, valid);
-            if(valid) {
-                resolve(true);
-            } else{
-                reject('Username Invalid');
-            }
+    static userListener(resolve) {
+        this.socket.on('userlist', userList => {
+            console.log('Received answer about users from server');
+            console.log('userList: ');            
+            console.log(userList);
+            resolve(userList);
         })
     };
+
+    static createUser(nickname) {
+        return new Promise((resolve) => {
+            this.socket.emit('adduser', nickname, function(valid) {
+                if(valid) {
+                    resolve(true);
+                } else{
+                    resolve(false);
+                }
+            });
+        })
+    };
+
+    static joinRoom(roomName) {
+        console.log('Joing Room...');
+        this.socket.emit('joinroom', {room: roomName}, function(success, reason) {
+            if(success) {
+                console.log('Joined Room');
+            } else{
+                console.log('Failed to join Room');
+                console.log(reason);    
+            }
+        });   
+    };
+
 }

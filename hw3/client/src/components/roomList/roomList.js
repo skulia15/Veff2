@@ -3,20 +3,6 @@ import RoomListItem from '../roomListItem/roomListItem';
 import PropTypes from 'prop-types';
 
 class RoomList extends React.Component {
-    componentDidMount() {
-        console.log('component did mount');
-        
-        // socket.on('roomlist', function(res) {
-        //     console.log('Received answer about rooms from server');
-        //     rooms = res;
-            
-        //     RoomList.state = {rooms: rooms}
-        //     console.log('State Change: ');
-        //     console.log(RoomList.state);
-        // });
-        //console.log(this.state.rooms);
-    }
-
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -24,26 +10,28 @@ class RoomList extends React.Component {
         }
 
         this.socketService = this.context.server.socketService;
+        this.handleJoinRoom = this.handleJoinRoom.bind(this);
 
-        // Connect to the server
-        this.socketService.connect();
         // Send emit to rooms
         this.socketService.getRooms();
         // Grab the event when server returns rooms
         this.socketService.roomListener((roomList) =>{
             this.setState({rooms: roomList});
-            console.log('Changing state: ');
+            console.log('Rooms: ');
             console.log(this.state.rooms);
         })
     }
 
+    handleJoinRoom(event) {
+        console.log(event.target.value);
+        this.socketService.joinRoom(event.target.value);
+    }
+
     render() {
-        console.log('rendering!:');
-        console.log(this.state.rooms);
         return (
             <div>
-                <ul className="room-list">
-                    {this.state.rooms.map((roomListItem) => {
+                <ul className="list-group room-list" onClick={this.handleJoinRoom}>
+                    {Object.keys(this.state.rooms).map((roomListItem) => {
                         return <RoomListItem info={roomListItem} />
                     })}
                 </ul>
@@ -55,6 +43,9 @@ class RoomList extends React.Component {
 RoomList.contextTypes = {
     server: PropTypes.shape({
         socketService: PropTypes.component
+    }),
+    routerHelper: PropTypes.shape({
+        history: PropTypes.component
     })
 };
 
