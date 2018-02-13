@@ -16,6 +16,10 @@ var users = {};
 rooms.lobby = new Room();
 rooms.lobby.setTopic("Welcome to the lobby!");
 
+/** I MADE THIS */
+rooms.something = new Room();
+rooms.something.setTopic("Will this Work?!?");
+
 io.on('connection', function (socket) {
 	console.log(socket);
 	//This gets performed when a user joins the server.

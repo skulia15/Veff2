@@ -1,14 +1,13 @@
 import React from 'react';
 
 const RoomListItem = ({info}) => {
-    const {topic} = info;
-    console.log(topic)
+    //const {topic} = info;
+    console.log(info)
     return (
         <li className="room-list-item">
-            <h3>
+            <p>
                 hello
-                {info.topic}
-            </h3>
+            </p>
         </li>
         
     );
