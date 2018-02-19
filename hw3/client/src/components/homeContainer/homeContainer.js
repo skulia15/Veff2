@@ -1,12 +1,13 @@
 import React from 'react';
 
-class RoomContainer extends React.Component {
+class HomeContainer extends React.Component {
     render() {
         return (
-            <div className="container room-container">
+            <div className="container home-container">
                 {this.props.children}
             </div>
         );
     }
 }
-export default RoomContainer;
+
+export default HomeContainer;

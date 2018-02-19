@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '../styles/site';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Redirect} from 'react-router';
 import SocketService from './services/socketService';
 import HomePage from './components/homePage/homePage';
 import LobbyPage from './components/lobbyPage/lobbyPage';
@@ -11,8 +11,8 @@ import CreateRoomPage from './components/createRoomPage/createRoomPage';
 
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         // Connect to the server        
         SocketService.connect();
     }
@@ -20,7 +20,7 @@ class App extends React.Component {
     getChildContext() {
         return {
             routerHelper: {
-                history: Redirect
+                redirect: Redirect
             }, 
             server: {
                 socketService: SocketService
@@ -32,16 +32,13 @@ class App extends React.Component {
         return (
             <Switch>
                 <Route exact path='/' component={HomePage} />
-                <Route path='/lobby' component={LobbyPage} />
-                <Route path='/createRoom' component={CreateRoomPage} />
-                <Route render={({location}) => (
-                    <div> 
-                        <div>404 not found</div>
-                        <div>{location.pathname} was not found! </div>
-                    </div>
-                )}/>
+                <Route exact path='/lobby' component={LobbyPage} />
+                <Route exact path='/createRoom' component={CreateRoomPage} />
+                <div> 
+                    <div>404 not found</div>
+                </div>
             </Switch>
-        );
+        )
     }
 }
 
@@ -51,8 +48,9 @@ App.childContextTypes = {
     }),
     
     routerHelper: PropTypes.shape({
-        history: PropTypes.component
+        redirect: PropTypes.component,
+
     })
 }
 
-ReactDOM.render(<Router><App /></Router>, document.getElementById('app'))
+ReactDOM.render(<Router><App /></Router>, document.getElementById('app'));

@@ -18,10 +18,6 @@ var users = {};
 rooms.lobby = new Room();
 rooms.lobby.setTopic("Welcome to the lobby!");
 
-/** I MADE THIS */
-rooms.something = new Room();
-rooms.something.setTopic("Will this Work?!?");
-
 io.on('connection', function (socket) {
 	console.log(socket);
 	//This gets performed when a user joins the server.
@@ -108,7 +104,6 @@ io.on('connection', function (socket) {
 	socket.on('sendmsg', function (data) {
 
 		var userAllowed = false;
-
 		//Check if user is allowed to send message.
 		if(rooms[data.roomName].users[socket.username] !== undefined) {
 			userAllowed = true;

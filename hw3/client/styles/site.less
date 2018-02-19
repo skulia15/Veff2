@@ -1,31 +1,89 @@
 // Insert your styles here, using LESS
+#root-container{
+    height: 100%;        
+}
 
 body {
+    height: 100%;
     font-family: 'Courier New', Courier, monospace;
-
-    .title{
-        text-align: center;
-    }
-    .main-container{
-        width: 80%;
-        margin: 0 auto;
-        background-color: lightgray;
-        display: flex;
+        
+    #app {
         height: 100%;
-    }
+        
+        .title{
+            text-align: center;
+            margin: 50px 0px;
+        }
 
-    .info-container{
-        float: left;
-    }
-    .room-container{
-        float: right;
-    }
-   
-    .login-input{
-        text-align: center;
-    }
+        .title-info{
+            margin-bottom: 20px;
+            
+        }
+        .title-heading{
+            margin: 0 auto;
+        }
+        
+        
 
-    .join-button{
-        float: right;
+        .home-container{
+            width: 30%;
+            margin: 0 auto;
+            display: block;
+            height: 100%;
+            text-align: center;
+            
+        }
+        .main-container{
+            background-color: lightgray;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            height: 100%;
+        }
+
+        .info-container{
+            background-color: lightblue;
+            float: left;
+        }
+        .room-container{
+            background-color: lightpink;
+        }
+
+        .users-in-room-container{
+            background-color: limegreen;
+        }
+    
+        .login-input{
+            text-align: center;
+        }
+
+        .create-room-form{
+            text-align: center; 
+            margin: 0 auto; margin: 0 auto; 
+            width:250px;
+            width: 30%;
+        }
+        .join-button{
+            float: right;
+        }
+        .icon{
+            margin: 0px 15px;
+            
+        }
+        .icon-large{
+            font-size: 1.5em;
+        }
+
+        .form-center{
+            width: 100%;
+        }
+
+        .btn-left{
+            float: left;
+        }
+        
+        .btn-right{
+            float: right;
+        }
     }
 }

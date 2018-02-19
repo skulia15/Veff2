@@ -6,37 +6,50 @@ class RoomList extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            rooms: []
+            rooms: this.props.rooms
         }
 
         this.socketService = this.context.server.socketService;
         this.handleJoinRoom = this.handleJoinRoom.bind(this);
+    }
+    componentWillMount() {
+        this.setState({rooms: this.props.rooms})
+    }
 
-        // Send emit to rooms
-        this.socketService.getRooms();
-        // Grab the event when server returns rooms
-        this.socketService.roomListener((roomList) =>{
-            this.setState({rooms: roomList});
-            console.log('Rooms: ');
-            console.log(this.state.rooms);
-        })
+    componentWillReceiveProps(nextProps) {
+        console.log('Rooms Props Changed');
+        if(nextProps.rooms !== this.state.rooms) {
+            console.log('Changing room state');
+            this.setState({rooms: nextProps.rooms})
+        }
     }
 
     handleJoinRoom(event) {
-        console.log(event.target.value);
+        this.socketService.leaveRoom(this.props.currentRoomTitle)
         this.socketService.joinRoom(event.target.value);
+        let keys = Object.getOwnPropertyNames(this.props.rooms);
+        let indexOfJoinedRoom = keys.indexOf(event.target.value);
+        let currentRoom = this.props.rooms[Object.keys(this.props.rooms)[indexOfJoinedRoom]];
+        let currentRoomTitle = event.target.value;
+        let currentRoomTopic = currentRoom.topic;
+        this.props.updateCurrentRoom(currentRoom, currentRoomTitle, currentRoomTopic);
+        console.log(currentRoom);
     }
 
     render() {
-        return (
-            <div>
-                <ul className="list-group room-list" onClick={this.handleJoinRoom}>
-                    {Object.keys(this.state.rooms).map((roomListItem) => {
-                        return <RoomListItem info={roomListItem} />
-                    })}
-                </ul>
-            </div>
-        );
+        if(this.state.rooms) {
+            return (
+                <div>
+                    <ul className="list-group room-list" onClick={this.handleJoinRoom}>
+                        {Object.keys(this.state.rooms).map((roomListItem) => {
+                            return <RoomListItem key={roomListItem} info={roomListItem} value={roomListItem}/>
+                        })}
+                    </ul>
+                </div>
+            );
+        } else {
+            <div>Something went horribly wrong</div>
+        }
     }
 }
 

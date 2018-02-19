@@ -3,12 +3,8 @@ import React from 'react';
 class InfoContainer extends React.Component {
     render() {
         return (
-            <div className="container container-fluid info-container ">
-                <div className="row">
-                    <div className="col-lg-6">
-                        {this.props.children}
-                    </div>
-                </div>
+            <div className="container info-container col-md-3">
+                {this.props.children}
             </div>
             
         );

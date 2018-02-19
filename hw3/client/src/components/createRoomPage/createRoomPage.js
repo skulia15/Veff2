@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import MainContainer from '../mainContainer/mainContainer';
 
 
 class CreateRoomPage extends React.Component {
@@ -8,56 +9,80 @@ class CreateRoomPage extends React.Component {
         super(props, context);
 
         this.state = {
-            roomName: ''
+            newRoomName: '',
+            newRoomTopic: '',
+            createRoomSuccess: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeRoomName = this.handleChangeRoomName.bind(this);
+        this.handleChangeTopic = this.handleChangeTopic.bind(this);        
         this.socketService = this.context.server.socketService;
+        this.redirect = this.context.routerHelper.redirect;
     }
 
-    handleChange(event) {
-        this.setState({roomName: event.target.value});
+    handleChangeRoomName(event) {
+        this.setState({newRoomName: event.target.value});
+    }
+
+    handleChangeTopic(event) {
+        this.setState({newRoomTopic: event.target.value});
     }
 
     handleSubmit(event) {
-        // Create a user with the provided nickname
         console.log('creating room with name: ' + this.state.roomName);
-        let roomName = this.state.username;
+        let roomName = this.state.newRoomName;
+        let topic = this.state.newRoomTopic;
         // Joins 
-        this.socketService.joinRoom(roomName).then(function(success) {
+        event.preventDefault();
+        this.socketService.createRoom(roomName, topic, (success) => {
             if(success) {
-                // Redirect here
-                alert('Your Nickname is ' + nickname);
-            } else{
-                alert('The Nickname ' + nickname + ' is already taken');
+                this.setState({createRoomSuccess: success})
             }
         });
-        //Validate
-        //route to lobby
         
+    }
 
-        event.preventDefault();
+    ShowCreateForm() {
+        if(this.state.createRoomSuccess === false) {
+            return(
+                <div className="form-center">
+                    <h1 className="title">Create Room</h1>
+                    <div className="create-room-input ">
+                        <form className="create-room-form">
+                            <div className="form-group">
+                                <label>
+                                    Room Name
+                                </label>
+                                <input type="text" className="form-control" value={this.state.newRoomName} onChange={this.handleChangeRoomName} />
+                            </div>
+                            <div className="form-group">                            
+                                <label>
+                                    Topic
+                                </label>
+                                <input type="text" className="form-control" value={this.state.newRoomTopic} onChange={this.handleChangeTopic} />
+                            </div>
+                            <Link to="/lobby" className="btn btn-danger btn-left">Cancel</Link>
+                            <button onClick={this.handleSubmit} className="btn btn-primary btn-right">Create Room</button>
+                        </form>
+                    </div>
+                </div>
+            )
+        } else {
+            return(
+                <this.redirect to={{
+                    pathname: '/lobby',
+                }} />
+            )
+        }
     }
     
     render() {
         return (
-            <Container>
-                <h1>Create Room</h1>
-                <div className="create-room-input">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-group">
-                            <label>
-                                Room Name
-                                <input type="text" className="form-control" value={this.state.username} onChange={this.handleChange} />
-                            </label>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Create Room</button>
-                    </form>
-                </div>
-                <Link to="/lobby" className="btn btn-primary">Lobby</Link>
-            </Container>
-        );
+            <MainContainer>
+                {this.ShowCreateForm()}
+            </MainContainer>
+        )
     }
 }
 
@@ -67,7 +92,7 @@ CreateRoomPage.contextTypes = {
     }),
     
     routerHelper: PropTypes.shape({
-        history: PropTypes.component,
+        redirect: PropTypes.component,
     })
 };
 
