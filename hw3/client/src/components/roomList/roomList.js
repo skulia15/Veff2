@@ -58,7 +58,7 @@ RoomList.contextTypes = {
         socketService: PropTypes.component
     }),
     routerHelper: PropTypes.shape({
-        history: PropTypes.component
+        redirect: PropTypes.component
     })
 };
 

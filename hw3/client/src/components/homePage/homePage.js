@@ -21,12 +21,18 @@ class HomePage extends React.Component {
             return(
                 <LoginForm loginState={this.TriggerLogin}/>
             )
-        } else {
+        } else if(this.state.nickname.length) {
             return(
                 <this.redirect to={{
                     pathname: '/lobby',
+                    //https://stackoverflow.com/questions/46752317/how-can-i-pass-data-using-redirect-in-react-router-v4
+                    username: { referrer: this.state.nickname}
                 }} />
             )
+        } else{
+            return(
+                <div>You must pick a nickname of minimum length one</div>
+            );
         }
     }
 

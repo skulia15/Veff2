@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import MainContainer from '../mainContainer/mainContainer';
 
 
@@ -30,6 +29,7 @@ class CreateRoomPage extends React.Component {
     }
 
     handleSubmit(event) {
+       
         console.log('creating room with name: ' + this.state.roomName);
         let roomName = this.state.newRoomName;
         let topic = this.state.newRoomTopic;
@@ -62,7 +62,6 @@ class CreateRoomPage extends React.Component {
                                 </label>
                                 <input type="text" className="form-control" value={this.state.newRoomTopic} onChange={this.handleChangeTopic} />
                             </div>
-                            <Link to="/lobby" className="btn btn-danger btn-left">Cancel</Link>
                             <button onClick={this.handleSubmit} className="btn btn-primary btn-right">Create Room</button>
                         </form>
                     </div>
@@ -71,7 +70,7 @@ class CreateRoomPage extends React.Component {
         } else {
             return(
                 <this.redirect to={{
-                    pathname: '/lobby',
+                    pathname: '/lobby'
                 }} />
             )
         }
@@ -84,6 +83,7 @@ class CreateRoomPage extends React.Component {
             </MainContainer>
         )
     }
+
 }
 
 CreateRoomPage.contextTypes = {

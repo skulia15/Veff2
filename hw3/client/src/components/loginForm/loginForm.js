@@ -8,12 +8,13 @@ class LoginForm extends React.Component {
         this.state = {
             username: ''
         }
+        
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.socketService = this.context.server.socketService;
     }
-
+    
     handleChange(event) {
         this.setState({username: event.target.value});
     }
@@ -23,7 +24,7 @@ class LoginForm extends React.Component {
         console.log('creating user with nickname: ' + this.state.username);
         let nickname = this.state.username;
         var thisProps = this.props;
-        this.socketService.createUser(nickname).then(function(valid) {
+        this.socketService.createUser(nickname).then((valid) => {
             if(valid) {
                 thisProps.loginState(nickname);
             } else{
