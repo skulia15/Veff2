@@ -47,10 +47,6 @@ class LobbyPage extends React.Component {
         if(this.state.currentUser === null) {
             this.setState({currentUser: this.props.location.username.referrer});
         }
-        console.log('----CURRENT USER-----');
-        console.log(this.state.currentUser);
-        console.log('----Username from props---');
-        console.log(this.props.location.username.referrer);
         
         this.socketService.getUsers();
 
@@ -61,6 +57,7 @@ class LobbyPage extends React.Component {
         // Grab the event when server returns rooms
         this.socketService.roomListener((roomList) =>{
             this.setState({rooms: roomList});
+
             let keys = Object.getOwnPropertyNames(roomList);
             // If we have not yet joined a room, then join the lobby
             if(!this.state.currentRoom) {
@@ -82,23 +79,22 @@ class LobbyPage extends React.Component {
 
         // Grab the event when server returns rooms
         this.socketService.usersInChatListener((room, updatedUsers, updatedOPs) => {
-            console.log('-------------------------------------');
-            console.log('UPDATED USERS');
-            console.log(updatedUsers);
-            console.log('UPDATED OPS');
-            console.log(updatedOPs);
+            // console.log('-------------------------------------');
+            // console.log('UPDATED USERS');
+            // console.log(updatedUsers);
+            // console.log('UPDATED OPS');
+            // console.log(updatedOPs);
             let updatedOpsArray = $.map(updatedOPs, function(value) {
                 return [value];
             });
             let updatedUsersArray = $.map(updatedUsers, function(value) {
                 return [value];
             });
-            console.log('UPDATED USERS ARRAY');
-            console.log(updatedUsersArray);
-            console.log('UPDATED OPS ARRAY');
-            console.log(updatedOpsArray);
-
-            console.log('-------------------------------------');
+            // console.log('UPDATED USERS ARRAY');
+            // console.log(updatedUsersArray);
+            // console.log('UPDATED OPS ARRAY');
+            // console.log(updatedOpsArray);
+            // console.log('-------------------------------------');
             
             this.setState({usersInRoom: updatedUsersArray, opsInRoom: updatedOpsArray});
             
@@ -116,15 +112,15 @@ class LobbyPage extends React.Component {
         this.setState({currentRoom: currentRoom});
         this.setState({currentRoomTitle: currentRoomTitle});
         this.setState({currentRoomTopic: currentRoomTopic});
-        console.log('***** Current Room info ******');
-        console.log(this.state.currentRoom);
+        let currentRoomOpsArray = $.map(currentRoom.ops, function(value) {
+            return [value];
+        });
+        this.setState({opsInRoom: currentRoomOpsArray});   
     }
 
     toggleModal() {
-        console.log('toggling modal');
         $('.modal').css('display', 'grid')
         this.setState({isOpen: !this.state.isOpen});
-        console.log(this.state.isOpen);
     }
     
     showInfo() {
@@ -156,9 +152,21 @@ class LobbyPage extends React.Component {
                 </RoomContainer>
                 <UsersInRoomContainer>
                     <h3>OP's</h3>
-                    <UserList users={this.state.opsInRoom} currentUser={this.state.currentUser} currentRoom={this.state.currentRoom}/>
+                    <UserList 
+                        currentRoomTitle={this.state.currentRoomTitle}
+                        currentUser={this.state.currentUser}
+                        currentRoom={this.state.currentRoom} 
+                        users={this.state.opsInRoom} 
+                        currentUser={this.state.currentUser} 
+                        currentRoom={this.state.currentRoom}/>
                     <h3>Users In chat</h3>
-                    <UserList users={this.state.usersInRoom} currentUser={this.state.currentUser} currentRoom={this.state.currentRoom}/>                    
+                    <UserList 
+                        currentRoomTitle={this.state.currentRoomTitle}                    
+                        currentUser={this.state.currentUser} 
+                        currentRoom={this.state.currentRoom} 
+                        users={this.state.usersInRoom} 
+                        currentUser={this.state.currentUser} 
+                        currentRoom={this.state.currentRoom}/>                    
                 </UsersInRoomContainer>
             </MainContainer>
         );

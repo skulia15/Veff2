@@ -30,15 +30,15 @@ export default class SocketService {
     // Request a list of all users
     static getUsers() {
         this.socket.emit('users');
-        console.log('Getting users...');
+        //console.log('Getting users...');
     };
 
     // Listen to when server responds with a list of users
     static userListener(resolve) {
         this.socket.on('userlist', userList => {
-            console.log('Received answer about users from server');
-            console.log('userList: ');            
-            console.log(userList);
+            // console.log('Received answer about users from server');
+            // console.log('userList: ');            
+            // console.log(userList);
             resolve(userList);
         })
     };
@@ -89,7 +89,7 @@ export default class SocketService {
     // Listens to when the chat updates
     static messageListener(resolve) {
         this.socket.on('updatechat', (room, updatedChat) => {
-            console.log('Chat has been updated');
+            // console.log('Chat has been updated');
             resolve(room, updatedChat);
         })
     }
@@ -117,13 +117,59 @@ export default class SocketService {
                 });
                 resolve(true);
             } else{
-                console.log('Failed to join Room');
-                console.log(reason);    
+                console.log('Failed to join Room because' + reason);
                 resolve(false);
             }
         });   
     };
 
+    // Adds the user to the list of op's in room
+    static makeUserOp(nickname, roomName, resolve) {
+        let contents = {room: roomName, user: nickname}
+        this.socket.emit('op',  contents, (success) => {
+            if(success) {
+                console.log('Made user ' + nickname + ' Op in room ' + roomName);
+                resolve(success);
+            }
+            resolve(false);
+        });
+    }
+
+    // Removes Op access from user
+    static removeOpFromUser(nickname, roomName, resolve) {
+        let contents = {room: roomName, user: nickname}
+        this.socket.emit('deop',  contents, (success) => {
+            if(success) {
+                console.log('Removed op from user ' + nickname);
+                resolve(success);
+            }
+            resolve(false);
+        });
+    }
     
+
+    // Removes the user from the room
+    static kickUser(nickname, roomName, resolve) {
+        let contents = {room: roomName, user: nickname}
+        this.socket.emit('kick',  contents, (success) => {
+            if(success) {
+                console.log('Kicked user ' + nickname + ' from room ' + roomName);
+                resolve(success);
+            }
+            resolve(false);
+        });
+    }
+
+    // Bans the user from the room
+    static banUser(nickname, roomName, resolve) {
+        let contents = {room: roomName, user: nickname}
+        this.socket.emit('ban',  contents, (success) => {
+            if(success) {
+                console.log('Banned user ' + nickname + ' from room ' + roomName);
+                resolve(success);
+            }
+            resolve(false);
+        });
+    }
 
 }

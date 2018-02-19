@@ -17,9 +17,7 @@ class RoomList extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('Rooms Props Changed');
         if(nextProps.rooms !== this.state.rooms) {
-            console.log('Changing room state');
             this.setState({rooms: nextProps.rooms})
         }
     }
@@ -33,7 +31,6 @@ class RoomList extends React.Component {
         let currentRoomTitle = event.target.value;
         let currentRoomTopic = currentRoom.topic;
         this.props.updateCurrentRoom(currentRoom, currentRoomTitle, currentRoomTopic);
-        console.log(currentRoom);
     }
 
     render() {

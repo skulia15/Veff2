@@ -29,7 +29,6 @@ class CreateRoomPage extends React.Component {
     }
 
     handleSubmit(event) {
-       
         console.log('creating room with name: ' + this.state.roomName);
         let roomName = this.state.newRoomName;
         let topic = this.state.newRoomTopic;

@@ -27,13 +27,14 @@ class CreateRoomModal extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log('creating room with name: ' + this.state.roomName);
+        console.log('creating room with name: ' + this.state.newRoomName);
         let roomName = this.state.newRoomName;
         let topic = this.state.newRoomTopic;
         event.preventDefault();
         this.socketService.createRoom(roomName, topic, (success) => {
             if(success) {
                 console.log('Created room');
+                this.socketService.getRooms();
             }
         });
         // Close the modal
@@ -41,7 +42,6 @@ class CreateRoomModal extends React.Component {
     }
 
     ShowCreateForm() {
-       
         return(
             <div className="form-center">
                 <h1 className="title">Create Room</h1>
@@ -51,7 +51,7 @@ class CreateRoomModal extends React.Component {
                             <label>
                                 Room Name
                             </label>
-                            <input type="text" className="form-control" value={this.state.newRoomName} onChange={this.handleChangeRoomName} />
+                            <input type="text" className="form-control" value={this.state.newRoomName} onChange={this.handleChangeRoomName} autoFocus/>
                         </div>
                         <div className="form-group">                            
                             <label>
@@ -71,10 +71,12 @@ class CreateRoomModal extends React.Component {
     render() {
     // Render nothing if the "show" prop is false
         if(!this.props.show) {
-            console.log('Modal hidden');
+            // Hide modal
+            // console.log('Modal hidden');
             return null;
         } else{
-            console.log('Modal Shown');
+            // Show modal            
+            // console.log('Modal Shown');
             return (
                 <div className="backdrop">
                     <div className="modal">

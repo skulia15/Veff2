@@ -6,27 +6,55 @@ class UserListItem extends React.Component {
     constructor(props, ctx) {
         super(props,ctx);
         this.state = {
-            isOp: false,
+            userIsOp: false,
             nickname: this.props.info
         }
+        this.showOpOptions = this.showOpOptions.bind(this);
+        
     }
 
-    componentWillMount() { 
+    componentWillReceiveProps() { 
         this.setState({nickname: this.props.info});
+
+        // If user is op then mark him as such
+        if(this.props.currentRoom.ops.hasOwnProperty(this.props.info)) {
+            this.setState({userIsOp: true});
+        }
     }
+    
 
-
+    showOpOptions() {
+        //if(this.state.userIsOp === true) {
+        return(
+            <div>
+                <button
+                    className="btn btn-warning" 
+                    value={this.state.nickname} 
+                    onClick={() => this.props.kickUser(this.state.nickname, this.props.currentRoomTitle)}>Kick</button>
+                <button 
+                    className="btn btn-danger" 
+                    value={this.state.nickname} 
+                    onClick={() => this.props.banUser(this.state.nickname, this.props.currentRoomTitle)}>Ban User</button>  
+                <button 
+                    className="btn btn-primary" 
+                    value={this.state.nickname} 
+                    onClick={() => this.props.makeUserOp(this.state.nickname, this.props.currentRoomTitle)}>Make OP</button>
+                <button 
+                    className="btn btn-warning" 
+                    value={this.state.nickname} 
+                    onClick={() => this.props.removeOpFromUser(this.state.nickname, this.props.currentRoomTitle)}>De-OP</button>  
+            </div>
+        )
+    // }
+    }
 
     render() {
-        if(this.state.nickname) {
+        if(this.state.nickname && this.state.userIsOp !== undefined) {
             return (
-                <li className="list-group-item user-list-item">
+                <li id="user-list-item" className="list-group-item user-list-item">
                     <i className="fas fa-user icon icon-small"></i>
                     {this.state.nickname}
-                    <button className="btn btn-warning" onClick={() => alert('Kicked')}>Kick</button>
-                    <button className="btn btn-danger" onClick={() => alert('Banned')}>Ban</button>    
-                    <button className="btn btn-primary" onClick={() => this.makeUserOp}>Make OP</button>              
-                                    
+                    {this.showOpOptions()}
                 </li>
             );
         } else {

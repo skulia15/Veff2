@@ -7,50 +7,111 @@ class UserList extends React.Component {
         super(props, context);
         this.state = {
             users: this.props.users,
-            userIsOp: false
+            currentRoom: this.props.currentRoom,
+            currentUser: this.props.currentUser,
+            currentRoomTitle: this.props.currentRoomTitle,
+            //userIsOp: false,
         }
         this.makeUserOp = this.makeUserOp.bind(this);
+        this.kickUser = this.kickUser.bind(this);
+        this.banUser = this.banUser.bind(this);
+        this.removeOpFromUser = this.removeOpFromUser.bind(this);
         
         this.socketService = this.context.server.socketService;
     }
 
-    componentDidMount() {
-        this.setState({users: this.props.users})
-        
-        // if(this.props.currentRoom.ops)
+    makeUserOp(nickname, roomName) {
+        alert('op-ing');
+        this.socketService.makeUserOp(nickname, roomName, (success) => {
+            if(success) {
+                console.log('Successfully op\'d user' + nickname);
+            } else{
+                console.log('Failed to Op');
+                console.log(nickname);
+                console.log(this.state.currentRoomTitle);
+            }
+        })
+        event.preventDefault();
     }
 
-    makeUserOp(event) {
-        alert('make user op');
+    removeOpFromUser(nickname, roomName) {
+        alert('De op-ing');
+        this.socketService.removeOpFromUser(nickname, roomName, (success) => {
+            if(success) {
+                console.log('Successfully de-op\'d user' + nickname);
+            } else{
+                console.log('Failed to de-Op');
+                console.log(nickname);
+                console.log(this.state.currentRoomTitle);
+            }
+        })
+        event.preventDefault();
+    }
+
+
+    kickUser(nickname, roomName) {
+        console.log(nickname);
+        console.log(roomName);
+        this.socketService.kickUser(nickname, roomName, (success) => {
+            if(success) {
+                console.log('Successfully kicked');
+            } else{
+                console.log('Failed to kick');
+                console.log(nickname);
+                console.log(this.state.currentRoomTitle);
+            }
+        })
+        event.preventDefault();
+    }
+
+    banUser(nickname, roomName) {
+        this.socketService.banUser(nickname, roomName, (success) => {
+            if(success) {
+                console.log('Successfully banned');
+            } else{
+                console.log('Failed to ban');
+                console.log(nickname);
+                console.log(this.state.currentRoomTitle);
+            }
+        })
         event.preventDefault();
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('Detected new user');
+        this.setState({users: this.props.users});
+        this.setState({currentRoom: this.props.currentRoom});
+        this.setState({currentUser: this.props.currentUser});
+        this.setState({currentRoomTitle: this.props.currentRoomTitle});
+        
+        // if user props have been updated
         if(nextProps.users !== this.state.users) {
-            console.log('Updating state for users');
             this.setState({users: nextProps.users})
-            console.log(this.state.users);
-            console.log(nextProps.users);
-            console.log(this);
-            this.forceUpdate();
+            this.forceUpdate(); // TODO: þarf þetta?
         }
+
     }
 
     render() {
-        if(this.state.users) {
+        if(this.state.users && this.state.currentRoom) {
             return (
                 <div>
-                    <ul className="list-group user-list"  onClick={this.makeUserOp}>
+                    <ul className="list-group user-list">
                         {this.state.users.map((userListItem) => {
-                            return <UserListItem key={userListItem} value={userListItem} info={userListItem}/>
+                            return <UserListItem 
+                                kickUser={this.kickUser} 
+                                makeUserOp={this.makeUserOp}
+                                banUser={this.banUser} 
+                                removeOpFromUser={this.removeOpFromUser}                                 
+                                currentRoom={this.state.currentRoom}
+                                currentRoomTitle={this.state.currentRoomTitle}
+                                key={userListItem} 
+                                value={userListItem} 
+                                info={userListItem}/>
                         })}
                     </ul>
                 </div>
             );
-        } else{
-            console.log('------USER LIST ERROR-----');
-            console.log(this.state.users);
+        } else {
             return(
                 <div>
                     Error in User List
