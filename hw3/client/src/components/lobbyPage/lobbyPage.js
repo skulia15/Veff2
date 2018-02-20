@@ -11,8 +11,6 @@ import CreateRoomModal from '../createRoomPage/createRoomModal';
 import PrivateMessageModal from '../privateMessageModal/privateMessageModal';
 import DisplayPrivateMessageModal from '../displayPrivateMessageModal/displayPrivateMessageModal';
 
-
-
 class LobbyPage extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -32,7 +30,6 @@ class LobbyPage extends React.Component {
             sendPrivateMessageTo: '',
             receivedMsgFrom: '',
             receivedMsg: '',
-            userIsOp: false
         }
 
         // For calling socket
@@ -42,7 +39,6 @@ class LobbyPage extends React.Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.togglePrivateMessageModal = this.togglePrivateMessageModal.bind(this);
         this.toggleDisplayMessageModal = this.toggleDisplayMessageModal.bind(this);
-        this.changeOPstatus = this.changeOPstatus.bind(this);
         
         this.showInfo = this.showInfo.bind(this);
         this.showChatRoom = this.showChatRoom.bind(this);
@@ -102,16 +98,6 @@ class LobbyPage extends React.Component {
 
             this.setState({usersInRoom: updatedUsersArray, opsInRoom: updatedOpsArray});
             
-            if(this.state.currentRoom !== null) {
-                // If user is OP then mark him as such
-                if(this.state.currentRoom.ops.hasOwnProperty(this.state.currentUser)) {
-                    this.setState({userIsOp: true});
-                    console.log('IN LOBBY: Changing user to OP');
-                } else { // Else Remove his OP status
-                    this.setState({userIsOp: false});
-                    console.log('IN LOBBY: DE OP-ing user');
-                }
-            }
         });
 
         this.socketService.messageListener((currentRoom, updatedMessages) => {
@@ -132,28 +118,15 @@ class LobbyPage extends React.Component {
 
     updateCurrentRoom(currentRoom, currentRoomTitle, currentRoomTopic) {
         event.preventDefault();
-        this.socketService.getRooms();   
-        console.log('/////////////////////////////');
-        //console.log('current room');
-        //console.log(currentRoom);
+        this.socketService.getRooms();
         this.setState({currentRoom: currentRoom});
         this.setState({currentRoomTitle: currentRoomTitle});
         this.setState({currentRoomTopic: currentRoomTopic});
-        // console.log('current room title');
-        // console.log(typeof(this.state.currentRoomTitle));
-        // console.log('current room topic');
-        // console.log(this.state.currentRoomTopic);
         let currentRoomOpsArray = $.map(currentRoom.ops, function(value) {
             return [value];
         });
 
         this.setState({opsInRoom: currentRoomOpsArray});
-        
-        //WAS HERE
-
-        console.log('OPs in room: ');
-        console.log(this.state.opsInRoom);
-        console.log('/////////////////////////////');
     }
 
     toggleModal() {
@@ -173,10 +146,6 @@ class LobbyPage extends React.Component {
         this.setState({displayMessageIsOpen: !this.state.displayMessageIsOpen});
     }
 
-    changeOPstatus(opStatus) {
-        console.log('Changing op status in LOBBY');
-        this.setState({userIsOp: opStatus});
-    }
 
     showInfo() {
         return(
@@ -188,7 +157,6 @@ class LobbyPage extends React.Component {
                     currentRoomTitle={this.state.currentRoomTitle}
                     updateCurrentRoom={this.updateCurrentRoom}/>
             </InfoContainer>
-
         );
     }
 
@@ -211,9 +179,7 @@ class LobbyPage extends React.Component {
                         users={this.state.opsInRoom}
                         currentUser={this.state.currentUser}
                         currentRoom={this.state.currentRoom}
-                        userIsOp={this.state.userIsOp}
-                        opsInRoom={this.state.opsInRoom}
-                        changeOPstatus={this.changeOPstatus}/>
+                        opsInRoom={this.state.opsInRoom}/>
                     <h3>Users In chat</h3>
                     <UserList
                         togglePrivateMessageModal ={this.togglePrivateMessageModal}
@@ -221,9 +187,7 @@ class LobbyPage extends React.Component {
                         currentUser={this.state.currentUser}
                         users={this.state.usersInRoom}
                         currentRoom={this.state.currentRoom}
-                        userIsOp={this.state.userIsOp}
-                        opsInRoom={this.state.opsInRoom}
-                        changeOPstatus={this.changeOPstatus}/>
+                        opsInRoom={this.state.opsInRoom}/>
                 </UsersInRoomContainer>
             </MainContainer>
         );

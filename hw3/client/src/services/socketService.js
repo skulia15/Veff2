@@ -98,16 +98,18 @@ export default class SocketService {
     static createRoom(roomName, topic, resolve) {
         this.socket.emit('joinroom', {room: roomName}, (success, reason) => {
             if(success) {
-                // Set a topic for a room
-                this.socket.emit('settopic',  {topic: topic, room: roomName}, (success) => {
-                    if(success) {
-                        console.log('Topic successfully set for ', roomName);                        
-                        resolve(true);
-                    } else {
-                        console.log('Failed to set topic for ', roomName);
-                        resolve(false);
-                    }
-                });
+                // Set a topic for a room only if it has been provided
+                if(topic !== undefined && topic !== '') {
+                    this.socket.emit('settopic',  {topic: topic, room: roomName}, (success) => {
+                        if(success) {
+                            console.log('Topic successfully set for ', roomName);                        
+                            resolve(true);
+                        } else {
+                            console.log('Failed to set topic for ', roomName);
+                            resolve(false);
+                        }
+                    });
+                }
                 resolve(true);
             } else{
                 console.log('Failed to join Room because' + reason);
@@ -168,6 +170,7 @@ export default class SocketService {
     // When the server emits a message. On partroom, joinroom and disconnect
     static serverMessageListener() {
         this.socket.on('servermessage',  (type, room, username) => {
+            this.getRooms();
             if(type === 'part') {
                 console.log('User ' + username + ' Parted room ' + room);
                 // send message to room

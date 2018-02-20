@@ -38,18 +38,7 @@ class CreateRoomModal extends React.Component {
         });
         this.socketService.getRooms();
 
-        //let keys = Object.getOwnPropertyNames(this.props.rooms);        
-        //let indexOfJoinedRoom = keys.indexOf(roomName);
-        //let currentRoom = this.props.rooms[Object.keys(this.props.rooms)[indexOfJoinedRoom]];
-        // Close the modal
         this.props.onClose();
-
-        // Update the current room after creating it
-
-        // console.log('-- updating room --');        
-        // console.log(this.props.rooms);
-        // this.props.updateCurrentRoom(roomName, topic);
-        // console.log('-- updated room --');
     }
 
     ShowCreateForm() {
@@ -62,13 +51,20 @@ class CreateRoomModal extends React.Component {
                             <label>
                                 Room Name
                             </label>
-                            <input type="text" className="form-control" value={this.state.newRoomName} onChange={this.handleChangeRoomName} autoFocus/>
+                            <input type="text" 
+                                className="form-control" 
+                                value={this.state.newRoomName} 
+                                onChange={this.handleChangeRoomName} 
+                                autoFocus/>
                         </div>
                         <div className="form-group">                            
                             <label>
                                 Topic
                             </label>
-                            <input type="text" className="form-control" value={this.state.newRoomTopic} onChange={this.handleChangeTopic} />
+                            <input type="text" 
+                                className="form-control" 
+                                value={this.state.newRoomTopic} 
+                                onChange={this.handleChangeTopic} />
                         </div>
                         <button onClick={this.handleSubmit} className="btn btn-primary btn-right">Create Room</button>
                         <button onClick={this.props.onClose} className="btn btn-danger btn-left">Cancel</button>                            
@@ -76,7 +72,6 @@ class CreateRoomModal extends React.Component {
                 </div>
             </div>
         )
-
     }
 
     render() {
@@ -92,7 +87,6 @@ class CreateRoomModal extends React.Component {
                         <MainContainer>
                             {this.ShowCreateForm()}
                         </MainContainer>
-    
                     </div>
                 </div>
             );

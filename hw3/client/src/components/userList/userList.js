@@ -10,7 +10,6 @@ class UserList extends React.Component {
             currentRoom: this.props.currentRoom,
             currentUser: this.props.currentUser,
             currentRoomTitle: this.props.currentRoomTitle,
-            userIsOp: this.props.userIsOp,
             opsInRoom: this.props.opsInRoom
         }
         this.makeUserOp = this.makeUserOp.bind(this);
@@ -29,7 +28,7 @@ class UserList extends React.Component {
         this.setState({opsInRoom: this.props.opsInRoom});
         
         
-        // if user props have been updated
+        // if props have been updated then update the state
         if(nextProps.users !== this.state.users) {
             this.setState({users: nextProps.users});
         }
@@ -49,71 +48,51 @@ class UserList extends React.Component {
         if(nextProps.opsInRoom !== this.state.opsInRoom) {
             this.setState({opsInRoom: nextProps.opsInRoom});
         }
-
-        console.log('In userList');
-        // console.log('current room title');
-        // console.log(this.state.currentRoomTitle);
-        console.log('current room:');
-        console.log(this.state.currentRoom);
-        // console.log('Current user:');
-        // console.log(this.state.currentUser);
     }
 
     makeUserOp(nickname, roomName) {
-        alert('op-ing');
+        alert('OP-ing user ' + nickname);
         this.socketService.makeUserOp(nickname, roomName, (success) => {
             if(success) {
                 console.log('Successfully op\'d user' + nickname);
-                this.props.changeOPstatus(true);
             } else{
                 console.log('Failed to Op');
-                console.log(nickname);
-                console.log(this.state.currentRoomTitle);
             }
-        })
+        });
         event.preventDefault();
     }
 
     removeOpFromUser(nickname, roomName) {
-        alert('De op-ing');
+        alert('De-op-ing user ' + nickname);
         this.socketService.removeOpFromUser(nickname, roomName, (success) => {
             if(success) {
-                console.log('Successfully de-op\'d user' + nickname);
-                this.props.changeOPstatus(false);                
+                console.log('Successfully de-op\'d user' + nickname);              
             } else{
                 console.log('Failed to de-Op');
-                console.log(nickname);
-                console.log(this.state.currentRoomTitle);
             }
-        })
+        });
         event.preventDefault();
     }
 
     kickUser(nickname, roomName) {
-        alert('Kicking');
-        console.log(nickname);
-        console.log(roomName);
+        alert('Kicking user ' + nickname);
         this.socketService.kickUser(nickname, roomName, (success) => {
             if(success) {
                 console.log('Successfully kicked ' + nickname);
             } else{
                 console.log('Failed to kick ' + nickname);
-                console.log(nickname);
-                console.log(this.state.currentRoomTitle);
             }
-        })
+        });
         event.preventDefault();
     }
 
     banUser(nickname, roomName) {
-        alert('Banning');
+        alert('Banning user ' + nickname);
         this.socketService.banUser(nickname, roomName, (success) => {
             if(success) {
                 console.log('Successfully banned');
             } else{
                 console.log('Failed to ban');
-                console.log(nickname);
-                console.log(this.state.currentRoomTitle);
             }
         })
         event.preventDefault();
