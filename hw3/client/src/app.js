@@ -7,7 +7,6 @@ import {Redirect} from 'react-router';
 import SocketService from './services/socketService';
 import HomePage from './components/homePage/homePage';
 import LobbyPage from './components/lobbyPage/lobbyPage';
-import CreateRoomPage from './components/createRoomPage/createRoomPage';
 
 
 class App extends React.Component {
@@ -33,7 +32,6 @@ class App extends React.Component {
             <Switch>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/lobby' component={LobbyPage} />
-                <Route exact path='/createRoom' component={CreateRoomPage} />
                 <div> 
                     <div>404 not found</div>
                 </div>

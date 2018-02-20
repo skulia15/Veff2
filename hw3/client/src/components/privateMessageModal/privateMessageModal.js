@@ -7,81 +7,56 @@ class CreateRoomModal extends React.Component {
         super(props, context);
 
         this.state = {
-            newRoomName: '',
-            newRoomTopic: '',
+            messageContent: ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangeRoomName = this.handleChangeRoomName.bind(this);
-        this.handleChangeTopic = this.handleChangeTopic.bind(this);        
+        this.handleChange = this.handleChange.bind(this);        
         this.socketService = this.context.server.socketService;
         this.redirect = this.context.routerHelper.redirect;
     }
 
-    handleChangeRoomName(event) {
-        this.setState({newRoomName: event.target.value});
-    }
-
-    handleChangeTopic(event) {
-        this.setState({newRoomTopic: event.target.value});
+    handleChange(event) {
+        this.setState({messageContent: event.target.value});
     }
 
     handleSubmit(event) {
-        console.log('creating room with name: ' + this.state.newRoomName);
-        let roomName = this.state.newRoomName;
-        let topic = this.state.newRoomTopic;
         event.preventDefault();
-        this.socketService.createRoom(roomName, topic, (success) => {
-            if(success) {
-                console.log('Created room');
-                this.socketService.getRooms();
-            }
-        });
+        this.socketService.sendPrivateMessage(this.props.sendTo, this.state.messageContent);
         // Close the modal
         this.props.onClose();
     }
 
-    ShowCreateForm() {
+    ShowSendMessageForm() {
         return(
             <div className="form-center">
-                <h1 className="title">Create Room</h1>
+                <h2 className="title">Send a private message to {this.props.sendTo}</h2>
                 <div className="create-room-input ">
                     <form className="create-room-form">
                         <div className="form-group">
-                            <label>
-                                Room Name
-                            </label>
-                            <input type="text" className="form-control" value={this.state.newRoomName} onChange={this.handleChangeRoomName} autoFocus/>
+                            <label>Message:</label>
+                            <textarea className="form-control" rows="3" id="message" onChange={this.handleChange} autoFocus></textarea>
                         </div>
-                        <div className="form-group">                            
-                            <label>
-                                Topic
-                            </label>
-                            <input type="text" className="form-control" value={this.state.newRoomTopic} onChange={this.handleChangeTopic} />
-                        </div>
-                        <button onClick={this.handleSubmit} className="btn btn-primary btn-right">Create Room</button>
+                        <button onClick={this.handleSubmit} className="btn btn-primary btn-right">Send Message</button>
                         <button onClick={this.props.onClose} className="btn btn-danger btn-left">Cancel</button>                            
                     </form>
                 </div>
             </div>
         )
-
     }
 
     render() {
     // Render nothing if the "show" prop is false
         if(!this.props.show) {
             // Hide modal
-            // console.log('Modal hidden');
             return null;
         } else{
             // Show modal            
-            // console.log('Modal Shown');
             return (
                 <div className="backdrop">
-                    <div className="modal" id="createRoomModal">
+                    <div className="modal" id="privateMessageModal">
                         <MainContainer>
-                            {this.ShowCreateForm()}
+                            {this.ShowSendMessageForm()}
                         </MainContainer>
     
                     </div>
