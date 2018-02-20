@@ -54,7 +54,7 @@ class MessageList extends React.Component {
                             })}
                         </ul>
                     </div>
-                    <div>
+                    <div className="message-box">
                         <form>
                             <div className="form-group">
                                 <label>Message:</label>
