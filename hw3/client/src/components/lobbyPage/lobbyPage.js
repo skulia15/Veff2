@@ -116,7 +116,9 @@ class LobbyPage extends React.Component {
             $('#message-list').scrollTop(Number.MAX_SAFE_INTEGER);
         });
 
-        this.socketService.serverMessageListener(type, room, username);
+        this.socketService.serverMessageListener((type, room, username) => {
+            console.log(type, room, username);
+        });
 
         this.socketService.privateMessageListener((messageFrom, message) => {
             this.setState({displayMessageIsOpen: true});
@@ -154,12 +156,7 @@ class LobbyPage extends React.Component {
 
     showInfo() {
         return(
-            <InfoContainer>
-              <div class="header">
-                <h3>Welcome to ChatterBox {this.state.currentUser}</h3>
-                {/* <h3>Active Users</h3>
-                <UserList users={this.state.users}/> */}
-              </div>
+          <InfoContainer>
                 <h3>Active Chatrooms</h3>
                 <button className="btn btn-success" onClick={this.toggleModal}>Create Room</button>
                 <RoomList rooms={this.state.rooms}
@@ -167,6 +164,7 @@ class LobbyPage extends React.Component {
                     currentRoomTitle={this.state.currentRoomTitle}
                     updateCurrentRoom={this.updateCurrentRoom}/>
             </InfoContainer>
+
         );
     }
 
@@ -174,10 +172,8 @@ class LobbyPage extends React.Component {
         return(
             <MainContainer>
                 <RoomContainer>
-                  <div class="chatroom">
                     <h2>Current Chatroom: {this.state.currentRoomTitle}</h2>
                     <h4>Topic for this Chatroom: {this.state.currentRoomTopic}</h4>
-                  </div>
                     <MessageList
                         currentRoomTitle={this.state.currentRoomTitle}
                         currentRoom={this.state.currentRoom}
@@ -205,7 +201,6 @@ class LobbyPage extends React.Component {
             </MainContainer>
         );
     }
-
     showModal() {
         return(
             <CreateRoomModal show={this.state.createRoomIsOpen}
@@ -213,7 +208,6 @@ class LobbyPage extends React.Component {
             </CreateRoomModal>
         )
     }
-
     showPrivateMessageModal() {
         return(
             <PrivateMessageModal show={this.state.privateMessageIsOpen}
@@ -222,7 +216,6 @@ class LobbyPage extends React.Component {
             </PrivateMessageModal>
         )
     }
-
     showDisplayPrivateMessageModal() {
         return(
             <DisplayPrivateMessageModal show={this.state.displayMessageIsOpen}
@@ -232,13 +225,18 @@ class LobbyPage extends React.Component {
             </DisplayPrivateMessageModal>
         )
     }
-
     render() {
         if(this.state.currentRoom && this.state.currentRoomTitle
             && this.state.rooms && this.state.currentUser
             && this.state.privateMessageIsOpen !== undefined
             && this.state.displayMessageIsOpen !== undefined) {
             return (
+              <div>
+              <div className="header">
+                <h3 className="center">Welcome to ChatterBox {this.state.currentUser}</h3>
+                {/* <h3>Active Users</h3>
+                <UserList users={this.state.users}/> */}
+                </div>
                 <MainContainer>
                     {this.showInfo()}
                     {this.showChatRoom()}
@@ -246,6 +244,7 @@ class LobbyPage extends React.Component {
                     {this.showPrivateMessageModal()}
                     {this.showDisplayPrivateMessageModal()}
                 </MainContainer>
+                </div>
             );
         } else{
             return(
@@ -256,7 +255,6 @@ class LobbyPage extends React.Component {
         }
     }
 }
-
 LobbyPage.contextTypes = {
     server: PropTypes.shape({
         socketService: PropTypes.component
@@ -265,8 +263,5 @@ LobbyPage.contextTypes = {
     routerHelper: PropTypes.shape({
         redirect: PropTypes.component,
     }),
-
-
 };
-
 export default LobbyPage;

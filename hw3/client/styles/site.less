@@ -1,4 +1,6 @@
 // Insert your styles here, using LESS
+@banner-height: 80px;
+
 #root-container{
     height: 100%;
 }
@@ -6,7 +8,7 @@
 body {
     height: 100%;
     font-family: 'Courier New', Courier, monospace;
-    margin: auto;
+    margin: 0;
   }
 
     #app {
@@ -16,6 +18,10 @@ body {
         .title{
             text-align: center;
             margin: 50px 0px;
+        }
+
+        .center{
+          text-align: center;
         }
 
         .title-info{
@@ -34,6 +40,12 @@ body {
             text-align: center;
         }
 
+        .container{
+            padding: 0px;
+            margin: 0 auto;
+        }
+
+
         .main-container{
             background-color: lightgray;
             width: 100%;
@@ -44,15 +56,14 @@ body {
 
         .info-container{
             background-color: lightblue;
-            //float: left;
+            float: left;
+            margin-top: @banner-height;
         }
 
         .header{
           position: fixed;
-          top: -6px;
-          left: 181px;
-          width: 1026px;
-          height: 60px;
+          width: 100%;
+          height: @banner-height;
           float: left;
           border-style: solid;
           border-color: black;
@@ -61,16 +72,18 @@ body {
 
         .room-container{
             background-color: lightpink;
+            margin-top: @banner-height;
         }
 
         .chatroom {
           color: red;
           text-align: left;
-          margin-top: 60px;
+          height: @banner-height;
         }
 
         .users-in-room-container{
             background-color: limegreen;
+            margin-top: @banner-height;
         }
 
         .login-input{
@@ -109,10 +122,6 @@ body {
         // The gray background
         .backdrop{
             position: 'fixed';
-            top: 10%;
-            bottom: 10%;
-            left: 30%;
-            right: 30%;
             background-color: green;
             padding: 50;
         }
@@ -125,5 +134,9 @@ body {
             display: grid;
             margin: '0 auto';
             padding: 30;
+            top: 10%;
+            bottom: 10%;
+            left: 30%;
+            right: 30%;
         }
     }

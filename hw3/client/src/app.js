@@ -12,7 +12,7 @@ import LobbyPage from './components/lobbyPage/lobbyPage';
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
-        // Connect to the server        
+        // Connect to the server
         SocketService.connect();
     }
 
@@ -20,19 +20,19 @@ class App extends React.Component {
         return {
             routerHelper: {
                 redirect: Redirect
-            }, 
+            },
             server: {
                 socketService: SocketService
             }
         }
     }
-    
+
     render() {
         return (
             <Switch>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/lobby' component={LobbyPage} />
-                <div> 
+                <div>
                     <div>404 not found</div>
                 </div>
             </Switch>
@@ -44,7 +44,7 @@ App.childContextTypes = {
     server: PropTypes.shape({
         socketService: PropTypes.component
     }),
-    
+
     routerHelper: PropTypes.shape({
         redirect: PropTypes.component,
 
