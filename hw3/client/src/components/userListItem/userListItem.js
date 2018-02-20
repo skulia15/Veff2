@@ -8,7 +8,7 @@ class UserListItem extends React.Component {
             opsInRoom: this.props.opsInRoom
         }
         this.showOpOptions = this.showOpOptions.bind(this);
-        
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -22,23 +22,23 @@ class UserListItem extends React.Component {
     showOpOptions() {
         if(this.props.opsInRoom.includes(this.props.currentUser)) {
             return(
-                <div>
+                <div class="button-right">
                     <button
-                        className="btn btn-warning" 
-                        value={this.state.nickname} 
+                        className="btn btn-warning"
+                        value={this.state.nickname}
                         onClick={() => this.props.kickUser(this.state.nickname, this.props.currentRoomTitle)}>Kick</button>
-                    <button 
-                        className="btn btn-danger" 
-                        value={this.state.nickname} 
-                        onClick={() => this.props.banUser(this.state.nickname, this.props.currentRoomTitle)}>Ban User</button>  
-                    <button 
-                        className="btn btn-primary" 
-                        value={this.state.nickname} 
+                    <button
+                        className="btn btn-danger"
+                        value={this.state.nickname}
+                        onClick={() => this.props.banUser(this.state.nickname, this.props.currentRoomTitle)}>Ban User</button>
+                    <button
+                        className="btn btn-primary"
+                        value={this.state.nickname}
                         onClick={() => this.props.makeUserOp(this.state.nickname, this.props.currentRoomTitle)}>Make OP</button>
-                    <button 
-                        className="btn btn-warning" 
-                        value={this.state.nickname} 
-                        onClick={() => this.props.removeOpFromUser(this.state.nickname, this.props.currentRoomTitle)}>De-OP</button> 
+                    <button
+                        className="btn btn-warning"
+                        value={this.state.nickname}
+                        onClick={() => this.props.removeOpFromUser(this.state.nickname, this.props.currentRoomTitle)}>De-OP</button>
                 </div>
             )
         }
@@ -50,14 +50,14 @@ class UserListItem extends React.Component {
                 <li id="user-list-item" className="list-group-item user-list-item">
                     <i className="fas fa-user icon icon-small"></i>
                     {this.state.nickname}
-                    <div>
+                    <div class="button-right">
                         {this.showOpOptions()}
-                        <button 
-                            className="btn btn-success" 
+                        <button
+                            className="btn btn-success"
                             value={this.state.nickname}
                             onClick={() => this.props.togglePrivateMessageModal(this.state.nickname)}>Private Message</button>
                     </div>
-                        
+
                 </li>
             );
         } else {
