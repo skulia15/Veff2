@@ -47,17 +47,24 @@ body {
 
 
         .main-container{
-            background-color: lightgray;
+            background-color: white;
             width: 100%;
             margin: 0 auto;
             display: flex;
-            height: 100%;
+            height: 100vh;
         }
 
         .info-container{
-            background-color: lightblue;
+            background-color: white;
             float: left;
+            padding-left: 15px;
             margin-top: @banner-height;
+            width: 18%;
+        }
+
+        ul.list-group.room-list {
+            overflow-y: scroll;
+            height: 78vh;
         }
 
         .header{
@@ -66,24 +73,38 @@ body {
           height: @banner-height;
           float: left;
           border-style: solid;
-          border-color: black;
-          background: #337ab7;
+          border-color: slategrey;
+          background: #5f5f5f;
+          color: #f1f1f1;
         }
 
         .room-container{
-            background-color: lightpink;
+            background-color: #4CAF50;
             margin-top: @banner-height;
+            width: 80%;
+            padding-left: 15px;
         }
 
         .chatroom {
           color: red;
           text-align: left;
           height: @banner-height;
+          height: 100%;
+        }
+
+        .list-group {
+          overflow: auto;
+        }
+
+        .list-group-item {
+          overflow: auto;
         }
 
         .users-in-room-container{
-            background-color: limegreen;
+            background-color: white;
             margin-top: @banner-height;
+            width: 20%;
+            padding-left: 15px;
         }
 
         .login-input{
@@ -98,6 +119,7 @@ body {
         }
         .join-button{
             float: right;
+            line-height: 10px;
         }
         .icon{
             margin: 0px 15px;
