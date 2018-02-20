@@ -33,9 +33,10 @@ class CreateRoomModal extends React.Component {
         event.preventDefault();
         this.socketService.createRoom(roomName, topic, (success) => {
             if(success) {
-                this.socketService.getRooms();
+                console.log('room created');
             }
         });
+        this.socketService.getRooms();
 
         //let keys = Object.getOwnPropertyNames(this.props.rooms);        
         //let indexOfJoinedRoom = keys.indexOf(roomName);

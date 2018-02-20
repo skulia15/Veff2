@@ -1,13 +1,11 @@
 import React from 'react';
 
-
-
 class UserListItem extends React.Component {
     constructor(props, ctx) {
         super(props,ctx);
         this.state = {
-            userIsOp: this.props.userIsOp,
-            nickname: this.props.info
+            nickname: this.props.info,
+            opsInRoom: this.props.opsInRoom
         }
         this.showOpOptions = this.showOpOptions.bind(this);
         
@@ -15,23 +13,14 @@ class UserListItem extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({nickname: this.props.info});
-        if(nextProps.userIsOp !== this.state.userIsOp) {
-            this.setState({userIsOp: nextProps.userIsOp});
-        }
-        if(this.state.userIsOp) {
-            console.log('()()()()()()()())())()');
-            console.log('In userListItem and user is OP');
-            console.log('()()()()()()()())())()');
-        } else{
-            console.log(':(:(:(:(:(:(');
-            console.log('User is not op');
-            console.log(this.props.currentRoom);
+
+        if(nextProps.opsInRoom !== this.state.opsInRoom) {
+            this.setState({userIsOp: nextProps.opsInRoom});
         }
     }
-    
 
     showOpOptions() {
-        if(this.state.userIsOp === true) {
+        if(this.props.opsInRoom.includes(this.props.currentUser)) {
             return(
                 <div>
                     <button
@@ -56,16 +45,19 @@ class UserListItem extends React.Component {
     }
 
     render() {
-        if(this.state.nickname && this.props.userIsOp !== undefined) {
+        if(this.state.nickname) {
             return (
                 <li id="user-list-item" className="list-group-item user-list-item">
                     <i className="fas fa-user icon icon-small"></i>
                     {this.state.nickname}
-                    {this.showOpOptions()}
-                    <button 
-                        className="btn btn-success" 
-                        value={this.state.nickname}
-                        onClick={() => this.props.togglePrivateMessageModal(this.state.nickname)}>Private Message</button>
+                    <div>
+                        {this.showOpOptions()}
+                        <button 
+                            className="btn btn-success" 
+                            value={this.state.nickname}
+                            onClick={() => this.props.togglePrivateMessageModal(this.state.nickname)}>Private Message</button>
+                    </div>
+                        
                 </li>
             );
         } else {

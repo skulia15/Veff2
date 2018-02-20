@@ -29,7 +29,7 @@ class DisplayPrivateMessageModal extends React.Component {
     ShowReceivedMessage() {
         return(
             <div className="form-center">
-                <h1 className="title">You received a message from {this.props.receivedMsgFrom}</h1>
+                <h3 className="title">You received a message from {this.props.receivedMsgFrom}</h3>
                 <div className="create-room-input ">
                     <form className="create-room-form">
                         <div className="form-group">

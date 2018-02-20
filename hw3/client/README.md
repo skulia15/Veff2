@@ -27,3 +27,5 @@ When you have run npm start, the browser opens up on localhost:9000 and every ti
 * Cannot send update to chat when user leaves a room
 
 * Clicking on a room item in the roomlist without pressing join creates a room with the title '0'
+
+* When a user is kicked from a room he can still view messages, but not send messages

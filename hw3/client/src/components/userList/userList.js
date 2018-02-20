@@ -10,7 +10,8 @@ class UserList extends React.Component {
             currentRoom: this.props.currentRoom,
             currentUser: this.props.currentUser,
             currentRoomTitle: this.props.currentRoomTitle,
-            userIsOp: this.props.userIsOp
+            userIsOp: this.props.userIsOp,
+            opsInRoom: this.props.opsInRoom
         }
         this.makeUserOp = this.makeUserOp.bind(this);
         this.kickUser = this.kickUser.bind(this);
@@ -25,11 +26,12 @@ class UserList extends React.Component {
         this.setState({currentRoom: this.props.currentRoom});
         this.setState({currentUser: this.props.currentUser});
         this.setState({currentRoomTitle: this.props.currentRoomTitle});
+        this.setState({opsInRoom: this.props.opsInRoom});
+        
         
         // if user props have been updated
         if(nextProps.users !== this.state.users) {
             this.setState({users: nextProps.users});
-            this.forceUpdate(); // TODO: þarf þetta?
         }
 
         if(nextProps.currentRoom !== this.state.currentRoom) {
@@ -42,6 +44,10 @@ class UserList extends React.Component {
 
         if(nextProps.currentRoomTitle !== this.state.currentRoomTitle) {
             this.setState({currentRoomTitle: nextProps.currentRoomTitle});
+        }
+
+        if(nextProps.opsInRoom !== this.state.opsInRoom) {
+            this.setState({opsInRoom: nextProps.opsInRoom});
         }
 
         console.log('In userList');
@@ -58,6 +64,7 @@ class UserList extends React.Component {
         this.socketService.makeUserOp(nickname, roomName, (success) => {
             if(success) {
                 console.log('Successfully op\'d user' + nickname);
+                this.props.changeOPstatus(true);
             } else{
                 console.log('Failed to Op');
                 console.log(nickname);
@@ -72,6 +79,7 @@ class UserList extends React.Component {
         this.socketService.removeOpFromUser(nickname, roomName, (success) => {
             if(success) {
                 console.log('Successfully de-op\'d user' + nickname);
+                this.props.changeOPstatus(false);                
             } else{
                 console.log('Failed to de-Op');
                 console.log(nickname);
@@ -81,15 +89,15 @@ class UserList extends React.Component {
         event.preventDefault();
     }
 
-
     kickUser(nickname, roomName) {
+        alert('Kicking');
         console.log(nickname);
         console.log(roomName);
         this.socketService.kickUser(nickname, roomName, (success) => {
             if(success) {
-                console.log('Successfully kicked');
+                console.log('Successfully kicked ' + nickname);
             } else{
-                console.log('Failed to kick');
+                console.log('Failed to kick ' + nickname);
                 console.log(nickname);
                 console.log(this.state.currentRoomTitle);
             }
@@ -98,6 +106,7 @@ class UserList extends React.Component {
     }
 
     banUser(nickname, roomName) {
+        alert('Banning');
         this.socketService.banUser(nickname, roomName, (success) => {
             if(success) {
                 console.log('Successfully banned');
@@ -117,6 +126,7 @@ class UserList extends React.Component {
                     <ul className="list-group user-list">
                         {this.state.users.map((userListItem) => {
                             return <UserListItem 
+                                opsInRoom={this.props.opsInRoom}
                                 togglePrivateMessageModal={this.props.togglePrivateMessageModal}
                                 kickUser={this.kickUser} 
                                 makeUserOp={this.makeUserOp}
@@ -124,7 +134,7 @@ class UserList extends React.Component {
                                 removeOpFromUser={this.removeOpFromUser}                                 
                                 currentRoom={this.state.currentRoom}
                                 currentRoomTitle={this.state.currentRoomTitle}
-                                userIsOp={this.props.userIsOp}
+                                currentUser={this.props.currentUser}
                                 key={userListItem} 
                                 value={userListItem} 
                                 info={userListItem}/>

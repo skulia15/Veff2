@@ -166,7 +166,7 @@ export default class SocketService {
     }
 
     // When the server emits a message. On partroom, joinroom and disconnect
-    static serverMessageListener(resolve) {
+    static serverMessageListener() {
         this.socket.on('servermessage',  (type, room, username) => {
             if(type === 'part') {
                 console.log('User ' + username + ' Parted room ' + room);
@@ -175,7 +175,7 @@ export default class SocketService {
                 //this.sendMessage(messageContents);
             }
             if(type === 'join') {
-                console.log('User ' + username + ' Parted room ' + room);
+                console.log('User ' + username + ' joined room ' + room);
                 // send message to room
                 // let messageContents = {msg: username + ' joined the room', roomName: room};
                 // this.sendMessage(messageContents);
@@ -187,7 +187,6 @@ export default class SocketService {
                 console.log(room);
                 // send message to room
             }
-            resolve(type, room, username);
         });
     }
 
