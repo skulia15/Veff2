@@ -1,12 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 
 const MessageListItem = ({info}) => {
     const {message, nick, timestamp} = info;
     return (
         <li className="list-group-item">
-            <p>{timestamp}</p>
-            <p><b>{nick}:</b></p>
-            <p>{message}</p>
+            {moment(timestamp).format('YYYY MMMM Do, h:mm:ss a')}<br />
+            <b>{nick}:</b><br />
+            {message}
             
         </li>
     );

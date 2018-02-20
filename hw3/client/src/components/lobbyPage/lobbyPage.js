@@ -164,7 +164,7 @@ class LobbyPage extends React.Component {
         return(
             <MainContainer>
                 <RoomContainer>
-                    <h2>Current Chatroom: {this.state.currentRoomTitle}</h2>
+                    <h2 className="center">Current Chatroom: {this.state.currentRoomTitle}</h2>
                     <h4>Topic for this Chatroom: {this.state.currentRoomTopic}</h4>
                     <MessageList
                         currentRoomTitle={this.state.currentRoomTitle}

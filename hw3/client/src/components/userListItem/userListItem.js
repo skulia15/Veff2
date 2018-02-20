@@ -22,7 +22,7 @@ class UserListItem extends React.Component {
     showOpOptions() {
         if(this.props.opsInRoom.includes(this.props.currentUser)) {
             return(
-                <div class="button-right">
+                <div className="button-right">
                     <button
                         className="btn btn-warning"
                         value={this.state.nickname}

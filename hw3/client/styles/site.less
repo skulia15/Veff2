@@ -64,6 +64,7 @@ body {
 
         ul.list-group.room-list {
             overflow-y: scroll;
+            max-height: 350px;
             height: 78vh;
         }
 
@@ -164,9 +165,19 @@ body {
             bottom: 10%;
             left: 30%;
             right: 30%;
+            border: 2px solid gray;
         }
 
         .message-box {
-            margin-top: 150px;
+            bottom: 0;
+            width: 40%;
+        }
+
+        .list-group-item {
+            padding: 3px 10px;
+        }
+
+        #message-list {
+            height: 350px;
         }
     }

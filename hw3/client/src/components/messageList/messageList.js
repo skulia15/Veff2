@@ -55,12 +55,14 @@ class MessageList extends React.Component {
                         </ul>
                     </div>
                     <div className="message-box">
+                        <div className="pull-right">
+                            <button className="btn btn-info" onClick={this.handleSendMessage}>Send</button>
+                        </div>
                         <form>
                             <div className="form-group">
                                 <label>Message:</label>
                                 <textarea className="form-control" rows="3" id="message" onChange={this.handleChange} autoFocus></textarea>
                             </div>
-                            <button className="btn btn-info" onClick={this.handleSendMessage}>Send</button>
                         </form>
                     </div>
                 </div>
