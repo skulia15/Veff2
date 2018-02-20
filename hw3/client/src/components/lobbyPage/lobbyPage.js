@@ -3,6 +3,7 @@ import InfoContainer from '../../components/infoContainer/infoContainer';
 import RoomList from '../roomList/roomList';
 import UserList from '../userList/userList';
 import PropTypes from 'prop-types';
+// import {Link} from 'react-router-dom';
 import MainContainer from '../mainContainer/mainContainer';
 import RoomContainer from '../roomContainer/roomContainer';
 import MessageList from '../messageList/messageList';
@@ -10,6 +11,8 @@ import UsersInRoomContainer from '../usersInRoomContainer/usersInRoomContainer';
 import CreateRoomModal from '../createRoomPage/createRoomModal';
 import PrivateMessageModal from '../privateMessageModal/privateMessageModal';
 import DisplayPrivateMessageModal from '../displayPrivateMessageModal/displayPrivateMessageModal';
+
+
 
 class LobbyPage extends React.Component {
     constructor(props, context) {
@@ -89,11 +92,11 @@ class LobbyPage extends React.Component {
 
         // Grab the event when server returns rooms
         this.socketService.usersInChatListener((room, updatedUsers, updatedOPs) => {
-            // console.log('-------------------------------------');
-            // console.log('UPDATED USERS');
-            // console.log(updatedUsers);
-            // console.log('UPDATED OPS');
-            // console.log(updatedOPs);
+            console.log('-------------------------------------');
+            console.log('UPDATED USERS');
+            console.log(updatedUsers);
+            console.log('UPDATED OPS');
+            console.log(updatedOPs);
             let updatedOpsArray = $.map(updatedOPs, function(value) {
                 return [value];
             });
@@ -111,16 +114,23 @@ class LobbyPage extends React.Component {
         });
 
         this.socketService.messageListener((currentRoom, updatedMessages) => {
-            this.setState({messages: updatedMessages});
+            this.setState({messages: updatedMessages})
             // Scroll to the bottom when chat updates with new message       
             $('#message-list').scrollTop(Number.MAX_SAFE_INTEGER);            
         });
 
-        this.socketService.serverMessageListener(type, room, username);
+        this.socketService.serverMessageListener((type, room, username) => {
+            // console.log('000000000000000');
+            console.log(type, room, username);
+            // console.log('000000000000000');
+        });
 
         this.socketService.privateMessageListener((messageFrom, message) => {
+            console.log('----YOU RECEIVED A MESSAGE-----');
             this.setState({displayMessageIsOpen: true});
-            this.setState({receivedMsgFrom: messageFrom, receivedMsg: message});
+            this.setState({receivedMsgFrom: messageFrom, receivedMsg: message})
+            console.log(messageFrom);
+            console.log(message);
         })
     }
 
@@ -205,7 +215,9 @@ class LobbyPage extends React.Component {
     showModal() {
         return(
             <CreateRoomModal show={this.state.createRoomIsOpen}
-                onClose={this.toggleModal}>
+                onClose={this.toggleModal}
+                rooms={this.state.rooms}
+                updateCurrentRoom={this.updateCurrentRoom}>
             </CreateRoomModal>
         )
     }

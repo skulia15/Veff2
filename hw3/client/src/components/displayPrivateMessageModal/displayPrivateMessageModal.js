@@ -46,11 +46,9 @@ class DisplayPrivateMessageModal extends React.Component {
     // Render nothing if the "show" prop is false
         if(!this.props.show) {
             // Hide modal
-            // console.log('Modal hidden');
             return null;
         } else {
-            // Show modal            
-            // console.log('Modal Shown');
+            // Show modal
             if(this.props.receivedMsg && this.props.receivedMsgFrom) {
                 return (
                     <div className="backdrop">

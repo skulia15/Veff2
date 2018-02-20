@@ -37,6 +37,10 @@ class CreateRoomModal extends React.Component {
                 this.socketService.getRooms();
             }
         });
+        let keys = Object.getOwnPropertyNames(this.props.rooms);        
+        let indexOfJoinedRoom = keys.indexOf(roomName);
+        let currentRoom = this.props.rooms[Object.keys(this.props.rooms)[indexOfJoinedRoom]];
+        this.props.updateCurrentRoom(currentRoom, roomName, topic);
         // Close the modal
         this.props.onClose();
     }
@@ -72,11 +76,9 @@ class CreateRoomModal extends React.Component {
     // Render nothing if the "show" prop is false
         if(!this.props.show) {
             // Hide modal
-            // console.log('Modal hidden');
             return null;
         } else{
-            // Show modal            
-            // console.log('Modal Shown');
+            // Show modal
             return (
                 <div className="backdrop">
                     <div className="modal" id="createRoomModal">
