@@ -42,7 +42,11 @@ class UserListItem extends React.Component {
                 <button 
                     className="btn btn-warning" 
                     value={this.state.nickname} 
-                    onClick={() => this.props.removeOpFromUser(this.state.nickname, this.props.currentRoomTitle)}>De-OP</button>  
+                    onClick={() => this.props.removeOpFromUser(this.state.nickname, this.props.currentRoomTitle)}>De-OP</button>
+                <button 
+                    className="btn btn-success" 
+                    value={this.state.nickname}
+                    onClick={() => this.props.togglePrivateMessageModal(this.state.nickname)}>Private Message</button> 
             </div>
         )
     // }

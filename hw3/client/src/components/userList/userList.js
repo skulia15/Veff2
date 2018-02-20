@@ -98,6 +98,7 @@ class UserList extends React.Component {
                     <ul className="list-group user-list">
                         {this.state.users.map((userListItem) => {
                             return <UserListItem 
+                                togglePrivateMessageModal={this.props.togglePrivateMessageModal}
                                 kickUser={this.kickUser} 
                                 makeUserOp={this.makeUserOp}
                                 banUser={this.banUser} 

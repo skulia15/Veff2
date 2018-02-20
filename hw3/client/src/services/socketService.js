@@ -199,4 +199,22 @@ export default class SocketService {
         });
     }
 
+    // Sends a private message to a user
+    static sendPrivateMessage(nickname, message, resolve) {
+        let contents = {nick: nickname, message: message};
+        this.socket.emit('privatemsg',  contents, (success) => {
+            if(success) {
+                resolve(success);
+            }
+            resolve(false);
+        });
+    }
+
+    // Listens to the event when user receives a private message
+    static privateMessageListener(resolve) {
+        this.socket.on('recv_privatemsg',  (messageFrom, message) => {
+            resolve(messageFrom, message);
+        });
+    }
+
 }

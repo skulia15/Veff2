@@ -3,13 +3,13 @@ import InfoContainer from '../../components/infoContainer/infoContainer';
 import RoomList from '../roomList/roomList';
 import UserList from '../userList/userList';
 import PropTypes from 'prop-types';
-// import {Link} from 'react-router-dom';
 import MainContainer from '../mainContainer/mainContainer';
 import RoomContainer from '../roomContainer/roomContainer';
 import MessageList from '../messageList/messageList';
 import UsersInRoomContainer from '../usersInRoomContainer/usersInRoomContainer';
 import CreateRoomModal from '../createRoomPage/createRoomModal';
-
+import PrivateMessageModal from '../privateMessageModal/privateMessageModal';
+import DisplayPrivateMessageModal from '../displayPrivateMessageModal/displayPrivateMessageModal';
 
 class LobbyPage extends React.Component {
     constructor(props, context) {
@@ -24,7 +24,12 @@ class LobbyPage extends React.Component {
             users: [],
             messages: [],
             opsInRoom: [],
-            isOpen: false
+            createRoomIsOpen: false,
+            privateMessageIsOpen: false,
+            displayMessageIsOpen: false,
+            sendPrivateMessageTo: '',
+            receivedMsgFrom: '',
+            receivedMsg: ''
         }
 
         // For calling socket
@@ -32,11 +37,14 @@ class LobbyPage extends React.Component {
 
         this.updateCurrentRoom = this.updateCurrentRoom.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.togglePrivateMessageModal = this.togglePrivateMessageModal.bind(this);
+        this.toggleDisplayMessageModal = this.toggleDisplayMessageModal.bind(this);
+
 
         this.showInfo = this.showInfo.bind(this);
         this.showChatRoom = this.showChatRoom.bind(this);
         this.showModal = this.showModal.bind(this);
-
+        this.showPrivateMessageModal = this.showPrivateMessageModal.bind(this);
 
         // On first page load user should join the lobby
         this.socketService.joinRoom('lobby');
@@ -48,8 +56,10 @@ class LobbyPage extends React.Component {
             this.setState({currentUser: this.props.location.username.referrer});
         }
 
+        // Request list of users
         this.socketService.getUsers();
 
+        // Listen to when server responds with user list
         this.socketService.userListener((userList) => {
             this.setState({users: userList})
         })
@@ -79,11 +89,11 @@ class LobbyPage extends React.Component {
 
         // Grab the event when server returns rooms
         this.socketService.usersInChatListener((room, updatedUsers, updatedOPs) => {
-            console.log('-------------------------------------');
-            console.log('UPDATED USERS');
-            console.log(updatedUsers);
-            console.log('UPDATED OPS');
-            console.log(updatedOPs);
+            // console.log('-------------------------------------');
+            // console.log('UPDATED USERS');
+            // console.log(updatedUsers);
+            // console.log('UPDATED OPS');
+            // console.log(updatedOPs);
             let updatedOpsArray = $.map(updatedOPs, function(value) {
                 return [value];
             });
@@ -101,16 +111,17 @@ class LobbyPage extends React.Component {
         });
 
         this.socketService.messageListener((currentRoom, updatedMessages) => {
-            this.setState({messages: updatedMessages})
+            this.setState({messages: updatedMessages});
             // Scroll to the bottom when chat updates with new message
             $('#message-list').scrollTop(Number.MAX_SAFE_INTEGER);
         });
 
-        this.socketService.serverMessageListener((type, room, username) => {
-            console.log('000000000000000');
-            console.log(type, room, username);
-            console.log('000000000000000');
-        });
+        this.socketService.serverMessageListener(type, room, username);
+
+        this.socketService.privateMessageListener((messageFrom, message) => {
+            this.setState({displayMessageIsOpen: true});
+            this.setState({receivedMsgFrom: messageFrom, receivedMsg: message});
+        })
     }
 
     updateCurrentRoom(currentRoom, currentRoomTitle, currentRoomTopic) {
@@ -125,8 +136,20 @@ class LobbyPage extends React.Component {
     }
 
     toggleModal() {
-        $('.modal').css('display', 'grid')
-        this.setState({isOpen: !this.state.isOpen});
+        $('#createRoomModal').css('display', 'grid')
+        this.setState({createRoomIsOpen: !this.state.createRoomIsOpen});
+    }
+
+    togglePrivateMessageModal(sendTo) {
+        this.setState({sendPrivateMessageTo: sendTo})
+        $('#privateMessageModal').css('display', 'grid');
+        this.setState({privateMessageIsOpen: !this.state.privateMessageIsOpen});
+        this.setState({sendPrivateMessageTo: sendTo});
+    }
+
+    toggleDisplayMessageModal() {
+        $('#display-private-message-modal').css('display', 'grid')
+        this.setState({displayMessageIsOpen: !this.state.displayMessageIsOpen});
     }
 
     showInfo() {
@@ -171,6 +194,7 @@ class LobbyPage extends React.Component {
                         currentRoom={this.state.currentRoom}/>
                     <h3>Users In chat</h3>
                     <UserList
+                        togglePrivateMessageModal ={this.togglePrivateMessageModal}
                         currentRoomTitle={this.state.currentRoomTitle}
                         currentUser={this.state.currentUser}
                         currentRoom={this.state.currentRoom}
@@ -184,20 +208,43 @@ class LobbyPage extends React.Component {
 
     showModal() {
         return(
-            <CreateRoomModal show={this.state.isOpen}
+            <CreateRoomModal show={this.state.createRoomIsOpen}
                 onClose={this.toggleModal}>
-                Here's some content for the modal
             </CreateRoomModal>
         )
     }
 
+    showPrivateMessageModal() {
+        return(
+            <PrivateMessageModal show={this.state.privateMessageIsOpen}
+                sendTo={this.state.sendPrivateMessageTo}
+                onClose={this.togglePrivateMessageModal}>
+            </PrivateMessageModal>
+        )
+    }
+
+    showDisplayPrivateMessageModal() {
+        return(
+            <DisplayPrivateMessageModal show={this.state.displayMessageIsOpen}
+                onClose={this.toggleDisplayMessageModal}
+                receivedMsgFrom={this.state.receivedMsgFrom}
+                receivedMsg={this.state.receivedMsg}>
+            </DisplayPrivateMessageModal>
+        )
+    }
+
     render() {
-        if(this.state.currentRoom && this.state.currentRoomTitle && this.state.rooms && this.state.currentUser) {
+        if(this.state.currentRoom && this.state.currentRoomTitle
+            && this.state.rooms && this.state.currentUser
+            && this.state.privateMessageIsOpen !== undefined
+            && this.state.displayMessageIsOpen !== undefined) {
             return (
                 <MainContainer>
                     {this.showInfo()}
                     {this.showChatRoom()}
                     {this.showModal()}
+                    {this.showPrivateMessageModal()}
+                    {this.showDisplayPrivateMessageModal()}
                 </MainContainer>
             );
         } else{
