@@ -33,16 +33,22 @@ class CreateRoomModal extends React.Component {
         event.preventDefault();
         this.socketService.createRoom(roomName, topic, (success) => {
             if(success) {
-                console.log('Created room');
                 this.socketService.getRooms();
             }
         });
-        let keys = Object.getOwnPropertyNames(this.props.rooms);        
-        let indexOfJoinedRoom = keys.indexOf(roomName);
-        let currentRoom = this.props.rooms[Object.keys(this.props.rooms)[indexOfJoinedRoom]];
-        this.props.updateCurrentRoom(currentRoom, roomName, topic);
+
+        //let keys = Object.getOwnPropertyNames(this.props.rooms);        
+        //let indexOfJoinedRoom = keys.indexOf(roomName);
+        //let currentRoom = this.props.rooms[Object.keys(this.props.rooms)[indexOfJoinedRoom]];
         // Close the modal
         this.props.onClose();
+
+        // Update the current room after creating it
+
+        // console.log('-- updating room --');        
+        // console.log(this.props.rooms);
+        // this.props.updateCurrentRoom(roomName, topic);
+        // console.log('-- updated room --');
     }
 
     ShowCreateForm() {

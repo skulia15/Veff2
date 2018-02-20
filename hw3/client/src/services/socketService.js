@@ -23,22 +23,17 @@ export default class SocketService {
     // Listens to when server responds with list of rooms
     static roomListener(resolve) {
         this.socket.on('roomlist', roomList => {
-            //console.log('Received answer about rooms from server');
             resolve(roomList);
         })
     };
     // Request a list of all users
     static getUsers() {
         this.socket.emit('users');
-        //console.log('Getting users...');
     };
 
     // Listen to when server responds with a list of users
     static userListener(resolve) {
         this.socket.on('userlist', userList => {
-            // console.log('Received answer about users from server');
-            // console.log('userList: ');            
-            // console.log(userList);
             resolve(userList);
         })
     };
@@ -82,14 +77,12 @@ export default class SocketService {
 
     // Handles sending messages to room
     static sendMessage(contents) {
-        console.log('Sending message...');
         this.socket.emit('sendmsg', contents);   
     };
 
     // Listens to when the chat updates
     static messageListener(resolve) {
         this.socket.on('updatechat', (room, updatedChat) => {
-            // console.log('Chat has been updated');
             resolve(room, updatedChat);
         })
     }
@@ -195,18 +188,18 @@ export default class SocketService {
                 // send message to room
             }
             resolve(type, room, username);
-            //resolve(room, updatedUsers, updatedOPs);
         });
     }
 
     // Sends a private message to a user
-    static sendPrivateMessage(nickname, message, resolve) {
+    static sendPrivateMessage(nickname, message) {
         let contents = {nick: nickname, message: message};
         this.socket.emit('privatemsg',  contents, (success) => {
             if(success) {
-                resolve(success);
+                console.log('message sent');
+            } else{ 
+                console.log('failed to send message');
             }
-            resolve(false);
         });
     }
 

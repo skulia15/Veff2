@@ -16,8 +16,14 @@ When you have run npm start, the browser opens up on localhost:9000 and every ti
 
 ## Limitations
 
-Unbanning a user is not possible
+* Unbanning a user is not possible
 
-When you leave a chatroom / join another one you lose your OP status
+* When you leave a chatroom / join another one you lose your OP status
 
-Cannot send update to chat when user leaves a room
+* When creating a chatroom you must join it after creating it
+
+* Op's appear both in the list of op's and the list of users
+
+* Cannot send update to chat when user leaves a room
+
+* Clicking on a room item in the roomlist without pressing join creates a room with the title '0'

@@ -10,7 +10,7 @@ class UserList extends React.Component {
             currentRoom: this.props.currentRoom,
             currentUser: this.props.currentUser,
             currentRoomTitle: this.props.currentRoomTitle,
-            //userIsOp: false,
+            userIsOp: this.props.userIsOp
         }
         this.makeUserOp = this.makeUserOp.bind(this);
         this.kickUser = this.kickUser.bind(this);
@@ -18,6 +18,39 @@ class UserList extends React.Component {
         this.removeOpFromUser = this.removeOpFromUser.bind(this);
         
         this.socketService = this.context.server.socketService;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({users: this.props.users});
+        this.setState({currentRoom: this.props.currentRoom});
+        this.setState({currentUser: this.props.currentUser});
+        this.setState({currentRoomTitle: this.props.currentRoomTitle});
+        
+        // if user props have been updated
+        if(nextProps.users !== this.state.users) {
+            this.setState({users: nextProps.users});
+            this.forceUpdate(); // TODO: þarf þetta?
+        }
+
+        if(nextProps.currentRoom !== this.state.currentRoom) {
+            this.setState({currentRoom: nextProps.currentRoom});
+        }
+
+        if(nextProps.currentUser !== this.state.currentUser) {
+            this.setState({currentUser: nextProps.currentUser});
+        }
+
+        if(nextProps.currentRoomTitle !== this.state.currentRoomTitle) {
+            this.setState({currentRoomTitle: nextProps.currentRoomTitle});
+        }
+
+        console.log('In userList');
+        // console.log('current room title');
+        // console.log(this.state.currentRoomTitle);
+        console.log('current room:');
+        console.log(this.state.currentRoom);
+        // console.log('Current user:');
+        // console.log(this.state.currentUser);
     }
 
     makeUserOp(nickname, roomName) {
@@ -77,20 +110,6 @@ class UserList extends React.Component {
         event.preventDefault();
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({users: this.props.users});
-        this.setState({currentRoom: this.props.currentRoom});
-        this.setState({currentUser: this.props.currentUser});
-        this.setState({currentRoomTitle: this.props.currentRoomTitle});
-        
-        // if user props have been updated
-        if(nextProps.users !== this.state.users) {
-            this.setState({users: nextProps.users})
-            this.forceUpdate(); // TODO: þarf þetta?
-        }
-
-    }
-
     render() {
         if(this.state.users && this.state.currentRoom) {
             return (
@@ -105,6 +124,7 @@ class UserList extends React.Component {
                                 removeOpFromUser={this.removeOpFromUser}                                 
                                 currentRoom={this.state.currentRoom}
                                 currentRoomTitle={this.state.currentRoomTitle}
+                                userIsOp={this.props.userIsOp}
                                 key={userListItem} 
                                 value={userListItem} 
                                 info={userListItem}/>
