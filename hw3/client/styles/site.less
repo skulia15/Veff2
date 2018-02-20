@@ -1,15 +1,18 @@
 // Insert your styles here, using LESS
 #root-container{
-    height: 100%;        
+    height: 100%;
 }
 
 body {
     height: 100%;
     font-family: 'Courier New', Courier, monospace;
-        
+    margin: auto;
+  }
+
     #app {
         height: 100%;
-        
+        box-sizing: border-box;
+
         .title{
             text-align: center;
             margin: 50px 0px;
@@ -18,6 +21,7 @@ body {
         .title-info{
             margin-bottom: 20px;
         }
+
         .title-heading{
             margin: 0 auto;
         }
@@ -28,8 +32,8 @@ body {
             display: block;
             height: 100%;
             text-align: center;
-            
         }
+
         .main-container{
             background-color: lightgray;
             width: 100%;
@@ -40,23 +44,42 @@ body {
 
         .info-container{
             background-color: lightblue;
-            float: left;
+            //float: left;
         }
+
+        .header{
+          position: fixed;
+          top: -6px;
+          left: 181px;
+          width: 1026px;
+          height: 60px;
+          float: left;
+          border-style: solid;
+          border-color: black;
+          background: #337ab7;
+        }
+
         .room-container{
             background-color: lightpink;
+        }
+
+        .chatroom {
+          color: red;
+          text-align: left;
+          margin-top: 60px;
         }
 
         .users-in-room-container{
             background-color: limegreen;
         }
-    
+
         .login-input{
             text-align: center;
         }
 
         .create-room-form{
-            text-align: center; 
-            margin: 0 auto; margin: 0 auto; 
+            text-align: center;
+            margin: 0 auto; margin: 0 auto;
             width:250px;
             width: 30%;
         }
@@ -65,7 +88,7 @@ body {
         }
         .icon{
             margin: 0px 15px;
-            
+
         }
         .icon-large{
             font-size: 1.5em;
@@ -78,7 +101,7 @@ body {
         .btn-left{
             float: left;
         }
-        
+
         .btn-right{
             float: right;
         }
@@ -105,4 +128,3 @@ body {
             padding: 30;
         }
     }
-}

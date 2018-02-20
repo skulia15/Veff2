@@ -32,11 +32,11 @@ class LobbyPage extends React.Component {
 
         this.updateCurrentRoom = this.updateCurrentRoom.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        
-        this.showInfo = this.showInfo.bind(this);        
+
+        this.showInfo = this.showInfo.bind(this);
         this.showChatRoom = this.showChatRoom.bind(this);
         this.showModal = this.showModal.bind(this);
-        
+
 
         // On first page load user should join the lobby
         this.socketService.joinRoom('lobby');
@@ -47,7 +47,7 @@ class LobbyPage extends React.Component {
         if(this.state.currentUser === null) {
             this.setState({currentUser: this.props.location.username.referrer});
         }
-        
+
         this.socketService.getUsers();
 
         this.socketService.userListener((userList) => {
@@ -95,15 +95,15 @@ class LobbyPage extends React.Component {
             // console.log('UPDATED OPS ARRAY');
             // console.log(updatedOpsArray);
             // console.log('-------------------------------------');
-            
+
             this.setState({usersInRoom: updatedUsersArray, opsInRoom: updatedOpsArray});
-            
+
         });
 
         this.socketService.messageListener((currentRoom, updatedMessages) => {
             this.setState({messages: updatedMessages})
-            // Scroll to the bottom when chat updates with new message       
-            $('#message-list').scrollTop(Number.MAX_SAFE_INTEGER);            
+            // Scroll to the bottom when chat updates with new message
+            $('#message-list').scrollTop(Number.MAX_SAFE_INTEGER);
         });
 
         this.socketService.serverMessageListener((type, room, username) => {
@@ -121,24 +121,26 @@ class LobbyPage extends React.Component {
         let currentRoomOpsArray = $.map(currentRoom.ops, function(value) {
             return [value];
         });
-        this.setState({opsInRoom: currentRoomOpsArray});   
+        this.setState({opsInRoom: currentRoomOpsArray});
     }
 
     toggleModal() {
         $('.modal').css('display', 'grid')
         this.setState({isOpen: !this.state.isOpen});
     }
-    
+
     showInfo() {
         return(
             <InfoContainer>
+              <div class="header">
                 <h3>Welcome to ChatterBox {this.state.currentUser}</h3>
-                {/* <h3>Active Users</h3>                
+                {/* <h3>Active Users</h3>
                 <UserList users={this.state.users}/> */}
-                <h3>Active Chatrooms</h3>                                
+              </div>
+                <h3>Active Chatrooms</h3>
                 <button className="btn btn-success" onClick={this.toggleModal}>Create Room</button>
-                <RoomList rooms={this.state.rooms} 
-                    currentRoom={this.state.currentRoom} 
+                <RoomList rooms={this.state.rooms}
+                    currentRoom={this.state.currentRoom}
                     currentRoomTitle={this.state.currentRoomTitle}
                     updateCurrentRoom={this.updateCurrentRoom}/>
             </InfoContainer>
@@ -149,30 +151,32 @@ class LobbyPage extends React.Component {
         return(
             <MainContainer>
                 <RoomContainer>
+                  <div class="chatroom">
                     <h2>Current Chatroom: {this.state.currentRoomTitle}</h2>
                     <h4>Topic for this Chatroom: {this.state.currentRoomTopic}</h4>
+                  </div>
                     <MessageList
-                        currentRoomTitle={this.state.currentRoomTitle} 
-                        currentRoom={this.state.currentRoom} 
+                        currentRoomTitle={this.state.currentRoomTitle}
+                        currentRoom={this.state.currentRoom}
                         messages={this.state.messages}/>
                 </RoomContainer>
                 <UsersInRoomContainer>
-                    <h3>OP's</h3>
-                    <UserList 
+                    <h3>OPs</h3>
+                    <UserList
                         currentRoomTitle={this.state.currentRoomTitle}
                         currentUser={this.state.currentUser}
-                        currentRoom={this.state.currentRoom} 
-                        users={this.state.opsInRoom} 
-                        currentUser={this.state.currentUser} 
+                        currentRoom={this.state.currentRoom}
+                        users={this.state.opsInRoom}
+                        currentUser={this.state.currentUser}
                         currentRoom={this.state.currentRoom}/>
                     <h3>Users In chat</h3>
-                    <UserList 
-                        currentRoomTitle={this.state.currentRoomTitle}                    
-                        currentUser={this.state.currentUser} 
-                        currentRoom={this.state.currentRoom} 
-                        users={this.state.usersInRoom} 
-                        currentUser={this.state.currentUser} 
-                        currentRoom={this.state.currentRoom}/>                    
+                    <UserList
+                        currentRoomTitle={this.state.currentRoomTitle}
+                        currentUser={this.state.currentUser}
+                        currentRoom={this.state.currentRoom}
+                        users={this.state.usersInRoom}
+                        currentUser={this.state.currentUser}
+                        currentRoom={this.state.currentRoom}/>
                 </UsersInRoomContainer>
             </MainContainer>
         );
@@ -210,7 +214,7 @@ LobbyPage.contextTypes = {
     server: PropTypes.shape({
         socketService: PropTypes.component
     }),
-    
+
     routerHelper: PropTypes.shape({
         redirect: PropTypes.component,
     }),
