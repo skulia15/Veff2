@@ -79,11 +79,11 @@ class LobbyPage extends React.Component {
 
         // Grab the event when server returns rooms
         this.socketService.usersInChatListener((room, updatedUsers, updatedOPs) => {
-            // console.log('-------------------------------------');
-            // console.log('UPDATED USERS');
-            // console.log(updatedUsers);
-            // console.log('UPDATED OPS');
-            // console.log(updatedOPs);
+            console.log('-------------------------------------');
+            console.log('UPDATED USERS');
+            console.log(updatedUsers);
+            console.log('UPDATED OPS');
+            console.log(updatedOPs);
             let updatedOpsArray = $.map(updatedOPs, function(value) {
                 return [value];
             });
@@ -104,6 +104,12 @@ class LobbyPage extends React.Component {
             this.setState({messages: updatedMessages})
             // Scroll to the bottom when chat updates with new message       
             $('#message-list').scrollTop(Number.MAX_SAFE_INTEGER);            
+        });
+
+        this.socketService.serverMessageListener((type, room, username) => {
+            console.log('000000000000000');
+            console.log(type, room, username);
+            console.log('000000000000000');
         });
     }
 

@@ -60,7 +60,7 @@ export default class SocketService {
     // Leave a room
     static leaveRoom(roomName) {
         console.log('Leaving Room...', roomName);
-        this.socket.emit('partroom', roomName);   
+        this.socket.emit('partroom', roomName);
     };
 
     
@@ -169,6 +169,33 @@ export default class SocketService {
                 resolve(success);
             }
             resolve(false);
+        });
+    }
+
+    // When the server emits a message. On partroom, joinroom and disconnect
+    static serverMessageListener(resolve) {
+        this.socket.on('servermessage',  (type, room, username) => {
+            if(type === 'part') {
+                console.log('User ' + username + ' Parted room ' + room);
+                // send message to room
+                //let messageContents = {msg: username + ' left the room', roomName: room};
+                //this.sendMessage(messageContents);
+            }
+            if(type === 'join') {
+                console.log('User ' + username + ' Parted room ' + room);
+                // send message to room
+                // let messageContents = {msg: username + ' joined the room', roomName: room};
+                // this.sendMessage(messageContents);
+            }
+            if(type === 'quit') {
+                // Send to all rooms user is part of
+                console.log('User ' + username + ' Left ChatterBox ');
+                console.log('User ' + username + ' is part of these rooms:');
+                console.log(room);
+                // send message to room
+            }
+            resolve(type, room, username);
+            //resolve(room, updatedUsers, updatedOPs);
         });
     }
 

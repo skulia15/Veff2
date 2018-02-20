@@ -58,7 +58,7 @@ class MessageList extends React.Component {
                         <form>
                             <div className="form-group">
                                 <label>Message:</label>
-                                <textarea className="form-control" rows="3" id="message" onChange={this.handleChange}></textarea>
+                                <textarea className="form-control" rows="3" id="message" onChange={this.handleChange} autoFocus></textarea>
                             </div>
                             <button className="btn btn-info" onClick={this.handleSendMessage}>Send</button>
                         </form>
