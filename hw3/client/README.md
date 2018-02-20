@@ -29,3 +29,5 @@ When you have run npm start, the browser opens up on localhost:9000 and every ti
 * Clicking on a room item in the roomlist without pressing join creates a room with the title '0'
 
 * When a user is kicked from a room he can still view messages, but not send messages
+
+* When the user refreshes the page he encounters an error. To fix this route back to '/'

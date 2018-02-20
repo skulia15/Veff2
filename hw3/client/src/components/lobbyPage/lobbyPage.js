@@ -19,9 +19,9 @@ class LobbyPage extends React.Component {
             currentRoom: null,
             currentRoomTitle: '',
             currentRoomTopic: '',
-            usersInRoom: [],
             rooms: [],
             users: [],
+            usersInRoom: [],
             messages: [],
             opsInRoom: [],
             createRoomIsOpen: false,
@@ -35,11 +35,11 @@ class LobbyPage extends React.Component {
         // For calling socket
         this.socketService = this.context.server.socketService;
 
+        // Binding 'this' to local functions
         this.updateCurrentRoom = this.updateCurrentRoom.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
+        this.toggleCreateRoomModal = this.toggleCreateRoomModal.bind(this);
         this.togglePrivateMessageModal = this.togglePrivateMessageModal.bind(this);
         this.toggleDisplayMessageModal = this.toggleDisplayMessageModal.bind(this);
-        
         this.showInfo = this.showInfo.bind(this);
         this.showChatRoom = this.showChatRoom.bind(this);
         this.showModal = this.showModal.bind(this);
@@ -87,6 +87,7 @@ class LobbyPage extends React.Component {
         this.socketService.getRooms();
 
         this.socketService.usersInChatListener((room, updatedUsers, updatedOPs) => {
+            this.socketService.getRooms();
             // Map op's from object to array
             let updatedOpsArray = $.map(updatedOPs, function(value) {
                 return [value];
@@ -97,7 +98,6 @@ class LobbyPage extends React.Component {
             });
 
             this.setState({usersInRoom: updatedUsersArray, opsInRoom: updatedOpsArray});
-            
         });
 
         this.socketService.messageListener((currentRoom, updatedMessages) => {
@@ -129,7 +129,7 @@ class LobbyPage extends React.Component {
         this.setState({opsInRoom: currentRoomOpsArray});
     }
 
-    toggleModal() {
+    toggleCreateRoomModal() {
         $('#createRoomModal').css('display', 'grid')
         this.setState({createRoomIsOpen: !this.state.createRoomIsOpen});
     }
@@ -151,7 +151,7 @@ class LobbyPage extends React.Component {
         return(
             <InfoContainer>
                 <h3>Active Chatrooms</h3>
-                <button className="btn btn-success" onClick={this.toggleModal}>Create Room</button>
+                <button className="btn btn-success" onClick={this.toggleCreateRoomModal}>Create Room</button>
                 <RoomList rooms={this.state.rooms}
                     currentRoom={this.state.currentRoom}
                     currentRoomTitle={this.state.currentRoomTitle}
@@ -196,7 +196,7 @@ class LobbyPage extends React.Component {
     showModal() {
         return(
             <CreateRoomModal show={this.state.createRoomIsOpen}
-                onClose={this.toggleModal}
+                onClose={this.toggleCreateRoomModal}
                 rooms={this.state.rooms}
                 updateCurrentRoom={this.updateCurrentRoom}>
             </CreateRoomModal>
@@ -223,14 +223,11 @@ class LobbyPage extends React.Component {
     }
     render() {
         if(this.state.currentRoom && this.state.currentRoomTitle
-            && this.state.rooms && this.state.currentUser
-            && this.state.privateMessageIsOpen !== undefined
-            && this.state.displayMessageIsOpen !== undefined
-            && this.state.createRoomIsOpen !== undefined) {
+            && this.state.rooms && this.state.currentUser) {
             return (
                 <div>
                     <div className="header">
-                        <h3 className="center">Welcome to ChatterBox {this.state.currentUser}</h3>
+                        <h3 className="center"><i className="fab fa-rocketchat icon icon-large"></i>Welcome to ChatterBox {this.state.currentUser}</h3>
                     </div>
                     <MainContainer>
                         {this.showInfo()}
