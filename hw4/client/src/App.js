@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 // My components here
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Menu from './components/Menu/Menu';
+import Offers from './components/Offers/Offers';
 import About from './components/About/About';
+import PizzaItem from './components/PizzaItem/PizzaItem';
+import OfferItem from './components/OfferItem/OfferItem';
 import reducers from './reducers/reducers';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
@@ -30,16 +33,14 @@ class App extends React.Component {
                     <NavigationBar logoImageUrl="http://i0.kym-cdn.com/photos/images/original/001/259/271/69a.png" />
                     <div className="container">
                         <Switch>
-                            {/* <Route path="/topgames" component={TopGames} /> */}
-                            <Route path="/about" component={About} />
-                            {/* <Route path="/signup" component={SignupForm} /> */}
-                            {/* <Route path="/profile" component={Profile} /> */}
-                            {/* <Route path="/login" component={Login} /> */}
                             <Route exact path="/" render={() => {
                                 return <Redirect to="/pizzas" />;
                             }} />
                             <Route exact path="/pizzas" component={Menu} />
-                            {/* <Route path="/:newsId" component={NewsItem} /> */}
+                            <Route path="/offers/:offerId" component={OfferItem} />
+                            <Route path="/pizzas/:pizzaId" component={PizzaItem} />
+                            <Route path="/offers" component={Offers} />
+                            <Route path="/about" component={About} />
                         </Switch>
                     </div>
                 </div>

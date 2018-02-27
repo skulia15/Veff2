@@ -2,20 +2,20 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ListViewItem = ({ info }) => {
+const PizzaListViewItem = ({ info }) => {
     const { id, name, description, price, image } = info;
     return (
-        <li className="list-view-item">
+        <li className="grid-item list-view-item">
+            <img src={image} alt="Photo of pizza" className="image-preview"/>
             <h3><Link to={`/pizzas/${id}`}>{name}</Link></h3>
             <p>{description}</p>
             <p>{price} kr</p>
-            <img src={image} alt="Photo of pizza" />
         </li>
     );
 };
 
 // Add propTypes
-ListViewItem.propTypes = {
+PizzaListViewItem.propTypes = {
     info: PropTypes.shape({
         name: PropTypes.string.isRequired,
         description: PropTypes.string,
@@ -25,7 +25,7 @@ ListViewItem.propTypes = {
 };
 
 // Add defaultProps
-ListViewItem.defaultProps = {
+PizzaListViewItem.defaultProps = {
     info: {
         name: 'Pizza name',
         description: 'Description of pizza',
@@ -34,4 +34,4 @@ ListViewItem.defaultProps = {
     }
 };
 
-export default ListViewItem;
+export default PizzaListViewItem;

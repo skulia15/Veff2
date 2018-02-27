@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 const ListView = ({ children }) => {
-    return <ul className="list-view">{children}</ul>
+    return <div className="grid-container list-view">{children}</div>
 };
 
 // Add propTypes

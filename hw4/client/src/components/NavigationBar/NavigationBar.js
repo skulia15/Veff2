@@ -15,19 +15,19 @@ const NavigationBar = ({ logoImageUrl }) => {
                     exact
                     to="/pizzas"
                     activeClassName="active"
-                    className="nav-link">Menu</NavLink>
+                    className="nav-link">MENU</NavLink>
                 <NavLink
                     to="/offers"
                     activeClassName="active"
-                    className="nav-link">Offers</NavLink>
+                    className="nav-link">OFFERS</NavLink>
                 <NavLink
                     to="/about"
                     activeClassName="active"
-                    className="nav-link">About us</NavLink>
+                    className="nav-link">ABOUT US</NavLink>
                 <NavLink
                     to="/cart"
                     activeClassName="active"
-                    className="nav-link">Cart</NavLink>
+                    className="nav-link">CART</NavLink>
             </NavigationBarLinkWrapper>
         </nav>
     );

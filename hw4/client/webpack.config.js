@@ -31,7 +31,7 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     plugins: [new HtmlWebpackPlugin({
-        title: 'pizzeria-uno',
+        title: 'Pizzeria Uno',
         template: './index.html',
         inject: 'body'
     })]
