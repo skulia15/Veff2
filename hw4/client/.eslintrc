@@ -4,11 +4,26 @@
 		"react"
 	],
 	"parserOptions": {
+		"ecmaVersion": 8,
 		"ecmaFeatures": {
+			"experimentalObjectRestSpread": true,
 			"jsx": true
 		}
 	},
+	"env": {
+		"es6": true,
+		"node": true
+	},
 	"rules": {
+		"arrow-spacing": ["error", { "before": true, "after": true }],
+		"comma-dangle": ["error", {
+			"arrays": "never",
+			"objects": "never",
+			"imports": "never",
+			"exports": "never",
+			"functions": "never"
+		  }],
+		  "comma-spacing": ["error", { "before": false, "after": true }],
 		"quotes": [
 			2,
 			"single"
@@ -32,17 +47,17 @@
 			}
 		],
 		"camelcase": [
-			1,
+			"error",
 			{properties: "always"
 			}
 		],
-		"indent": [
-			1,
-			4,
-			{
-				"SwitchCase": 1
-			}
-		],
+		// "indent": [
+		// 	1,
+		// 	4,
+		// 	{
+		// 		"SwitchCase": 1
+		// 	}
+		// ],
 		"space-before-blocks": [
 			2,
 			"always"
@@ -51,12 +66,33 @@
 			2,
 			"always"
 		],
+		"indent": ["error", 4, {
+			"SwitchCase": 1,
+			"VariableDeclarator": 1,
+			"outerIIFEBody": 1,
+			"MemberExpression": 1,
+			"FunctionDeclaration": { "parameters": 1, "body": 1 },
+			"FunctionExpression": { "parameters": 1, "body": 1 },
+			"CallExpression": { "arguments": 1 },
+			"ArrayExpression": 1,
+			"ObjectExpression": 1,
+			"ImportDeclaration": 1,
+			"flatTernaryExpressions": false,
+			"ignoreComments": false
+		  }],
+		"handle-callback-err": ["error", "^(err|error)$" ],
+		"constructor-super": "error",
+		"curly": ["error", "multi-line"],
 		"no-duplicate-imports": 2,
 		"no-unused-vars": 2,
 		"no-irregular-whitespace": "warn",
 		"no-unreachable": "warn",
-		"curly": "warn",
-		"no-redeclare":"warn",
-		"no-mixed-requires": "warn"
+		"no-redeclare": "warn",
+		"no-mixed-requires": "warn",
+		"key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
+		"keyword-spacing": ["error", { "before": true, "after": true }],
+		"no-mixed-spaces-and-tabs": "error",
+		"no-multi-spaces": "error",
+		"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
 	}
 }

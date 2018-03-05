@@ -1,32 +1,38 @@
 
 import React from 'react';
-import pizzaService from '../../services/pizzaService';
-// import PizzaListViewItem from '../PizzaListViewItem/PizzaListViewItem'
+import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
-class PizzaItem extends React.Component {
-    componentDidMount() {
-        // Get news item based on route param
-        const { pizzaId } = this.props.match.params;
-        pizzaService.getPizzaById(pizzaId).then(pizza => {
-            this.setState({ pizzaItem: pizza.data });
-        });
-    }
-    constructor(props) {
-        super(props);
-        this.state = { pizzaItem: {} };
-    }
-    render() {
-        const { name, description, price, image } = this.state.pizzaItem;
-        return (
-            <div className="details-container">
-                <h3>{name}</h3>
-                <p>{description}</p>
-                <p>{price}</p>
-                <img src={image} alt="Photo of pizza" />
-            </div>
-            //<PizzaListViewItem info={this.state.pizzaItem} />
-        )
-    }
+const PizzaItem = ({ pizza }) => {
+    // componentDidMount() {
+    //     // Get news item based on route param
+    //     const { pizzaId } = this.props.match.params;
+    //     pizzaService.getPizzaById(pizzaId).then(pizza => {
+    //         this.setState({ pizzaItem: pizza.data });
+    //     });
+    // }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { pizzaItem: {} };
+    // }
+    const {id, name, description, price, image} = pizza;
+    return (
+        <div className="grid-item list-view-item">
+            <Link className="title-large" to={`/pizzas/${id}`}>{name}</Link>
+            <p>{description}</p>
+            <p>{price} kr</p>
+            <img src={image} alt="Photo of pizza" className="image-preview"/>
+        </div>
+    )
+};
+
+PizzaItem.PropTypes = {
+    pizza: PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string,
+        price: PropTypes.number,
+        image: PropTypes.string
+    })
 };
 
 export default PizzaItem;

@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: ['babel-polyfill', './src/App.js'],
+    entry: './src/App.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
@@ -20,19 +20,13 @@ module.exports = {
         ]
     },
     watch: true,
-    resolve: {
-        extensions: ['.js', '.jsx', '.less']
-    },
     devServer: {
-        compress: true,
         port: 9090,
         open: true,
+        compress: true,
         historyApiFallback: true
     },
-    devtool: 'inline-source-map',
-    plugins: [new HtmlWebpackPlugin({
-        title: 'Pizzeria Uno',
-        template: './index.html',
-        inject: 'body'
-    })]
+    plugins: [
+        new HtmlWebpackPlugin({ title: 'Pizzeria Uno', template: './index.html', inject: 'body' })
+    ]
 };

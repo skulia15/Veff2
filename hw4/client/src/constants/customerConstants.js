@@ -1,0 +1,5 @@
+export const GET_CUSTOMER = 'GET_CUSTOMER';
+
+export const CREATE_CUSTOMER = 'CREATE_CUSTOMER';
+
+export const DESIRED_CUSTOMER = 'DESIRED_CUSTOMER';

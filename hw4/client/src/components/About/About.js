@@ -8,6 +8,10 @@ const About = () => {
                 <hr className="border"/>
                 <p>It all began when Ike Sewell imagined a pizza unlike any other. Fresh dough with a tall edge, topped with homemade sauce and more cheese than you could believe. People have been lining up ever since.</p>
             </div>
+            <div className="text-center">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/51uDsNsQDAL.jpg" alt="Delicious Pizza" align="middle"/>
+            </div>
+            
             <div>
                 <h1 className="title-large">OUR PIZZERIA UNO HERITAGE</h1>
                 <hr className="border"/>
