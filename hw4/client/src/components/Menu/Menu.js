@@ -11,27 +11,19 @@ class Menu extends React.Component {
         const { getAllPizzas } = this.props;
         getAllPizzas();
     }
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         // filter: '',
-    //         // categoryFilter: 'technology',
-    //         pizzas: []
-    //     };
-    // };
-    // onFilter(e) {
-    //     this.setState({
-    //         filter: e.target.value
-    //     });
-    // }
+
     render() {
-        // const { pizzas, filter, categoryFilter } = this.state;
         const { pizza } = this.props;
         if (pizza.constructor === Array) {
             return (
-                <div>
-                    <h1 className="text-center title">UNO PIZZERIA MENU</h1>
-                    <h3 className="text-center title">WE INVENTED DEEP DISH PIZZA... </h3>
+                <div className="menu-container">
+                    <div className="text-center title text-box-shadow">
+                        <p className="menu-welcome">
+                            <span className="block-span">UNO PIZZERIA MENU</span>
+                            <span className="block-span">WE INVENTED DEEP DISH PIZZA...</span> 
+                        </p>
+                    </div>
+                    
                     <ListView>
                         {pizza.map((pizzaItem) => (<PizzaItem key={pizzaItem.id} pizza={pizzaItem} />))}
                     </ListView>

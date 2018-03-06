@@ -16,30 +16,14 @@ class Offers extends React.Component {
         const { getAllOffers } = this.props;
         getAllOffers();
     }
-    // const { getUserSession } = this.props;
-    // getUserSession();
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         // filter: '',
-    //         // categoryFilter: 'technology',
-    //         offers: []
-    //     };
-    // };
-    // onFilter(e) {
-    //     this.setState({
-    //         filter: e.target.value
-    //     });
-    // }
+
     render() {
-        // const { pizzas, filter, categoryFilter } = this.state;
         const { offer } = this.props;
-        // const filteredPizzas = pizzas.filter(n => n.name.toLowerCase().includes(filter.toLowerCase()));
         return (
-            <div>
-                <h1 className="text-center title">OUR OFFERS</h1>                
-                {/* <SearchBar onFilter={this.onFilter.bind(this)} /> */}
-                {/* <Filter onFilter={(category) => { this.setState({ categoryFilter: category }) }} selected={categoryFilter} /> */}
+            <div className="menu-container">
+                <div className="text-center title text-box-shadow">
+                    <h1 className="menu-welcome">OUR OFFERS</h1>
+                </div>
                 <ListView>
                     {offer.map((offerItem) => (<OfferItem key={offerItem.id} offerData={offerItem} />))}
                 </ListView>

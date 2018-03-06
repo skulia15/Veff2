@@ -10,24 +10,24 @@ const NavigationBar = ({ logoImageUrl }) => {
             <div className="nav-logo">
                 <img src={logoImageUrl} alt="" />
             </div>
-            <NavigationBarLinkWrapper>
+            <NavigationBarLinkWrapper className="font-nav">
                 <NavLink
                     exact
                     to="/pizzas"
                     activeClassName="active"
-                    className="nav-link">MENU</NavLink>
+                    className="nav-link"><i class="fa fa-cutlery fa-lg"></i> MENU</NavLink>
                 <NavLink
                     to="/offers"
                     activeClassName="active"
-                    className="nav-link">OFFERS</NavLink>
+                    className="nav-link"><i className="fa fa-tag fa-lg"></i> OFFERS</NavLink>
                 <NavLink
                     to="/about"
                     activeClassName="active"
-                    className="nav-link">ABOUT US</NavLink>
+                    className="nav-link"><i className="fa fa-info-circle fa-lg"></i> ABOUT US</NavLink>
                 <NavLink
                     to="/cart"
                     activeClassName="active"
-                    className="nav-link">CART</NavLink>
+                    className="nav-link"><i className="fa fa-shopping-cart fa-lg"></i> CART</NavLink>
             </NavigationBarLinkWrapper>
         </nav>
     );

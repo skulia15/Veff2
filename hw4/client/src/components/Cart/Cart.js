@@ -18,29 +18,41 @@ class Cart extends React.Component {
                 // <div className="container has-background">
                 //     <h1 className="text-center title">LOADING CART</h1>
                 // </div>
-                <div className="container has-background">
-                    <h1 className="text-center title">CART</h1>
-                    <h4 className="text-center title">YOUR CART IS EMPTY</h4>
+                // <div className="container container-narrow has-background">
+                //     <h1 className="text-center title">CART</h1>
+                //     <h4 className="text-center title">YOUR CART IS EMPTY</h4>
+                // </div>
+                <div className="text-center title text-box-shadow">
+                    <p className="menu-welcome">
+                        <h2 className="block-span">CART</h2>
+                        <h4 className="block-span">YOUR CART IS EMPTY</h4> 
+                    </p>
                 </div>
             );
-        // If we have retrieved the cart but it contains no items we display empty cart message
-        } else if (!cart.length) {
-            return (
-                <div className="container has-background">
-                    <h1 className="text-center title">CART</h1>
-                    <h4 className="text-center title">YOUR CART IS EMPTY</h4>
-                </div>
-            )
+        // // If we have retrieved the cart but it contains no items we display empty cart message
+        // } else if (!cart.length) {
+        //     return (
+        //         <div className="container container-narrow has-background">
+        //             <h1 className="text-center title">CART</h1>
+        //             <h4 className="text-center title">YOUR CART IS EMPTY</h4>
+        //         </div>
+        //     )
         // Display items in the cart
         } else {
             return (
-                <div className="container has-background">
-                    <h1 className="text-center title">CART</h1>
-                    <h4 className="text-center title">ITEMS IN YOUR CART</h4>
-                    <ListView>
-                        {cart.map((cartItem) => <PizzaItem key={cartItem.id} pizza={cartItem} /> )}
-                    </ListView>
-                    <Link to={'/checkout'} className="btn btn-primary">CHECKOUT</Link>
+                <div>
+                    <div className="text-center title text-box-shadow">
+                        <p className="menu-welcome">
+                            <h2 className="block-span">CART</h2>
+                            <h4 className="block-span">ITEMS IN YOUR CART</h4> 
+                        </p>
+                    </div>
+                    <div className="container-narrow has-background">
+                        <ListView>
+                            {cart.map((cartItem) => <PizzaItem key={cartItem.id} pizza={cartItem} /> )}
+                        </ListView>
+                        <Link to={'/checkout'} className="btn"><i class="fa fa-credit-card-alt fa-lg"></i>CHECKOUT</Link>
+                    </div>
                 </div>
             )
         }

@@ -110,7 +110,7 @@ class Checkout extends React.Component {
                         {this.showDeliveryFields()}
                     </div>
 
-                    <button type="submit" className="btn btn-primary">CONFIRM</button>
+                    <button type="submit" className="btn">CONFIRM</button>
                 </form>
             </div>
         )

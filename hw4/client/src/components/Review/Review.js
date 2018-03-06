@@ -40,9 +40,7 @@ class Review extends React.Component {
                 <ListView>
                     {cart.map((cartItem) => <PizzaItem key={cartItem.id} pizza={cartItem} /> )}
                 </ListView>
-                <button type="submit" className="btn btn-primary" onClick={() => this.createMyOrder(customer)}>CONFIRM</button>
-                {/* <Link to={'/receipt'} className="btn"></Link> */}
-                
+                <button type="submit" className="btn" onClick={() => this.createMyOrder(customer)}>CONFIRM</button>
             </div>
         );
     }
