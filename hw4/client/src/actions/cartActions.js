@@ -2,17 +2,12 @@ import { ADD_TO_CART, GET_CART, REMOVE_FROM_CART, DESIRED_ITEMS } from '../const
 import toastr from 'toastr';
 
 export const addToCart = (pizza) => {
-    console.log(localStorage.getItem(DESIRED_ITEMS));
     let cart = JSON.parse(localStorage.getItem(DESIRED_ITEMS));
-    console.log(cart === null);
     if (!cart) {
         cart = [];
-        console.log('clear array');
     }
     cart.push(pizza);
     localStorage.setItem(DESIRED_ITEMS, JSON.stringify(cart));
-    console.log('cart in cart action');
-    console.log(cart);
     toastr.success('Pizza ' + pizza.name + ' was added to cart', 'Success!');
     return {
         type: ADD_TO_CART,
@@ -23,7 +18,13 @@ export const addToCart = (pizza) => {
 export const removeFromCart = (pizza) => {
     toastr.error('Pizza ' + pizza.name + ' was removed from your cart', 'Removed!');
     let cart = JSON.parse(localStorage.getItem(DESIRED_ITEMS));
-    // remove
+    for (var i = 0; i < cart.length; i++) {
+        if (cart[i].id === pizza.id) {
+            cart.splice(i, 1);
+            break;
+        }
+    }
+    localStorage.setItem(DESIRED_ITEMS, JSON.stringify(cart));
     return {
         type: REMOVE_FROM_CART,
         payload: cart

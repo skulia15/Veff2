@@ -84,8 +84,8 @@ class Checkout extends React.Component {
             return <Redirect to={{pathname: '/review'}} />
         }
         return (
-            <div className="container has-background">
-                <h1 className="text-center title">CHECKOUT</h1>
+            <div className="container container-narrow has-background">
+                <h1 className="menu-item-title">CHECKOUT</h1>
                 <form action="" method="get" className="form-container" onSubmit={(e) => this.onFormSubmit(e)}>
                     <div className="form-container">
                         <label className="form-title">Delivery Method:</label>

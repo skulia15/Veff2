@@ -5,6 +5,7 @@ const customerReducer = (state = [], action) => {
         case GET_CUSTOMER:
             return action.payload
         case CREATE_CUSTOMER:
+            console.log('creating customer');
             console.log(action.payload);
             return action.payload
         default:

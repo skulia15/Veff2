@@ -10,7 +10,7 @@ class Receipt extends React.Component {
     render() {
         return (
             <div className="container has-background text-center">
-                <h1 className="title">YOUR RECEIPT</h1>
+                <h1 className="menu-item-title">YOUR RECEIPT</h1>
                 <p>Your pizza is going in the oven!</p>
             </div>
         )

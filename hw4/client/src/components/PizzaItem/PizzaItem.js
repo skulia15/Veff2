@@ -9,19 +9,19 @@ class PizzaItem extends React.Component {
     render() {
         const { id, name, description, price, image} = this.props.pizza;
         const { pizza, addToCart } = this.props;
-        console.log(pizza);
         return (
-            <Link style={{ textDecoration: 'none'}} to={`/pizzas/${id}`}>
-                <div className="grid-item list-view-item">
+
+            <div className="grid-item list-view-item">
+                <Link style={{ textDecoration: 'none'}} to={`/pizzas/${id}`}>
                     <p className="menu-item-title">{name}</p>
                     <p className="menu-item-desc">{description}</p>
                     <p className="menu-item-price">{price} kr</p>
                     <div className="pizza-img">
                         <img src={image} alt="Photo of pizza" className="image-preview"/>
                     </div>
-                    <button className="btn" onClick={() => addToCart(pizza)}><i className="fa fa-cart-plus fa-lg"></i>ADD TO CART</button>
-                </div>
-            </Link>
+                </Link>
+                <button className="btn" onClick={() => addToCart(pizza)}><i className="fa fa-cart-plus fa-lg"></i>ADD TO CART</button>
+            </div>
         )
     }
 };

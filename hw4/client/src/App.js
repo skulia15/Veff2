@@ -9,6 +9,7 @@ import Checkout from './components/Checkout/Checkout';
 import Review from './components/Review/Review';
 import Receipt from './components/Receipt/Receipt';
 import OfferItem from './components/OfferItem/OfferItem';
+import PreviousOrder from './components/PreviousOrder/PreviousOrder';
 import reducers from './reducers/reducers';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
@@ -39,6 +40,7 @@ class App extends React.Component {
                             <Route path="/checkout" component={Checkout} />
                             <Route path="/review" component={Review} />
                             <Route path="/receipt" component={Receipt} />
+                            <Route path="/orders/:telephone" component={PreviousOrder} />
                         </Switch>
                     </div>
                 </div>

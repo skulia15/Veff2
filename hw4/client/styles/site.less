@@ -55,6 +55,9 @@ body {
             transition-duration: 0.4s;
             background-color: green;
         }
+        &.btn-danger {
+            background-color: red;
+        }
     }
     .title {
         color: #fff;
@@ -167,7 +170,7 @@ body {
     }
     .image-preview {
         margin-bottom: 10px;
-        width: 250px;
+        width: 200px;
         img {
             width: 200px;
             display: block;
@@ -252,11 +255,14 @@ body {
         display: block
      }
     .grid-container {
-        width: 70%;
+        width: 60%;
         margin: auto;
         display: grid;
         grid-template-columns: 33% 33% 33%;
         //padding: 10px;
+        &.grid-container-cart {
+            width: 100%;
+        }
     }
     .grid-item {
         //background-color: rgba(255, 255, 255, 0.8);
@@ -316,6 +322,7 @@ body {
         font-family: 'Crimson Text', serif;
         font-style: normal;
         font-size: 15px;
+        height: 40px;
         font-weight: 400;
         line-height: 19px;
         color: @color-dark
@@ -364,7 +371,7 @@ body {
     }
 
     .container-narrow{
-        width: 70%;
+        width: 60%;
         margin: auto;
     }
 

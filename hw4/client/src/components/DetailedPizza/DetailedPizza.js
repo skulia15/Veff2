@@ -13,7 +13,7 @@ class DetailedPizza extends React.Component {
     render() {
         const { pizza } = this.props;
         return (
-            <div className="jumbotron has-background">
+            <div className="jumbotron container-narrow has-background">
                 <PizzaItem key={pizza.id} pizza={pizza}/>
             </div>
         );

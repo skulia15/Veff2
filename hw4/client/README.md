@@ -7,12 +7,18 @@ To run the client run ` npm start ` inside the client folder
 
 ## Known Limitations
 
-Cannot display a single offer, if an offer is clicked it returns empty site.
+* Cannot display a single offer, if an offer is clicked it returns empty site.
 
-Offers do not alter price of order.
+* Offers do not alter price of order.
 
-You cannot remove an item from a cart
+* Clicking the nav-icon does not transport to home screen
 
-The cart does not empty after placing an order
+* Detail view does not contain "extra info" about a pizza
 
-Clicking the nav-icon does not transport to home screen
+* Cannot retrieve old orders for a phone number
+
+* Cannot go from item to cart
+
+* Cannot go to menu from item
+
+* Cannot go to menu from cart

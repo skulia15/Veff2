@@ -1,11 +1,12 @@
 import React from 'react';
-import ListView from '../ListView/ListView';
+import ListViewCart from '../ListViewCart/ListViewCart';
 import { connect } from 'react-redux';
 import { getCart } from '../../actions/cartActions';
+import { calculatePrice } from '../../actions/priceActions'
 import { getCustomer } from '../../actions/customerActions' 
 import { createOrder } from '../../actions/orderActions';
-import PizzaItem from '../PizzaItem/PizzaItem';
 import { Redirect } from 'react-router-dom';
+import ItemsInCart from '../ItemsInCart/ItemsInCart';
 
 // import { Link } from 'react-router-dom';
 
@@ -17,40 +18,56 @@ class Review extends React.Component {
         }
     }
     componentDidMount() {
-        const { getCart, getCustomer } = this.props;
+        const { getCart, getCustomer, cart, calculatePrice } = this.props;
         getCart();
         getCustomer();
+        calculatePrice(cart);
     }
 
     createMyOrder(customer) {
-        const { createOrder, cart } = this.props;
-        createOrder(customer.telephone, cart);
+        const { createOrder, cart, price } = this.props;
+        console.log('CALLING CREATEMYORDER WITH');
+        console.log('CART');
+        console.log(cart);
+        console.log('TELEPHONE');
+        console.log(customer.telephone);
+        console.log('Price');
+        console.log(price);
+        createOrder(customer.telephone, cart, price);
         this.setState({ orderCreated: true});
     }
 
     render() {
-        const { cart, customer } = this.props;
+        const { cart, customer, price, calculatePrice } = this.props;
+        calculatePrice(cart);
         if (this.state.orderCreated) {
             return <Redirect to={{pathname: '/receipt'}} />
         }
-        return (
-            <div className="container has-background">
-                <h1 className="text-center title">YOUR ORDER</h1>
-                <h3 className="text-center">Make sure that you dont forget anything</h3>
-                <ListView>
-                    {cart.map((cartItem) => <PizzaItem key={cartItem.id} pizza={cartItem} /> )}
-                </ListView>
-                <button type="submit" className="btn" onClick={() => this.createMyOrder(customer)}>CONFIRM</button>
-            </div>
-        );
+        if (cart !== null && cart.length) {
+            return (
+                <div className="container-narrow has-background">
+                    <h1 className="menu-item-title">YOUR ORDER</h1>
+                    <h3 className="text-center">Make sure that you dont forget anything</h3>
+                    <ListViewCart>
+                        {cart.map((cartItem) => <ItemsInCart key={cartItem.id} pizza={cartItem} /> )}
+                    </ListViewCart>
+                    <p className="menu-item-price">Total price of order: {price} Kr</p>
+                    <button type="submit" className="btn" onClick={() => this.createMyOrder(customer)}>CONFIRM</button>
+                </div>
+            );
+        } else {
+            this.setState({orderCreated: false});
+            return <Redirect to={{pathname: '/cart'}} />
+        }
     }
 };
 
 const mapStateToProps = (state) => {
     return {
         cart: state.cart,
-        customer: state.customer
+        customer: state.customer,
+        price: state.price
     }
 }
 
-export default connect(mapStateToProps, { getCustomer, getCart, createOrder })(Review);
+export default connect(mapStateToProps, { getCustomer, getCart, createOrder, calculatePrice })(Review);

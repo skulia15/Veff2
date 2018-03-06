@@ -4,7 +4,8 @@ import order from './orderReducer';
 import offer from './offerReducer';
 import cart from './cartReducer';
 import customer from './customerReducer'
+import price from './priceReducer'
 
 export default combineReducers({
-    pizza, order, offer, cart, customer
+    pizza, order, offer, cart, customer, price
 });
