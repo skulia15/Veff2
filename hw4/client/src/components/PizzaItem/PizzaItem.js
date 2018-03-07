@@ -26,7 +26,7 @@ class PizzaItem extends React.Component {
     }
 };
 
-PizzaItem.PropTypes = {
+PizzaItem.propTypes = {
     pizza: PropTypes.shape({
         name: PropTypes.string,
         description: PropTypes.string,

@@ -6,6 +6,7 @@ import { calculatePrice } from '../../actions/priceActions'
 import { getCustomer } from '../../actions/customerActions' 
 import { createOrder } from '../../actions/orderActions';
 import { Redirect } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import ItemsInCart from '../ItemsInCart/ItemsInCart';
 
 // import { Link } from 'react-router-dom';
@@ -26,13 +27,6 @@ class Review extends React.Component {
 
     createMyOrder(customer) {
         const { createOrder, cart, price } = this.props;
-        console.log('CALLING CREATEMYORDER WITH');
-        console.log('CART');
-        console.log(cart);
-        console.log('TELEPHONE');
-        console.log(customer.telephone);
-        console.log('Price');
-        console.log(price);
         createOrder(customer.telephone, cart, price);
         this.setState({ orderCreated: true});
     }
@@ -69,5 +63,20 @@ const mapStateToProps = (state) => {
         price: state.price
     }
 }
+
+Review.PropTypes = {
+    order: PropTypes.shape({
+        telephone: PropTypes.string,
+        cart: PropTypes.object,
+        price: PropTypes.number
+    }),
+    customer: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        telephone: PropTypes.string.isRequired,
+        address: PropTypes.string,
+        city: PropTypes.string,
+        postalCode: PropTypes.string
+    })
+};
 
 export default connect(mapStateToProps, { getCustomer, getCart, createOrder, calculatePrice })(Review);

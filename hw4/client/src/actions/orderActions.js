@@ -4,42 +4,63 @@ import fetch from 'isomorphic-fetch';
 import axios from 'axios';
 
 export const getOrderByTelephone = (telephone) => {
-    console.log('--getting order for----');
-    console.log(telephone);
-    return dispatch => fetch('http://localhost:3500/api/orders/' + telephone)
-        .then(json => json.json())
-        .then(data => dispatch(getOrderByTelephoneSuccess(data)));
+    return dispatch => fetch('http://localhost:3500/api/orders/' + telephone).then((result => {
+        if (result.status === 200) {
+            result.json().then(data => dispatch(getOrderByTelephoneSuccess(data)));
+        } else {
+            dispatch(getOrderByTelephoneFail());
+        }
+    }))
 };
 
 export const createOrder = (telephone, cart, price) => {
-    console.log('in CreateOrder');
-    console.log('tel:');
-    console.log(telephone);
-    console.log('cart');
-    console.log(cart);
-    console.log('price');
-    console.log(price);
+    var headers = {
+        'Content-Type': 'application/json'
+    }
     let order = { telephone: telephone, price: price, cart: JSON.stringify(cart) };
-    return dispatch => axios.post('http://localhost:3500/api/orders/' + telephone, {order})
-        .then(data => dispatch(createOrderSuccess(data)));
+    return dispatch => axios.post('http://localhost:3500/api/orders/' + telephone, {order}, headers)
+        .then((result => {
+            if (result.status === 200) {
+                dispatch(createOrderSuccess());
+            } else {
+                dispatch(createOrderFail());
+            }
+        }))
 };
 
-const createOrderSuccess = (orderData) => {
-    let prevOrder = JSON.parse(orderData.config.data)
-    console.log('PREV ORDER');
-    console.log(prevOrder);
+// Successfully posted an order to the server
+// Returns true on success
+const createOrderSuccess = () => {
     localStorage.clear();
     return {
         type: CREATE_ORDER,
-        payload: prevOrder
+        payload: true
     };
 };
 
+// Error posting the order to the server
+// Returns null on error
+const createOrderFail = () => {
+    return {
+        type: CREATE_ORDER,
+        payload: null
+    };
+};
+
+// Successfully found an order with the provided phone number
+// Returns the most recently placed order
 const getOrderByTelephoneSuccess = (order) => {
-    console.log('hey success in getting order');
-    console.log(order);
     return {
         type: GET_ORDER_BY_TELEPHONE,
-        payload: order
+        payload: order[order.length - 1]
+    };
+};
+
+// Error finding order with the provided phone number
+// Returns null on error
+const getOrderByTelephoneFail = () => {
+    return {
+        type: GET_ORDER_BY_TELEPHONE,
+        payload: null
     };
 };

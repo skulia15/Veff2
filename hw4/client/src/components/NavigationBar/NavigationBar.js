@@ -28,22 +28,17 @@ const NavigationBar = ({ logoImageUrl }) => {
                     to="/cart"
                     activeClassName="active"
                     className="nav-link"><i className="fa fa-shopping-cart fa-lg"></i> CART</NavLink>
+                <NavLink
+                    to="/orders"
+                    activeClassName="active"
+                    className="nav-link"><i className="fa fa-history fa-lg"></i> PREVIOUS ORDERS</NavLink>
             </NavigationBarLinkWrapper>
         </nav>
     );
 };
 
-// NavigationBar.contextTypes = {
-//     user: PropTypes.shape({
-//         loginId: PropTypes.string,
-//         displayName: PropTypes.string
-//     })
-// };
-
 NavigationBar.propTypes = {
     logoImageUrl: PropTypes.string.isRequired
 };
 
-// Fix for react-router-dom, known bug with NavLink
-// export default connect(({ language }) => { return { language }; }, null, null, { pure: false })(NavigationBar);
 export default NavigationBar;

@@ -21,12 +21,15 @@ class Checkout extends React.Component {
         super(props);
         this.state = initialState
     }
+
     onInput(e) {
         let fields = Object.assign({}, this.state.fields);
         fields[e.target.name] = e.target.value;
         this.setState({ fields });
     };
+
     onFormSubmit(e) {
+        e.preventDefault();
         const { name, telephone, address, city, postalCode, deliveryMethod } = this.state.fields;
         if (deliveryMethod === 'pickup') {
             if (name === '' || telephone === '') {
@@ -43,13 +46,12 @@ class Checkout extends React.Component {
         var fields = Object.assign({}, this.state.fields);
         // updating value
         fields.formIsValid = true;
-        this.setState({fields});
+        this.setState({ fields });
         const { createCustomer } = this.props;
         let newCustomer = { name: name, address: address, city: city, telephone: telephone, postalCode: postalCode, deliveryMethod: deliveryMethod };
         createCustomer(newCustomer);
-        e.preventDefault();
     }
-    
+
     showDeliveryFields() {
         const { deliveryMethod, address, city, postalCode } = this.state.fields;
         if (deliveryMethod === 'delivery') {
@@ -81,7 +83,7 @@ class Checkout extends React.Component {
         const { name, telephone, formIsValid } = this.state.fields;
         // If the state of the form is valid, go to the review page
         if (formIsValid) {
-            return <Redirect to={{pathname: '/review'}} />
+            return <Redirect to={{ pathname: '/review' }} />
         }
         return (
             <div className="container container-narrow has-background">
@@ -109,7 +111,6 @@ class Checkout extends React.Component {
                             validate={val => !val ? 'Please provide a telephone number' : ''} />
                         {this.showDeliveryFields()}
                     </div>
-
                     <button type="submit" className="btn">CONFIRM</button>
                 </form>
             </div>

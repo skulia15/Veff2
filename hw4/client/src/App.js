@@ -10,13 +10,13 @@ import Review from './components/Review/Review';
 import Receipt from './components/Receipt/Receipt';
 import OfferItem from './components/OfferItem/OfferItem';
 import PreviousOrder from './components/PreviousOrder/PreviousOrder';
+import PhoneInput from './components/PhoneInput/PhoneInput'
 import reducers from './reducers/reducers';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-// import { PropTypes } from 'prop-types';
 import '../styles/site.less';
 import DetailedPizza from './components/DetailedPizza/DetailedPizza';
 
@@ -40,6 +40,7 @@ class App extends React.Component {
                             <Route path="/checkout" component={Checkout} />
                             <Route path="/review" component={Review} />
                             <Route path="/receipt" component={Receipt} />
+                            <Route exact path="/orders/" component={PhoneInput} />
                             <Route path="/orders/:telephone" component={PreviousOrder} />
                         </Switch>
                     </div>

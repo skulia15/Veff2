@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PizzaItem from '../PizzaItem/PizzaItem'
 import { getPizzaById } from '../../actions/pizzaActions';
+import { PropTypes } from 'prop-types';
 
 class DetailedPizza extends React.Component {
     componentDidMount() {
@@ -25,5 +26,17 @@ const mapStateToProps = (state) => {
         pizza: state.pizza
     }
 }
+
+// The DetailedPizza component needs to be served a pizza object
+// with required fields: 'name' and 'price' and optional fields
+// 'description' and 'image'
+DetailedPizza.propTypes = {
+    pizza: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        price: PropTypes.number.isRequired,
+        image: PropTypes.string
+    })
+};
 
 export default connect(mapStateToProps, { getPizzaById })(DetailedPizza);

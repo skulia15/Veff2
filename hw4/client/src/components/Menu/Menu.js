@@ -4,7 +4,7 @@ import ListView from '../ListView/ListView';
 import { connect } from 'react-redux';
 import PizzaItem from '../PizzaItem/PizzaItem'
 import { getAllPizzas } from '../../actions/pizzaActions';
-// import { getUserSession } from '../../actions/actions.js';
+// import { PropTypes } from 'prop-types';
 
 class Menu extends React.Component {
     componentDidMount() {
@@ -42,5 +42,14 @@ const mapStateToProps = (state) => {
         pizza: state.pizza
     }
 }
+
+// Menu.propTypes = {
+//     pizza: PropTypes.shape({
+//         name: PropTypes.string,
+//         description: PropTypes.string,
+//         price: PropTypes.number,
+//         image: PropTypes.string
+//     })
+// };
 
 export default connect(mapStateToProps, { getAllPizzas })(Menu);

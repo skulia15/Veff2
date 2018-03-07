@@ -1,15 +1,10 @@
 
 import React from 'react';
 import ListView from '../ListView/ListView';
-// import OfferListViewItem from '../OfferListViewItem/OfferListViewItem';
-// import SearchBar from '../SearchBar/SearchBar';
-// import Filter from '../Filter/Filter';
-// import pizzaService from '../../services/pizzaService';
+// import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import OfferItem from '../OfferItem/OfferItem';
 import { getAllOffers } from '../../actions/offerActions';
-
-// import { getUserSession } from '../../actions/actions.js';
 
 class Offers extends React.Component {
     componentDidMount() {
@@ -37,5 +32,13 @@ const mapStateToProps = (state) => {
         offer: state.offer
     }
 }
+
+// Offers.propTypes = {
+//     offer: PropTypes.shape({
+//         offer: PropTypes.string,
+//         price: PropTypes.number,
+//         validFor: PropTypes.string
+//     })
+// };
 
 export default connect(mapStateToProps, { getAllOffers })(Offers);

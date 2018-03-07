@@ -1,41 +1,73 @@
 import React from 'react';
-import ListView from '../ListView/ListView';
+import ListViewCart from '../ListViewCart/ListViewCart';
 import { connect } from 'react-redux';
-// import { getCustomer } from '../../actions/customerActions' 
 import { getOrderByTelephone } from '../../actions/orderActions';
-// import PizzaItem from '../PizzaItem/PizzaItem';
+import { emptyCart, addToCart } from '../../actions/cartActions';
+import { PropTypes } from 'prop-types';
+import ItemsInCart from '../ItemsInCart/ItemsInCart';
+import { Redirect } from 'react-router-dom';
+
 // import { Redirect } from 'react-router-dom';
 
 class PreviousOrder extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            proceedToCheckout: false
+        }
     }
     componentDidMount() {
         const { telephone } = this.props.match.params;
-        console.log('telephone:');
-        console.log(telephone);
-        const { getOrderByTelephone, order } = this.props;
+        const { getOrderByTelephone } = this.props;
         getOrderByTelephone(telephone);
-        console.log('order');
-        console.log(order);
-        console.log('props');
-        console.log(this.props);
-        // getCart();
-        // getCustomer();
+    }
+
+    // Clears the cart contents and add all items from previous order to the cart
+    // then redirects to checkout
+    setCartToPrevOrder(order) {
+        const { emptyCart } = this.props;
+        emptyCart();
+        order.forEach(item => {
+            addToCart(item);
+        });
+        this.setState({proceedToCheckout: true});
     }
 
     render() {
         const { order } = this.props;
-        //getOrderByTelephone(this.props.match.params.telephone);
-        console.log('order');
-        console.log(order);
+        if (this.state.proceedToCheckout) {
+            return <Redirect to={{pathname: '/cart'}} />
+        }
+        // Wait for order to load
+        if (order === undefined) {
+            return (<h1>Loading previous order</h1>);
+        }
+        // If no order has been found
+        if (order === null || !order.cart) {
+            return (
+                <div className="text-center title text-box-shadow">
+                    <div className="menu-welcome">
+                        <h2>YOU HAVE NO PREVIOUS ORDERS</h2>
+                    </div>
+                </div>
+            );
+        }
+        let cart = JSON.parse(order.cart);
         return (
-            <div className="container has-background">
-                <h1 className="text-center title">YOUR PREVIOUS ORDERS</h1>
-                <ListView>
-                    {/* {order.map((orderItem) => <PizzaItem key={orderItem.id} pizza={orderItem} /> )} */}
-                </ListView>
-                {/* <button type="submit" className="btn" onClick={() => this.createMyOrder(customer)}>CONFIRM</button> */}
+            <div className="menu-container">
+                <div className="text-center title text-box-shadow">
+                    <h1 className="text-center title">YOUR PREVIOUS ORDER</h1>
+                </div>
+                <div className="container-narrow has-background">
+                    <div>
+                        <ListViewCart>
+                            {cart.map((cartItem) => <ItemsInCart key={cartItem.id} pizza={cartItem} /> ) }
+                        </ListViewCart>
+                        <p className="menu-item-price">Price of order: {order.price} kr</p>
+                        <button type="submit" className="btn" onClick={() => this.setCartToPrevOrder(cart)}>
+                            <i className="fa fa-credit-card-alt fa-lg"></i>ADD ORDER TO CART</button>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -43,10 +75,18 @@ class PreviousOrder extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        // customer: state.customer
         telephone: state.telephone,
         order: state.order
     }
 }
 
-export default connect(mapStateToProps, { getOrderByTelephone })(PreviousOrder);
+PreviousOrder.PropTypes = {
+    order: PropTypes.shape({
+        telephone: PropTypes.string,
+        cart: PropTypes.object,
+        price: PropTypes.number
+    }),
+    telephone: PropTypes.string
+};
+
+export default connect(mapStateToProps, { getOrderByTelephone, emptyCart, addToCart })(PreviousOrder);

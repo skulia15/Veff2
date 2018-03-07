@@ -5,7 +5,7 @@ const ListView = ({ children }) => {
     return <div className="grid-container list-view">{children}</div>
 };
 
-// Add propTypes
+// Add PropTypes
 ListView.propTypes = {
     // Children to be rendered within the ListView component
     children: PropTypes.node
