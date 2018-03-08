@@ -80,7 +80,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-PreviousOrder.PropTypes = {
+PreviousOrder.propTypes = {
     order: PropTypes.shape({
         telephone: PropTypes.string,
         cart: PropTypes.object,

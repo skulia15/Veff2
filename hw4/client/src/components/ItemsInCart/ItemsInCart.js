@@ -22,7 +22,7 @@ class ItemsInCart extends React.Component {
     }
 };
 
-ItemsInCart.PropTypes = {
+ItemsInCart.propTypes = {
     pizza: PropTypes.shape({
         name: PropTypes.string,
         description: PropTypes.string,
