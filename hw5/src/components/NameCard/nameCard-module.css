@@ -1,0 +1,33 @@
+.namecard{
+    width: 600px;
+    height: 300px;
+    background-color: #F5F5F5;
+    position: relative;
+    color: #185291;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.profile{
+    display: inline-block;
+    margin: 10px;
+    margin-top: 50px;
+    background-size: cover;
+    background-position: 50%;
+    border-radius: 20%;
+    width: 100px;
+    height: 100px;
+}
+
+.name{
+    font-size: 33px;
+    position: absolute;
+    margin-left: 150px;
+    top: 25px;
+    font-weight: 500;
+}
+
+.info{
+    text-align: center;
+    font-size: 25px;
+    margin-top: -35px;
+}

@@ -1,0 +1,41 @@
+.modal{
+    /* some style */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0,0.4); /* Fallback color */
+}
+
+.modalcontent{
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    background-color: #F5F5F5;
+    color: #185291;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 30px;
+}
+
+.centered{
+    text-align: center;
+}
+
+
+.title {
+    /* some style */
+}
+
+.body {
+    /* some style */
+}
+
+.footer {
+    /* some style */
+}

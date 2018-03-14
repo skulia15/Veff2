@@ -1,0 +1,41 @@
+
+.carousel{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    
+}
+
+.carousel-small{
+    width: 25%;
+}
+
+.carousel-medium{
+    width: 40%;
+
+}
+.carousel-large{
+    width: 60%;
+}
+
+.image{
+    width: 100%;
+    position: relative;
+}
+
+.arrow{
+    position: absolute;
+    z-index: 1;
+    vertical-align: middle;
+    top: 40%;
+    width: 10%;
+}
+
+.arrowleft{
+    right: 0px;
+}
+
+.arrowright{
+    left: 0px;
+}
