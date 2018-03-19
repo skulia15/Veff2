@@ -1,10 +1,6 @@
 import React from "react";
 import "./App.css";
-import Modal from "./components/Modal/Modal";
-import ProgressBar from "./components/ProgressBar/ProgressBar";
-import NameCard from "./components/NameCard/NameCard";
-import Button from './components/Button/ButtonCM';
-import Carousel from './components/Carousel/Carousel';
+import { Modal, ProgressBar, NameCard, Button, Carousel, Row, Col, CartoonNetworkSpinner} from "./components/";
 
 class App extends React.Component {
 	constructor(props, ctx) {
@@ -31,21 +27,25 @@ class App extends React.Component {
 			</div>
 			<div>
 				<h3>Progress Bar</h3>
+				<h5>Success, Striped and animated</h5>
 				<ProgressBar 
 					progress={50}
 					striped={true}
 					animated={true}
 					state="success"/>
+				<h5>Info, Striped</h5>
 				<ProgressBar 
 					progress={75}
 					striped={true}
-					animated={true}
+					animated={false}
 					state="info"/>
+				<h5>Warning</h5>
 				<ProgressBar 
-					progress={10}
-					striped={true}
-					animated={true}
+					progress={25}
+					striped={false}
+					animated={false}
 					state="warning"/>
+				<h5>Danger, just animated?</h5>
 				<ProgressBar 
 					progress={90}
 					striped={false}
@@ -55,10 +55,10 @@ class App extends React.Component {
 			<div>
 				<h3>Name Card</h3>
 				<NameCard 
-					name="Skúli Arnarsson"
-					email="skulia15@ru.is"
-					telephone="8587111"
-					imageUrl="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"/>
+					name="Sméagol"
+					email="Sméa_cool@hotmail.com"
+					telephone="58-12345"
+					imageUrl="https://vignette.wikia.nocookie.net/lotr/images/7/79/Smeagol.jpeg/revision/latest?cb=20130201224335"/>
 			</div>
 			<div>
 				<h3>Carousel</h3>
@@ -70,6 +70,47 @@ class App extends React.Component {
 						'https://i.ytimg.com/vi/eoHfFA8cY7I/maxresdefault.jpg'
 					]}
 					size="medium"/>
+			</div>
+			<div>
+				<h3>Row / Col</h3>
+				<h5>3 cols of size 4</h5>
+				<Row>
+					<Col size={4}></Col>
+					<Col size={4}></Col>
+					<Col size={4}></Col>
+				</Row>
+				<h5>2 cols of size 6 + overflow size 4</h5>
+				<Row>
+					<Col size={6}></Col>
+					<Col size={6}></Col>
+					<Col size={4}></Col>
+				</Row>
+				<h5>12 cols of size 1 + overflow size 4</h5>
+				<Row>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={1}></Col>
+					<Col size={4}></Col>
+				</Row>
+			</div>
+			<div>
+				<h3>Cartoon Network Spinner</h3>
+				<h5>2 Second interval</h5>
+					<CartoonNetworkSpinner
+						interval={2} />
+				<h5>4 Second interval</h5>
+					<CartoonNetworkSpinner
+						interval={4} />
+
 			</div>
 		</div>
 		);

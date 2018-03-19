@@ -30,6 +30,7 @@
     vertical-align: middle;
     top: 40%;
     width: 10%;
+    filter: contrast(1000%);
 }
 
 .arrowleft{

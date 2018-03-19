@@ -1,0 +1,21 @@
+@keyframes spin {
+    20%, 100% {
+        transform:rotate(1440deg);
+    }
+}
+
+.spinner{
+    display: inline-block;
+    margin: 10px;
+    background-size: cover;
+    background-position: 50%;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    animation-name: spin;
+    animation-timing-function: ease-in;
+    animation-duration: 5s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+}
+

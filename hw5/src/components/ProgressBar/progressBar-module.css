@@ -4,6 +4,7 @@
     background-color: #E3E3E3;
     border-radius: 20px;
     max-width: 30%;
+    margin: 15px;
 }
 
 .progress{
@@ -28,16 +29,26 @@
     background-color: #FF5757
 }
 
+
 .striped{ /*https://stackoverflow.com/questions/31546894/making-smoothly-animated-striped-div*/
     background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%,
-                        transparent 25%,
-                        transparent 50%,
-                        rgba(0, 0, 0, 0.1) 50%,
-                        rgba(0, 0, 0, 0.1) 75%,
-                        transparent 75%,
-                        transparent);
+    transparent 25%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.1) 75%,
+    transparent 75%,
+    transparent);
 }
 
 .animated{
-    transition: opacity 0.3s ease;
+    animation: stripes-move 10s linear infinite;
+}
+
+@keyframes stripes-move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 1000px;
+    }
 }

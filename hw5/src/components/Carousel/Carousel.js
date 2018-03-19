@@ -6,21 +6,62 @@ class Carousel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            displayImage: 0
+            displayImage: 0,
+            imagesLength: 1,
+            hasNextImage: true,
+            hasPrevImage: false
         };
 
         this.nextPic = this.nextPic.bind(this);
         this.prevPic = this.prevPic.bind(this);
-        
     };
-
-    nextPic(event) {
-        this.setState({displayImage: this.state.displayImage + 1});
+    componentWillMount(){
+        const { images } = this.props;
+        this.setState({imagesLength: images.length});
     }
 
-    prevPic(event) {
-        
-        this.setState({displayImage: this.state.displayImage - 1});
+    nextPic() {
+        if(this.state.imagesLength - 1 > this.state.displayImage){
+            this.setState({displayImage: this.state.displayImage + 1});
+            this.setState({hasPrevImage: true});
+        }
+        else{
+            this.setState({hasNextImage: false});
+        }
+    }
+
+    prevPic() {
+        if(this.state.displayImage > 0){
+            this.setState({displayImage: this.state.displayImage - 1});
+            this.setState({hasNextImage: true});
+        }
+        else{
+            this.setState({hasPrevImage: false});
+        }
+    }
+
+    renderArrowRight(){
+        if(this.state.hasPrevImage){
+            return(
+                <div className= {`${styles.arrow} ${styles.arrowright}`}>
+                    <img src="https://relux.com/assets/static//img/carousel_arrow_right.png"
+                    alt="right arrow" className= {`${styles.image}`}
+                    onClick={() => this.prevPic()}/>
+                </div>
+            );
+        }
+    }
+
+    renderArrowLeft(){
+        if(this.state.hasNextImage){
+            return(
+                <div className= {`${styles.arrow} ${styles.arrowleft}`}>
+                    <img src="https://relux.com/assets/static//img/carousel_arrow_left.png" 
+                    alt="left arrow" className= {`${styles.image}`}
+                    onClick={() => this.nextPic()}/>
+                </div>
+            );
+        }
     }
 
     render(){
@@ -29,16 +70,8 @@ class Carousel extends React.Component {
             <div>
                 <div className= {`${styles[`carousel-${size}`]} ${styles.carousel}` }>
                     <img src={images[this.state.displayImage]} alt="hobbits" className= {`${styles.image}`}/>
-                    <div className= {`${styles.arrow} ${styles.arrowleft}`}>
-                        <img src="https://relux.com/assets/static//img/carousel_arrow_left.png" 
-                        alt="left arrow" className= {`${styles.image}`}
-                        onClick={(e) => this.nextPic(e)}/>
-                    </div>
-                    <div className= {`${styles.arrow} ${styles.arrowright}`}>
-                        <img src="https://relux.com/assets/static//img/carousel_arrow_right.png"
-                        alt="right arrow" className= {`${styles.image}`}
-                        onClick={(e) => this.prevPic(e)}/>
-                    </div>
+                    {this.renderArrowRight()}
+                    {this.renderArrowLeft()}
                 </div>
             </div>
         )
@@ -47,11 +80,11 @@ class Carousel extends React.Component {
 
 Carousel.propTypes = {
     images: PropTypes.array.isRequired,
-    size: PropTypes.string
+    size: PropTypes.oneOf(['small', 'medium', 'large'])
 };
 
 Carousel.defaultProps = {
-    isOpen: false
+    size: "medium"
 };
 
 export default Carousel;

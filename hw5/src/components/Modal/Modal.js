@@ -30,13 +30,17 @@ const Modal = ({ isOpen, onClose, children }) => {
     }
 };
 
-Modal.Title = ({ children }) => { return <div className={`${styles.title}`}>{children}</div>; };
-Modal.Body = ({ children }) => { return <div className={`${styles.body}`}>{children}</div>; };
+Modal.Title = ({ children }) => { return <div className={`${styles.title}`}>{children}</div> };
+Modal.Body = ({ children }) => { return <div className={`${styles.body}`}>{children}</div> };
+// TODO: should be optional 
 Modal.Footer = ({ children }) => { return <div className={`${styles.footer}`}>{children}</div> };
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool,
+    // Determines the visibility of the modal
+    isOpen: PropTypes.bool.isRequired,
+    // Called when the modal is closed
     onClose: PropTypes.func.isRequired,
+    // Children rendered within the modal
     children: PropTypes.node
 };
 
