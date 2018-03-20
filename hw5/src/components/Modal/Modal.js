@@ -15,11 +15,9 @@ const Modal = ({ isOpen, onClose, children }) => {
                         </div>
                     </div>
                     <div className={`${styles.centered}`}>
-                    <Button type="success" className={`${styles.modalbtn}`} onClick={onClose} > Close Modal </Button>
+                        <Button type="danger" className={`${styles.modalbtn}`} onClick={onClose} > Close Modal </Button>
+                    </div>
                 </div>
-                
-            </div>
-                
             </div>);
     }
     else{

@@ -7,5 +7,8 @@ export { default as Modal} from './Modal/Modal';
 export { default as NameCard} from './NameCard/NameCard';
 export { default as ProgressBar} from './ProgressBar/ProgressBar';
 export { default as Row} from './Row/Row';
+export { default as TimePicker} from './TimePicker/TimePicker';
+export { default as DatePicker} from './DatePicker/DatePicker';
+
 
 

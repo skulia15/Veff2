@@ -4,7 +4,8 @@ import styles from './col-module.css';
 
 const Col = ({size}) => {
     let precentOfScreen = (size / 12);
-    let widthInPx = precentOfScreen * (window.innerWidth - 120);
+    // -50 to make room for margin-left without horizontal scrolling
+    let widthInPx = precentOfScreen * (window.innerWidth - 50);
     return(
         <div className= {`${styles.col}`} style={{width: widthInPx}}>
             col

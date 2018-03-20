@@ -1,12 +1,16 @@
 import React from "react";
 import "./App.css";
-import { Modal, ProgressBar, NameCard, Button, Carousel, Row, Col, CartoonNetworkSpinner} from "./components/";
+import { Modal, ProgressBar, NameCard, Button, Carousel, Row, Col, CartoonNetworkSpinner, TimePicker, DatePicker} from "./components/";
 
 class App extends React.Component {
 	constructor(props, ctx) {
 		super(props, ctx);
 		this.state = {
-		showModule: false
+			showModal: false,
+			time: null,
+			time2: null,
+			date: null,
+			date2: null
 		};
 	}
 	render() {
@@ -16,12 +20,12 @@ class App extends React.Component {
 			<hr />
 			<div>
 				<h3>Modal</h3>
-				<Modal isOpen={this.state.showModule} onClose={() => this.setState({ showModule: false })}>
+				<Modal isOpen={this.state.showModal} onClose={() => this.setState({ showModal: false })}>
 					<Modal.Title>My Modal Title</Modal.Title>
 					<Modal.Body>My Modal Body</Modal.Body>
 					<Modal.Footer>My Modal Footer</Modal.Footer>
 				</Modal>
-				<Button type="warning" onClick={() => this.setState({ showModule: true })}>
+				<Button type="warning" onClick={() => this.setState({ showModal: true })}>
 					Open Modal
 				</Button>
 			</div>
@@ -103,18 +107,48 @@ class App extends React.Component {
 				</Row>
 			</div>
 			<div>
+				<h3>Time Picker</h3>
+				<h5>24 hour time picker</h5>
+				<TimePicker 
+					onTimePick={time => this.setState({time})}
+					format = {24}/>
+				<p>Selected Time: {this.state.time}</p>
+				<h5>12 hour time picker</h5>
+				<TimePicker 
+					onTimePick={time2 => this.setState({time2})}
+					format={12}/>
+				<p>Selected Time: {this.state.time2}</p>
+			</div>
+			<div>
+				<h3>Date Picker</h3>
+				<h5>Locale is-IS</h5>
+				<DatePicker 
+					onDatePick={date => this.setState({date})}/>
+				<p>Selected Date: {this.state.date}</p>
+				<h5>Locale en-EN</h5>
+				<DatePicker 
+					onDatePick={date2 => this.setState({date2})}
+					format={12}/>
+				<p>Selected Date: {this.state.date2}</p>
+			</div>
+			<div>
 				<h3>Cartoon Network Spinner</h3>
+				<p>HEADS UP: The interval time is the time in seconds passed as props:
+					 so it is the time the image stands still + the spin animation time = interval time</p>
+				<h5>0.5 Second interval</h5>
+					<CartoonNetworkSpinner
+						interval={0.5} />
 				<h5>2 Second interval</h5>
 					<CartoonNetworkSpinner
 						interval={2} />
 				<h5>4 Second interval</h5>
 					<CartoonNetworkSpinner
 						interval={4} />
-
 			</div>
 		</div>
 		);
 	}
 }
+
 
 export default App;

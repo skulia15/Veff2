@@ -1,0 +1,16 @@
+.timePicker{
+    position: relative;
+}
+
+.fields{
+    display: inline-flex;
+}
+
+.timefield{
+    font-size: 40px;
+    margin: 0px 22px;
+}
+
+.selector{
+    display: block;
+}
