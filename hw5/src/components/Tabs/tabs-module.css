@@ -1,0 +1,58 @@
+
+.tabWrapper-vertical{
+    height: 500px;
+    width: 400px;
+}
+
+.tabWrapper-horizontal{
+    height: 300px;
+    width: 500px;
+}
+
+.tabs-dark{
+    background-color: #3F3F3F;
+    color: white
+}
+
+.tabs-light{
+    background-color: #FAFAFA;
+    border: 1px solid grey;
+    color: black;
+}
+
+.tab{
+    border: 1px solid black;
+    width: 90px;
+    text-align: center;
+    font-weight: bold
+}
+
+.tab:hover{
+    cursor: pointer;
+    background-color: steelblue;
+    opacity: 0.6;
+}
+
+.selectedTab-light{
+    background-color: #008F7B;
+}
+
+.selectedTab-dark{
+    background-color: #832F24;
+}
+
+.tab-dark{
+    border: 1px solid white;
+}
+
+.tab-light{
+    border: 1px solid black;
+}
+
+.tabBarWrapper{
+    display: flex;
+}
+
+.tabContent{
+    padding: 20px;  
+}

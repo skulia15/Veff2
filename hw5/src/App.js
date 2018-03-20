@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Modal, ProgressBar, NameCard, Button, Carousel, Row, Col, CartoonNetworkSpinner, TimePicker, DatePicker} from "./components/";
+import { Modal, ProgressBar, NameCard, Button, Carousel, Row, Col, CartoonNetworkSpinner, TimePicker, DatePicker, Tab, Tabs} from "./components/";
 
 class App extends React.Component {
 	constructor(props, ctx) {
@@ -10,13 +10,16 @@ class App extends React.Component {
 			time: null,
 			time2: null,
 			date: null,
-			date2: null
+			date2: null,
+			tab: 1
 		};
 	}
 	render() {
 		return (
 		<div>
 			<h1>Styled components</h1>
+			<h5>You need Font awesome in the index.js to run this webapp</h5>
+			
 			<hr />
 			<div>
 				<h3>Modal</h3>
@@ -130,6 +133,54 @@ class App extends React.Component {
 					onDatePick={date2 => this.setState({date2})}
 					format={12}/>
 				<p>Selected Date: {this.state.date2}</p>
+			</div>
+			<div>
+				<h3>Tabs</h3>
+				<h5>Tabs Light Vertical</h5>
+					<Tabs
+						theme="light"
+						layout="vertical"
+						onSelect={newTab => this.setState({tab: newTab})}
+						currentSelectedTab={this.state.tab}>
+						<Tab
+							selectionKey={1}
+							title="Tab 1">
+							Content 1
+						</Tab>
+						<Tab
+							selectionKey={2}
+							title="Tab 2">
+							Content 2
+						</Tab>
+						<Tab
+							selectionKey={3}
+							title="Tab 3">
+							Content 3
+						</Tab>
+					</Tabs>
+					<h5>Tabs Dark Horizontal</h5>
+					<Tabs
+						theme="dark"
+						layout="horizontal"
+						onSelect={newTab => this.setState({tab: newTab})}
+						currentSelectedTab={this.state.tab}>
+						<Tab
+							selectionKey={1}
+							title="Tab 1">
+							Content 1
+						</Tab>
+						<Tab
+							selectionKey={2}
+							title="Tab 2">
+							Content 2
+						</Tab>
+						<Tab
+							selectionKey={3}
+							title="Tab 3">
+							Content 3
+						</Tab>
+					</Tabs>
+				
 			</div>
 			<div>
 				<h3>Cartoon Network Spinner</h3>

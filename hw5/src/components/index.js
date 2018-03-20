@@ -9,6 +9,10 @@ export { default as ProgressBar} from './ProgressBar/ProgressBar';
 export { default as Row} from './Row/Row';
 export { default as TimePicker} from './TimePicker/TimePicker';
 export { default as DatePicker} from './DatePicker/DatePicker';
+export { default as Tab} from './Tabs/Tab';
+export { default as Tabs} from './Tabs/Tabs';
+
+
 
 
 
