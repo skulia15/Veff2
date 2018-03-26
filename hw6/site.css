@@ -1,17 +1,123 @@
 /* EDIT BELOW THIS LINE */
 
+.section {
+    display: flex;
+}
 /* Add styles for section-1 */
+.section-1{
+    height: 200px;
+    flex-flow: row wrap;
+}
 
+.section-1 .flex-item{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-1 .flex-item:nth-child(odd) {
+    flex-grow: 2;
+}
+.section-1 .flex-item:nth-child(even) {
+    flex-grow: 1;
+}
 /* Add styles for section-2 */
 
+.section-2 {
+    flex-direction: column-reverse;
+}
+
+.section-2 .flex-item:nth-child(1) {
+    flex-grow: 1;
+    align-self: flex-start;
+    width: 50%;
+}
+.section-2 .flex-item:nth-child(5) {
+    flex-grow: 1;
+    align-self: flex-end;
+    width: 50%;
+}
+
 /* Add styles for section-3 */
+.section-3{
+    height: 200px;
+    flex-flow: column wrap;
+}
+
+.section-3 .flex-item{
+    flex-basis: 50%;
+}
+
+.section-3 .flex-item:nth-child(1) {
+    flex-basis: 100%;
+}
+
+.section-3 .flex-item:nth-child(6) {
+    flex-basis: 100%;
+}
 
 /* Add styles for section-4 */
 
+.section-4{
+    flex-flow: column wrap;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.section-4 .flex-item{
+    height: 60px;
+    width: 100px;
+}
+
 /* Add styles for section-5 */
+.section-5{
+    flex-flow: column-reverse wrap-reverse;
+    align-items: center;
+    justify-content: center;    
+}
+
+.section-5 :nth-child(1) {
+    order: 1;
+}
 
 /* Add styles for section-6 */
+.section-6{
+    flex-flow: row-reverse; 
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
 
 /* Add styles for section-7 */
+
+.section-7{
+    flex-flow: column-reverse wrap-reverse;
+    justify-content: space-around;
+}
+
+.cartoon {
+    flex-grow: 1;
+}
+.section-7 .carebear-red {
+    order: 4;
+}
+
+.section-7 .carebear-green {
+    order: 3;
+}
+
+.section-7 .carebear-blue {
+    order: 2;
+}
+
+.section-7 .carebear-yellow {
+    order: 1;
+}
+
+.section-7 .carebear-pink {
+    order: 5;
+    align-self: end;
+    flex-grow: 0;
+}
 
 /* Add styles for section-8 */
