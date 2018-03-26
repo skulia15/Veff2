@@ -121,3 +121,14 @@
 }
 
 /* Add styles for section-8 */
+.section-8{
+    flex-flow: column-reverse wrap;
+}
+
+.section-8 .flex-item {
+    flex-grow: 1;
+}
+
+.section-8 .flex-item:nth-child(1) {
+    flex-basis: 100%;
+}
