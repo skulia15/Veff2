@@ -1,0 +1,233 @@
+@import "variables.less";
+
+// EDIT BELOW THIS LINE
+
+body{
+    display: grid;
+    grid-template-columns: auto 250px;
+    background-color: @persianPink;
+}
+
+#right-aside, #right-aside-inside {
+    text-align: center;
+    background-color: @laurelGreen;
+    color: @white;
+    border-left: 8px solid @desaturatedCyan;
+    padding: @commonPadding;
+    img {
+        width: 150px;
+    }
+}
+
+main{
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "primary-nav"
+        "secondary-nav"
+        "cities"
+        "banner"
+        "footer";
+
+    #primary-nav{
+        grid-area: primary-nav;
+        display: grid;
+        justify-content: center;
+        border-bottom: 8px solid @thulianPink;
+        img{
+            width: 200px;
+        }
+    }
+    #secondary-nav{
+        grid-area: secondary-nav;
+        color: white;
+        display: grid;
+        align-items: center;
+        background-color: @spanishPink;
+        font-weight: bold;
+        ul{
+            justify-self: center;
+            li{
+                display: inline-block;
+                margin: 15px 20px;
+                a{
+                    font-size: 1.5em;
+                    color: @white;
+                    transition: color .3s;
+                    &:hover{
+                        color: darken(@white, 15%);
+                    }
+                }
+            } 
+        }
+    }
+    .cities{
+        grid-area: cities;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        li{
+            .city-img{
+                width: 250px;
+                height: 150px;
+                background-size: cover;
+                margin: 10px auto;
+            }
+            h2{
+                font-size: 2em;
+            }
+            background-color: @white;
+            border: 2px solid @thulianPink;
+            padding: 15px @commonPadding;
+        }
+    }
+    section{
+        &#banner{
+            grid-area: banner;
+            grid-template-rows: auto auto;
+            align-items: center;
+            text-align: center;
+            padding: @commonPadding;
+            color: white;
+            background-color: @spanishPink;
+            font-size: 1.5em;
+            ul{
+                display: grid;
+                grid-template-columns: repeat(4, auto);
+                justify-self: center;
+                li{
+                    margin: 30px;
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    background-size: cover;
+                }
+            }
+        }
+    }
+    #right-aside-inside{
+        display: none;
+    }
+    footer{
+        grid-area: footer;
+        padding: @commonPadding;
+        border-top: 8px solid @thulianPink;
+    }
+}
+
+// Tablet
+@media screen and (max-width: 1024px) {
+    body{
+        grid-template-columns: auto;
+        font-size: 0.9em;
+        .cities{
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+            li{
+                display: grid;
+                grid-template-columns: 1.5fr 1fr; 
+                padding: 20px !important;
+                align-items: start;
+                &:last-child{
+                    display: grid;
+                    grid-template-columns: 1.5fr 1fr;
+                    align-items: center;
+                    grid-column: 1 / span 2;
+                    .text-wrapper{
+                        grid-row: 1;
+                        grid-column: 1;
+                    }
+                    .city-img{
+                        width: 350px;
+                        height: 200px;
+                        grid-row: 1;
+                        grid-column: 2;
+                    }
+                }
+            }
+        }
+        .banner-area{
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+            "banner-item"
+            "pilot-item";
+            display: grid;
+            section{
+                &#banner{
+                    grid-area: banner-item;
+                    ul{
+                        grid-template-columns: repeat(2, auto);
+                        justify-content: center;
+                        li{
+                            width: 120px;
+                            height: 120px;
+                            margin: 15px;
+                        }
+                    }
+                } 
+            }
+            #right-aside-inside{
+                grid-area: pilot-item;
+                grid-row: 1;
+                grid-column: 2;
+                display: block;
+                font-size: 1.2em;
+            }
+        }
+    }
+    #right-aside{
+       display: none !important;
+    }
+}
+
+// Mobile
+@media screen and (max-width: 450px) {
+    body{
+        font-size: .8em;
+        #secondary-nav{
+            font-size: 2.5em;
+        }
+        .cities{
+            font-size: 0.8em;
+            grid-template-columns: auto;
+            li{
+                .text-wrapper{
+                    padding: 0 @commonPadding;
+                    
+                }
+                .city-img{
+                    width: 350px;
+                    height: 200px;
+                }
+                grid-column: span 2;
+                &:nth-child(even){
+                    grid-template-columns: 1.5fr 1fr;
+                    .city-img{
+                        grid-column: 2;
+                        grid-row: 1;
+                    }
+                    .text-wrapper{
+                        grid-column: 1;
+                    }
+                }
+                &:nth-child(odd){
+                    grid-template-columns: 1fr 1.5fr;
+                    .city-img{
+                        grid-column: 1;
+                    }
+                    .text-wrapper{
+                        grid-column: 2;
+                    }
+                }
+            }
+        }
+        .banner-area{
+            grid-template-columns: auto;
+            #banner > ul{
+                grid-template-columns: repeat(4, auto) !important;
+            }
+        }
+        #right-aside-inside{
+            display: none !important;
+        }
+    }
+}
