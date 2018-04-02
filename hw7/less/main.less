@@ -80,26 +80,28 @@ main{
             padding: 15px @commonPadding;
         }
     }
-    section{
-        &#banner{
-            grid-area: banner;
-            grid-template-rows: auto auto;
-            align-items: center;
-            text-align: center;
-            padding: @commonPadding;
-            color: white;
-            background-color: @spanishPink;
-            font-size: 1.5em;
-            ul{
-                display: grid;
-                grid-template-columns: repeat(4, auto);
-                justify-self: center;
-                li{
-                    margin: 30px;
-                    width: 150px;
-                    height: 150px;
-                    border-radius: 50%;
-                    background-size: cover;
+    .banner-area{
+        background-color: @spanishPink;
+        section{
+            &#banner{
+                grid-area: banner;
+                grid-template-rows: auto auto;
+                align-items: center;
+                text-align: center;
+                padding: @commonPadding;
+                color: white;
+                font-size: 1.5em;
+                ul{
+                    display: grid;
+                    grid-template-columns: repeat(4, auto);
+                    justify-self: center;
+                    li{
+                        margin: 30px;
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 50%;
+                        background-size: cover;
+                    }
                 }
             }
         }
@@ -122,25 +124,32 @@ main{
         .cities{
             grid-template-columns: repeat(2, 1fr);
             justify-content: center;
+            
             li{
                 display: grid;
-                grid-template-columns: 1.5fr 1fr; 
-                padding: 20px !important;
+                grid-template-columns: 1fr 1fr; 
+                padding: 10px !important;
                 align-items: start;
+                .city-img{
+                    margin: 10px 10px;
+                    max-width: 200px;
+                    max-height: 150px;
+                }
                 &:last-child{
                     display: grid;
                     grid-template-columns: 1.5fr 1fr;
                     align-items: center;
                     grid-column: 1 / span 2;
+                    justify-items: end;
                     .text-wrapper{
                         grid-row: 1;
                         grid-column: 1;
                     }
                     .city-img{
-                        width: 350px;
-                        height: 200px;
                         grid-row: 1;
                         grid-column: 2;
+                        max-width: 300px;
+                        max-height: 200px;
                     }
                 }
             }
@@ -180,14 +189,14 @@ main{
 }
 
 // Mobile
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 425px) {
     body{
-        font-size: .8em;
+        font-size: 1em;
+        grid-template-columns: auto;
         #secondary-nav{
-            font-size: 2.5em;
+            font-size: 1.5em;
         }
         .cities{
-            font-size: 0.8em;
             grid-template-columns: auto;
             li{
                 .text-wrapper{
@@ -195,8 +204,8 @@ main{
                     
                 }
                 .city-img{
-                    width: 350px;
-                    height: 200px;
+                    max-width: 250px;
+                    max-height: 150px;
                 }
                 grid-column: span 2;
                 &:nth-child(even){

@@ -95,22 +95,24 @@ main .cities li .city-img {
 main .cities li h2 {
   font-size: 2em;
 }
-main section#banner {
+main .banner-area {
+  background-color: #EDBFB7;
+}
+main .banner-area section#banner {
   grid-area: banner;
   grid-template-rows: auto auto;
   align-items: center;
   text-align: center;
   padding: 40px;
   color: white;
-  background-color: #EDBFB7;
   font-size: 1.5em;
 }
-main section#banner ul {
+main .banner-area section#banner ul {
   display: grid;
   grid-template-columns: repeat(4, auto);
   justify-self: center;
 }
-main section#banner ul li {
+main .banner-area section#banner ul li {
   margin: 30px;
   width: 150px;
   height: 150px;
@@ -136,25 +138,31 @@ main footer {
   }
   body .cities li {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    padding: 20px !important;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px !important;
     align-items: start;
+  }
+  body .cities li .city-img {
+    margin: 10px 10px;
+    max-width: 200px;
+    max-height: 150px;
   }
   body .cities li:last-child {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     align-items: center;
     grid-column: 1 / span 2;
+    justify-items: end;
   }
   body .cities li:last-child .text-wrapper {
     grid-row: 1;
     grid-column: 1;
   }
   body .cities li:last-child .city-img {
-    width: 350px;
-    height: 200px;
     grid-row: 1;
     grid-column: 2;
+    max-width: 300px;
+    max-height: 200px;
   }
   body .banner-area {
     grid-template-columns: 1fr 1fr;
@@ -184,15 +192,15 @@ main footer {
     display: none !important;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 425px) {
   body {
-    font-size: .8em;
+    font-size: 1em;
+    grid-template-columns: auto;
   }
   body #secondary-nav {
-    font-size: 2.5em;
+    font-size: 1.5em;
   }
   body .cities {
-    font-size: 0.8em;
     grid-template-columns: auto;
   }
   body .cities li {
@@ -202,8 +210,8 @@ main footer {
     padding: 0 40px;
   }
   body .cities li .city-img {
-    width: 350px;
-    height: 200px;
+    max-width: 250px;
+    max-height: 150px;
   }
   body .cities li:nth-child(even) {
     grid-template-columns: 1.5fr 1fr;
