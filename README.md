@@ -239,7 +239,7 @@ associated object attributes
     const square = new Rectangle(10, 10);
     console.log(sqare.area);
 ```
-![boxing](https://github.com/skulia15/Web-Programming-2/blob/master/imgs/boxing.png)
+![boxing](https://github.com/skulia15/Web-Programming-2/blob/master/imgs/boxing.png?raw=true)
 
 ## **Functions**
 ## **Promises**
