@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){ 
-//Run when page is loaded:
+// Run when page is loaded:
 
     // Define the __ object
     (function (){
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function(){
             
             // Functions
 
-            //3. Parent
+            // 3. Parent
             this.parent = function(query){
                 var parents = [];
                 for(var i = 0; i < this.length; i++){
@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function(){
                             parents.push(parent);
                     }
                 }
-                return new MakeBelieveElement(parents,parents.length);
+                return new MakeBelieveElement(parents, parents.length);
             };
 
-            //4. Grandparent
+            // 4. Grandparent
             this.grandparent = function (query) {
                 if(query)
                     return this.parent().parent(query);
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     return this.parent().parent();
             };
 
-            //5. Ancestor
+            // 5. Ancestor
             this.ancestor = function (query){
                 var grandparents = this.grandparent();
                 var ancestors = [];
@@ -53,15 +53,15 @@ document.addEventListener('DOMContentLoaded', function(){
                 return new MakeBelieveElement(ancestors, ancestors.length);
             };
 
-            //6. Onclick
+            // 6. Onclick
             this.onClick = function(fun){
                 for(var i = 0; i < this.length; i++){
-                    this.element[i].addEventListener('click',fun); 
+                    this.element[i].addEventListener('click', fun); 
                 }
                 return this;
             };
 
-            //7. Insert text
+            // 7. Insert text
             this.insertText = function(text){
                 for(var i = 0; i < this.length; i++){
                     this.element[i].innerHTML = text;
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return this;
             };
 
-            //8. Append
+            // 8. Append
             this.append = function(object){
                 for(var i = 0; i < this.length; i++){
                     if(object.nodeName)
@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function(){
                 return this;
             };
 
-            //9. Prepend
+            // 9. Prepend
             this.prepend = function(object){
                 for(var i = 0; i < this.length; i++){
                     if(object.nodeName)
-                        this.element[i].insertBefore(object,this.element[i].firstChild);
+                        this.element[i].insertBefore(object, this.element[i].firstChild);
                     else{
                         this.element[i].innerHTML = object + this.element[i].innerHTML;
                     }
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return this;
             };
 
-            //10. Delete
+            // 10. Delete
             this.delete = function(){
                 for(var i = 0; i < this.length; i++){
                     this.element[i].remove();
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return this;
             };
 
-            //11. Ajax
+            // 11. Ajax
             this.ajax = function(ajaxObject){
                 if(!ajaxObject.url){
                     throw new Error('Url must be provided');
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 if(!ajaxObject.timeout){ // if timeout not provided, default to 0
                     ajaxObject.timeout = 0; // 0 is no timeout
                 }
-                if(!ajaxObject.data){ // if data not provided, default to {}
+                if(!ajaxObject.data){ // if data not provided, defaults to {}
                     ajaxObject.data = {}; 
                 }
                 if(!ajaxObject.headers){ // if headers not provided, default to {}
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function(){
             };
             window.__.ajax = this.ajax;
 
-            //12. CSS
+            // 12. CSS
             this.css = function(key, value){
                 for(var i = 0; i < this.length; i++){
                     this.element[i].style[key] = value;
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return this;
             };
 
-            //13. Toggle class
+            // 13. Toggle class
             this.toggleClass = function(classname){
                 for(var i = 0; i < this.length; i++){
                     var currentclass = this.element[i].className;
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return this;
             };
 
-            //14. On submit
+            // 14. On submit
             this.onSubmit = function(fun){
                 for(var i = 0; i < this.length; i++){
                     if(this.element[i].tagName.toLowerCase() === "form")
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
             };
 
-            //15. On input
+            // 15. On input
             this.onInput = function(fun){
                 for(var i = 0; i < this.length; i++){
                     if(this.element[i].tagName.toLowerCase() === "input")
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function(){
         window.__ = innerMakeBelieve;
     })();
 
-    //Tests:
+    // Tests:
 
     // Get element
     var element = __("p");
