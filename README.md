@@ -239,7 +239,15 @@ associated object attributes
     const square = new Rectangle(10, 10);
     console.log(sqare.area);
 ```
+Boxing
 ![boxing](https://github.com/skulia15/Web-Programming-2/blob/master/imgs/boxing.png?raw=true)
+
+Inheritence
+![inheritence](https://github.com/skulia15/Web-Programming-2/blob/master/imgs/inheritence.png?raw=true)
+
+Inheritence using function based class
+![inheritence](https://github.com/skulia15/Web-Programming-2/blob/master/imgs/inheritencefunction.png?raw=true)
+
 
 ## **Functions**
 ## **Promises**
