@@ -6,6 +6,16 @@ To run the server run ` npm start ` inside the server folder
 
 To run the client run ` npm start ` inside the client folder
 
+![screen 1](https://github.com/skulia15/Web-Programming-2/blob/master/Pizzerio%20Uno/screens/screen1.png?raw=true)
+![screen 2](https://github.com/skulia15/Web-Programming-2/blob/master/Pizzerio%20Uno/screens/screen2.png?raw=true)
+![screen 3](https://github.com/skulia15/Web-Programming-2/blob/master/Pizzerio%20Uno/screens/screen3.png?raw=true)
+![screen 4](https://github.com/skulia15/Web-Programming-2/blob/master/Pizzerio%20Uno/screens/screen4.png?raw=true)
+![screen 5](https://github.com/skulia15/Web-Programming-2/blob/master/Pizzerio%20Uno/screens/screen5.png?raw=true)
+![screen 6](https://github.com/skulia15/Web-Programming-2/blob/master/Pizzerio%20Uno/screens/screen6.png?raw=true)
+
+
+
+
 ## Known Limitations
 
 * Offers do not alter price of order.
