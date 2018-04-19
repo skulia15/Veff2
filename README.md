@@ -793,7 +793,8 @@ p::first-line
 # **(15%) - Layout**
 ## **Flexbox**
 
-Cheat sheet: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+Cheat sheet: https://yoksel.github.io/flex-cheatsheet/ || https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
 
 first apply display: flex to containing element
 

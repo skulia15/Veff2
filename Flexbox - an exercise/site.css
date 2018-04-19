@@ -4,23 +4,27 @@
     display: flex;
 }
 /* Add styles for section-1 */
-.section-1{
+
+.section-1 {
     height: 200px;
     flex-flow: row wrap;
 }
 
-.section-1 .flex-item{
-    justify-content: center;
+.section-1 .flex-item {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
-.section-1 .flex-item:nth-child(odd) {
-    flex-grow: 2;
-}
-.section-1 .flex-item:nth-child(even) {
+.section-1 .flex-item:nth-child(even){
     flex-grow: 1;
 }
+
+.section-1 .flex-item:nth-child(odd){
+    flex-grow: 2;
+
+}
+
 /* Add styles for section-2 */
 
 .section-2 {
