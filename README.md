@@ -478,10 +478,11 @@ export default styled(MyComponent)`
 	background-color: blue;
 `
 
+<MyDiv/> -> Black
+<MyDiv backgroundColor="blue"/> -> Blue
 ```
 
-\<MyDiv/> -> Black
-\<MyDiv backgroundColor="blue"/> -> Blue
+
 
 ```javascript
 import styled from 'styled-components';
@@ -515,16 +516,20 @@ export const PasswordInput = styled.input.attrs({
 	padding: 10px;
 `;
 
+<PasswordInput size="100" />
+
 ```
 
-<PasswordInput size="100" />
 
 # **(15%) - CSS3**
 ## **Media queries**
 
 Media queries in External stylesheets
 
+```css
 <link rel='stylesheet' media='screen and (min-width: 768px) and (max-width: 1024px)' href='css/medium.css'>
+
+```
 
 Media queries Within stylesheets
 
