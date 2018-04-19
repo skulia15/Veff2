@@ -353,7 +353,7 @@ ReactDOM.render(<Router><App /></Router>, document.getElementById('app'));
 	const Button extends React.component = () => {
 		render(
 			return(
-				<button style ={buttonStyle}>Hello World"</button>
+				<button style ={buttonStyle}>Hello World</button>
 				<p>
 					{Radium.getState(this.state, 'button', ':hover') ? 'Hovering' : null}
 				</p>
@@ -480,8 +480,8 @@ export default styled(MyComponent)`
 
 ```
 
-<MyDiv/> -> Black
-<MyDiv backgroundColor="blue"/> -> Blue
+\<MyDiv/> -> Black
+\<MyDiv backgroundColor="blue"/> -> Blue
 
 ```javascript
 import styled from 'styled-components';
