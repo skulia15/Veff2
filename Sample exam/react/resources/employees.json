@@ -1,0 +1,40 @@
+{
+    "employees": [
+        {
+            "name": "Aragorn",
+            "jobtitle": "Sword Wielder",
+            "image": "https://vignette.wikia.nocookie.net/lotr/images/b/b6/Aragorn_profile.jpg/revision/latest/scale-to-width-down/333?cb=20170121121423",
+            "started": "Some time ago" 
+        },
+        {
+            "name": "Legolas",
+            "jobtitle": "Archer",
+            "image": "https://vignette.wikia.nocookie.net/lotr/images/3/33/Legolas_-_in_Two_Towers.PNG/revision/latest/scale-to-width-down/350?cb=20120916035151",
+            "started": "A long time ago" 
+        },
+        {
+            "name": "Gimli",
+            "jobtitle": "Lumberjack",
+            "image": "https://vignette.wikia.nocookie.net/lotr/images/e/ec/Gimli_-_FOTR.png/revision/latest/scale-to-width-down/350?cb=20121008105956",
+            "started": "Today" 
+        },
+        {
+            "name": "Boromir",
+            "jobtitle": "Fighter",
+            "image": "https://vignette.wikia.nocookie.net/lotr/images/b/b4/Seanbean_boromir.jpg/revision/latest/scale-to-width-down/343?cb=20110327195115",
+            "started": "Too late" 
+        },
+        {
+            "name": "Frodo",
+            "jobtitle": "Ringbearer",
+            "image": "https://vignette.wikia.nocookie.net/lotr/images/5/54/Untitledjk.png/revision/latest/scale-to-width-down/350?cb=20130313174543",
+            "started": "First day"
+        },
+        {
+            "name": "Gandalf",
+            "jobtitle": "Wizard",
+            "image": "https://vignette.wikia.nocookie.net/lotr/images/e/e7/Gandalf_the_Grey.jpg/revision/latest/scale-to-width-down/350?cb=20121110131754",
+            "started": "When the world was made" 
+        }
+    ]
+}

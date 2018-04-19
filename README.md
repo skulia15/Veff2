@@ -257,9 +257,71 @@ Inheritence using function based class
 ## **React**
 ## **Components**
 ## **Stateless**
+### Dumb Component
+```javascript
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import NavigationBarLinkWrapper from '../NavigationBarLinkWrapper/NavigationBarLinkWrapper';
+
+const NavigationBar = () => {
+    return (
+        <nav className="navbar">
+            <div className="nav-logo">
+                <img src='../../../resources/github.png' alt="" />
+            </div>
+            <NavigationBarLinkWrapper className="font-nav">
+                <NavLink
+                    exact
+                    to="/"
+                    activeClassName="active"
+                    className="nav-link"><i className="fa fa-cutlery fa-lg"></i> Home</NavLink>
+                <NavLink
+                    to="/contact"
+                    activeClassName="active"
+                    className="nav-link"><i className="fa fa-tag fa-lg"></i> Contact Us</NavLink>
+                <NavLink
+                    to="/employees"
+                    activeClassName="active"
+                    className="nav-link"><i className="fa fa-info-circle fa-lg"></i> Employees</NavLink>
+            </NavigationBarLinkWrapper>
+        </nav>
+    );
+};
+
+export default NavigationBar;
+```
 ## **Stateful**
 ## **PropTypes**
 ## **Routing**
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import Home from './components/Home/Home';
+class App extends React.Component {
+   
+    render() {
+        return (
+            <div>
+                <NavigationBar/>
+                <div>
+                    <div className="container">
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            {/* <Route path="/contact" component={Contact} />
+                            <Route path="/employees" component={Employees} /> */}
+                        </Switch>
+                    </div>
+                </div>
+            </div>
+            
+        );
+    };
+}
+
+ReactDOM.render(<Router><App /></Router>, document.getElementById('app'));
+
+```
 ## **Forms**
 ## **Redux**
 ## **Store**
@@ -267,19 +329,306 @@ Inheritence using function based class
 ## **Reducers**
 ## **Styling components**
 ## **Inline**
+	Bad practice, Won't show up on the test.
 ## **Radium**
+
+```javascript
+	import React from 'react'
+	import Radium from 'radium'
+
+	const buttonStyle = {
+		color: 'white',
+		padding: 10,
+		transition: 'all .1s',
+		fontSize: 16,
+		':hover': {
+			background: 'rgba(100,100,100, .2)'
+		},
+		'@media (max-width: 1196px)': {
+			fontSize: 10
+		}
+
+	}
+
+	const Button extends React.component = () => {
+		render(
+			return(
+				<button style ={buttonStyle}>Hello World"</button>
+				<p>
+					{Radium.getState(this.state, 'button', ':hover') ? 'Hovering' : null}
+				</p>
+				)
+		};
+	} 
+
+	export default Radium(Button)
+```
 ## **Multiple stylesheets**
+* When using Webpack we can import CSS files
+when using the proper loader
+* That allows us to use multiple CSS stylesheets
+within our application
+* The stylesheets will eventually be injected within
+the head section of the HTML page
+	A type of inline styles
+
+button.css:
+```css
+	.btn {
+		background: blue;
+		font-size: 16px;
+	};
+```
+
+button.js
+```javascript
+import react from 'react';
+import css from './button.css';
+
+const Button = () => {
+	return <button className="btn"> Button </button>
+}
+export default Button;
+
+```
+
 ## **CSS Modules**
+* A CSS Module is a CSS file which all class names and
+animation names are scoped locally by default
+* CSS Modules can be imported and accessed like a
+JavaScript object
+* Class names with camelCase are preferred over kebab-case
+* When exported we get real modules!
+
+button.css:
+```css
+	.btn {
+		background: blue;
+		font-size: 16px;
+	};
+```
+
+button.js
+```javascript
+import react from 'react';
+import css from './button.css';
+
+const Button = ({ type, children }) => {
+	return <button className={css.btn}>{children}</button>
+}
+export default Button;
+
+```
+
+* In order to reuse styles composition is your
+friend
+* Styles within CSS Modules have an option of a
+property called composes, which accepts class
+name from another module or the one you are in
+
+btn.css
+
+```css
+	.btn{
+		font-size: 16px;
+		border-radius: 4px;
+	}
+
+	.btnSuccess {
+		composes: btn;
+		background-color: red;
+	}
+```
+
+
 ## **Styled components (styled-components)**
+
+* Styled components combines CSS
+Modules and inline styles
+* Styles are located within the .js file
+
+```javascript
+import styled from 'styled-components';
+
+const Box = styled.div`
+	height: 100px;
+	width: 100px;
+	background-color: blue;
+`;
+export default Box;
+
+```
+
+```javascript
+import styled from 'styled-components';
+import React from 'react';
+
+class MyComponent extends React.Component {
+	render() {
+		const { className } = this.props;
+		return (
+			<div className={className}></div>
+		)
+	}
+};
+
+export default styled(MyComponent)`
+	width: 100px;
+	height: 100px;
+	background-color: blue;
+`
+
+```
+
+<MyDiv/> -> Black
+<MyDiv backgroundColor="blue"/> -> Blue
+
+```javascript
+import styled from 'styled-components';
+
+export const MyDiv = styled.div`
+	margin: 10px;
+	width: 100px;
+	height: 100px;
+	background-color: ${
+		props =>
+		props.backgroundColor ? props.backgroundColor : 'black'
+	};
+`;
+
+export const MyShadowDiv = MyDiv.extend`
+	box-shadow: 10px 10px ....;
+`;
+
+```
+
+
+```javascript
+import styled from 'styled-components';
+
+export const PasswordInput = styled.input.attrs({
+	type: 'password',
+	size = props => props.size ? `${props.size}px`
+})`
+	width: 100%;
+	font-size: ${props =>  props.size};
+	padding: 10px;
+`;
+
+```
+
+<PasswordInput size="100" />
+
 # **(15%) - CSS3**
 ## **Media queries**
+
+Media queries in External stylesheets
+
+<link rel='stylesheet' media='screen and (min-width: 768px) and (max-width: 1024px)' href='css/medium.css'>
+
+Media queries Within stylesheets
+
+```javascript
+@media screen and (max-width: 400px) {
+	.column { width: 100%; }
+}
+@media screen and (max-width: 768px) and (min-width: 400px) {
+	.column { width: 50%; }
+}
+@media screen and (min-width: 768px) {
+	.column { width: 33.3%; }
+}
+```
+
+Media queries in styled components
+
+```javascript
+import styled from 'styled-components';
+const VisibleOnPhone = styled.div`
+	height: 100px;
+	width: 100px;
+	@media (min-width: 400px) {
+		display: none;
+	}
+`;
+```
+
 ## **Animations**
+
+* Animations can be declared by using the
+@keyframes keyword in CSS
+* The keyframes are a recipe for the animation
+* The animation property is than applied within
+a specific CSS selector
+
+Keyframes, declaration and application:
+
+```javascript
+	@keyframes text-color-changer{
+		from { color: blue; }
+		to { color: red; }
+	}
+
+	@keyframes text-color-changer{
+		0% { color: blue; }
+		50% { color: yellow; }
+		100% { color: red; }
+	}
+
+	p {
+		animation: text-color-changer 5s ease-in infinite;
+	}
+```
+
+
+### Animations in styled-components
+
+* Animations are also available via keyframes
+which is a function implemented by styled-components
+* They offer a way to import/export keyframes and
+therefore offer reusability
+```javascript
+import styled, { keyframes } from 'styled-components';
+
+const colorChange = keyframes`
+	0% { background-color: yellow; }
+	25% { background-color: red; }
+	50% { background-color: green; }
+	75% { background-color: blue; }
+	100% { background-color: yellow; }
+`;
+
+const ColorChanger = styled.div`
+	width: 100px;
+	height: 100px;
+	animation: ${colorChange} 5s linear 0s infinite;
+`;
+
+export default ColorChanger;
+```
+
 animate()
 1. first argument: An object of CSS properties
 2. second argument: duration of the animation
 3. third argument: easing function, e.g. swing
 4. fourth argument: function triggered on completion
+
 ## **Gradients**
+* linear and radial
+* linear-gradient() is applied to the
+background-image CSS property
+
+* first argument: point or angle which determines
+the direction of the gradient
+* second argument - nth argument: a color which
+can be rgb, rgba, hex
+
+```css
+body {
+	background-image: linear-gradient(blue, yellow);
+}
+```
+
 ## **Shadows**
 ## **Transitions**
 ## **Perspective**
