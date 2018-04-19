@@ -2,7 +2,6 @@
 ## Implemented by Skúli Arnarsson
 ### More information visit each individual project.
 
-
 # Exam Notes
 ## ***(30%) - JavaScript***
 ## **DOM**
