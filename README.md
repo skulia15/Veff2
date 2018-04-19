@@ -808,10 +808,59 @@ first apply display: flex to containing element
 	align-content:  flex-start | center | space-around | space-between | stretch | flex-end;
 	flex-grow: 1;
 	flex-shrink: 1;
-	flex-basis: 100%
+	flex-basis: 100%;
 	align-self: auto | flex-start | flex-end | center | baseline | stretch;
 	order: 2;
 }
 ```
 
 ## **CSS Grid Layout**
+
+```css
+.grid-container{
+	grid-template-columns: 200px 50% 100px;
+	grid-template-columns: auto;
+	grid-template-columns: [atart col-a]200px [col-b]50% [col-c]100px[stop end last];
+	grid-template-rows: 20% minmax(2em, 30%) 50%
+	grid-template-rows: 1fr 1fr 2fr
+	grid-template-columns: mincontent;
+	grid-template-columns: maxcontent;
+	grid-template-columns: repeat(2, 1fr);
+	grid-row-start: 1;
+	grid-row: 1 / 3;
+	grid-row: 1 / span 3;
+	grid-auto-flow: row;
+	grid-rowgap: 20px;
+	grid-column-gap: 20px;
+	grid-gap: 20px;
+}
+```
+
+grid-template-areas is a way to define multiple
+named areas within a layout
+	* It allows for easy ordering of areas within the layout and much more
+
+```css
+body{
+	grid-template-areas: 
+				"header"
+				"main"
+				"footer";
+}
+
+header{
+	grid-area: header
+	background-color: green;
+}
+
+main{
+	grid-area: main
+	background-color: red;
+}
+
+footer{
+	grid-area: footer
+	background-color: blue;
+}
+
+```
