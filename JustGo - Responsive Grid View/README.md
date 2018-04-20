@@ -1,5 +1,11 @@
 # Just Go
 ## Implemented By Skúli Arnarsson
+
+## Start by installing all dependencies by executing "npm i" and then executing "gulp".
+
+* if gulp is not installed, to install type "npm install -g gulp".
+* if npm is not install type sudo apt-get install npm .
+
 ---------------
 ## Desktop Design (1600x900):
 ![DeskTop Design](https://github.com/skulia15/Veff2/blob/master/hw7/images/Desktop.png)
